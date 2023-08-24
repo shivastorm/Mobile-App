@@ -1,95 +1,145 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { themeColors } from "../theme";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,Image 
+} from 'react-native';
 
-export default function LoginScreen() {
-  const navigation = useNavigation();
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomButton from '../components/CustomButton';
+import InputField from '../components/InputField';
+
+const LoginScreen = ({navigation}) => {
   return (
-    <View
-      className="flex-1 bg-white"
-      style={{ backgroundColor: themeColors.bg }}
-    >
-      <SafeAreaView className="flex ">
-        <View className="flex-row justify-start">
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="bg-yellow-400 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-          >
-            <ArrowLeftIcon size="20" color="black" />
-          </TouchableOpacity>
-        </View>
-        <View className="flex-row justify-center">
-          <Image
-            source={require("../assets/images/login.png")}
-            style={{ width: 200, height: 200 }}
+    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <View style={{paddingHorizontal: 25}}>
+        <View style={{alignItems: 'center'}}>
+        <Image
+            source={require("../assets/images/signup.png")}
+            style={{ width: 300, height: 200, justifyContent: 'center',
+           marginTop:50,
+            
+          }}
           />
+          {/* <LoginSVG
+            height={300}
+            width={300}
+            style={{transform: [{rotate: '-5deg'}]}}
+          /> */}
         </View>
-      </SafeAreaView>
-      <View
-        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-        className="flex-1 bg-white px-8 pt-8"
-      >
-        <View className="form space-y-2">
-          <Text className="text-gray-700 ml-4">Email Address</Text>
-          <TextInput
-            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-            placeholder="email"
-            value="john@gmail.com"
-          />
-          <Text className="text-gray-700 ml-4">Password</Text>
-          <TextInput
-            className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
-            secureTextEntry
-            placeholder="password"
-            value="test12345"
-          />
-          <TouchableOpacity className="flex items-end">
-            <Text className="text-gray-700 mb-5">Forgot Password?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="py-3 bg-yellow-400 rounded-xl"
-            onPress={() => navigation.navigate("Dashboard")}
-          >
-            <Text className="text-xl font-bold text-center text-gray-700">
-              Login
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Text className="text-xl text-gray-700 font-bold text-center py-5">
-          Or
+
+        <Text
+          style={{
+            fontFamily: 'Roboto-Medium',
+            fontSize: 28,
+            fontWeight: '500',
+            color: '#333',
+            marginBottom: 30,
+          }}>
+          Login
         </Text>
-        <View className="flex-row justify-center space-x-12">
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/google.png")}
-              className="w-10 h-10"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/apple.png")}
-              className="w-10 h-10"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
+
+        <InputField
+          label={'Email ID'}
+          icon={
+            <MaterialIcons
+            name="alternate-email"
+            size={20}
+            color="#666"
+            style={{marginRight: 5}}
+          />
+          }
+          keyboardType="email-address"
+        />
+
+<InputField
+          label={'Password'}
+          icon={
+            <Ionicons
+            name="ios-lock-closed-outline"
+            size={20}
+            color="#666"
+            style={{marginRight: 5}}
+          />
+          }
+          inputType="password"
+          fieldButtonLabel={"Forgot?"}
+          fieldButtonFunction={() => {}}
+        />
+        
+        <CustomButton label={"Login"} onPress={() => {}} />
+
+        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
+          Or, login with ...
+        </Text>
+
+        <View
+          style={{
+            
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 30,
+            paddingHorizontal:20,
+            
+          }}>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              
+              paddingHorizontal: 30,
+              paddingVertical: 10,
+            }}>
+           <Image
               source={require("../assets/icons/facebook.png")}
               className="w-10 h-10"
+              style={{height:35,width:35}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+               
+              paddingHorizontal: 30,
+              paddingVertical: 10,
+            }}>
+         <Image
+              source={require("../assets/icons/apple.png")}
+              className="w-10 h-10"
+              style={{height:35,width:35}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+               
+              paddingHorizontal: 30,
+              paddingVertical: 10,
+            }}>
+          <Image
+              source={require("../assets/icons/google.png")}
+              className="w-10 h-10"
+              style={{height:35,width:35}}
             />
           </TouchableOpacity>
         </View>
-        <View className="flex-row justify-center mt-7">
-          <Text className="text-gray-500 font-semibold">
-            Don't have an account?
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-            <Text className="font-semibold text-yellow-500"> Sign Up</Text>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginBottom: 30,
+          }}>
+          <Text>New to the app?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <Text style={{color: '#AD40AF', fontWeight: '700'}}> Register</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
-}
+};
+
+export default LoginScreen;

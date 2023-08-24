@@ -1,99 +1,210 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
-import React from "react";
-import { themeColors } from "../theme";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { useNavigation } from "@react-navigation/native";
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,Image 
+} from 'react-native';
 
-// subscribe for more videos like this :)
-export default function SignUpScreen() {
-  const navigation = useNavigation();
+//import DatePicker from 'react-native-date-picker';
+
+import InputField from '../components/InputField';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomButton from '../components/CustomButton';
+
+const RegisterScreen = ({navigation}) => {
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [dobLabel, setDobLabel] = useState('Date of Birth');
+
   return (
-    <View
-      className="flex-1 bg-white"
-      style={{ backgroundColor: themeColors.bg }}
-    >
-      <SafeAreaView className="flex">
-        <View className="flex-row justify-start">
+    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{paddingHorizontal: 25}}>
+        <View style={{alignItems: 'center'}}>
+          
+        </View>
+        <Image
+            source={require("../assets/images/login.png")}
+            style={{ width: 200, height: 200 ,  
+            marginTop:60,marginLeft:60}}
+          />
+        
+        {/* <Text
+          style={{
+            //fontFamily: 'Roboto-Medium',
+           
+           //paddingHorizontal: 20,
+            fontSize: 28,
+            fontWeight: '500',
+            color: '#333',
+                      
+          }}>
+          Register
+        </Text> */}
+
+        <View
+          style={{
+            paddingVertical:20,
+            paddingHorizontal:30,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            
+          }}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="bg-yellow-400 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-          >
-            <ArrowLeftIcon size="20" color="black" />
-          </TouchableOpacity>
-        </View>
-        <View className="flex-row justify-center">
-          <Image
-            source={require("../assets/images/signup.png")}
-            style={{ width: 165, height: 110 }}
-          />
-        </View>
-      </SafeAreaView>
-      <View
-        className="flex-1 bg-white px-8 pt-8"
-        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-      >
-        <View className="form space-y-2">
-          <Text className="text-gray-700 ml-4">Full Name</Text>
-          <TextInput
-            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-            value="john snow"
-            placeholder="Enter Name"
-          />
-          <Text className="text-gray-700 ml-4">Email Address</Text>
-          <TextInput
-            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-            value="john@gmail.com"
-            placeholder="Enter Email"
-          />
-          <Text className="text-gray-700 ml-4">Password</Text>
-          <TextInput
-            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7"
-            secureTextEntry
-            value="test12345"
-            placeholder="Enter Password"
-          />
-          <TouchableOpacity
-            className="py-3 bg-yellow-400 rounded-xl"
-            onPress={() => navigation.navigate("Dashboard")}
-          >
-            <Text className="font-xl font-bold text-center text-gray-700">
-              Sign Up
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Text className="text-xl text-gray-700 font-bold text-center py-5">
-          Or
-        </Text>
-        <View className="flex-row justify-center space-x-12">
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/google.png")}
-              className="w-10 h-10"
+            onPress={() => {}}
+            style={{
+            
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+            }}>
+           <Image
+              source={require("../assets/icons/facebook.png")}
+              className="w-5 h-5"
+              style={{height:35,width:35}}
             />
           </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+            }}>
+              <Image
               source={require("../assets/icons/apple.png")}
               className="w-10 h-10"
+              style={{height:35,width:35}}
             />
           </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/facebook.png")}
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+             
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+            }}>
+             <Image
+              source={require("../assets/icons/google.png")}
               className="w-10 h-10"
+              style={{height:35,width:35}}
             />
           </TouchableOpacity>
         </View>
-        <View className="flex-row justify-center mt-7">
-          <Text className="text-gray-500 font-semibold">
-            Already have an account?
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text className="font-semibold text-yellow-500"> Login</Text>
+
+        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
+          Or, register with email ...
+        </Text>
+
+        <InputField
+          label={'Full Name'}
+          icon={
+            <Ionicons
+              name="person-outline"
+              size={20}
+              color="#666"
+              style={{marginRight: 5}}
+            />
+          }
+        />
+
+        <InputField
+          label={'Email ID'}
+          icon={
+            <MaterialIcons
+              name="alternate-email"
+              size={20}
+              color="#666"
+              style={{marginRight: 5}}
+            />
+          }
+          keyboardType="email-address"
+        />
+
+        <InputField
+          label={'Password'}
+          icon={
+            <Ionicons
+              name="ios-lock-closed-outline"
+              size={20}
+              color="#666"
+              style={{marginRight: 5}}
+            />
+          }
+          inputType="password"
+        />
+
+        <InputField
+          label={'Confirm Password'}
+          icon={
+            <Ionicons
+              name="ios-lock-closed-outline"
+              size={20}
+              color="#666"
+              style={{marginRight: 5}}
+            />
+          }
+          inputType="password"
+        />
+
+        {/* <View
+          style={{
+            flexDirection: 'row',
+            borderBottomColor: '#ccc',
+            borderBottomWidth: 1,
+            paddingBottom: 8,
+            marginBottom: 30,
+          }}>
+          <Ionicons
+            name="calendar-outline"
+            size={20}
+            color="#666"
+            style={{marginRight: 5}}
+          />
+          <TouchableOpacity onPress={() => setOpen(true)}>
+            <Text style={{color: '#666', marginLeft: 5, marginTop: 5}}>
+              {dobLabel}
+            </Text>
+          </TouchableOpacity>
+        </View> */}
+
+        {/* <DatePicker
+          modal
+          open={open}
+          date={date}
+          mode={'date'}
+          maximumDate={new Date('2005-01-01')}
+          minimumDate={new Date('1980-01-01')}
+          onConfirm={date => {
+            setOpen(false);
+            setDate(date);
+            setDobLabel(date.toDateString());
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        /> */}
+
+        <CustomButton label={'Register'} onPress={() => {}} />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginBottom: 30,
+          }}>
+          <Text>Already registered?</Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={{color: '#AD40AF', fontWeight: '700'}}> Login</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
-}
+};
+
+export default RegisterScreen;
