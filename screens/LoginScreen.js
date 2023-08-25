@@ -4,8 +4,10 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image
+  TouchableOpacity, Image, StyleSheet
 } from 'react-native';
+import * as Font from 'expo-font';
+// import { useFonts } from 'expo-font';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,12 +15,50 @@ import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
 
 export default LoginScreen = ({ navigation }) => {
-  const [username1, setUsername] = useState('');
+
+  // const [fontsLoaded] = useFonts({
+  //   'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
+  // });
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const handleLogin = () => {
-    console.log('Username:=========', (prev) => username1);
+    console.log('Username:', username);
     console.log('Password:', password);
   };
+
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await fetch('https://nurtemeventapi.nurtem.com/oauth/token', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         username: username,
+  //         password: password,
+  //         // grant_type: "password",
+
+  //         // client_id: "8MONB4VIJX",
+
+  //         // client_secret: "3C4I0UJUT8vuG17NWhhcguAQf6rJFj",
+
+  //         // username: "nurtemadmin@gmail.com",
+
+  //         // password: "Nurtem1!"
+  //       }),
+  //     });
+  //     console.log("response===", response)
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       // console.log("response==", data)
+  //       // Handle successful login, store tokens, navigate to next screen, etc.
+  //     } else {
+  //       // Handle error cases, display error messages, etc.
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <View style={{ paddingHorizontal: 25 }}>
@@ -35,7 +75,7 @@ export default LoginScreen = ({ navigation }) => {
 
         <Text
           style={{
-            fontFamily: 'Roboto-Medium',
+            fontFamily: "Roboto-Regular",
             fontSize: 28,
             fontWeight: '500',
             color: '#333',
@@ -44,55 +84,22 @@ export default LoginScreen = ({ navigation }) => {
           Login
         </Text>
 
-        {/* <InputField
-          label={'Email ID'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-
-          }
+        <TextInput
+          style={styles.input}
+          placeholder='Email ID'
           keyboardType="email-address"
           value={username}
-          onChangeText={(value) => (setUsername(value))}
-        /> */}
-        <TextInput
-          placeholder='Email ID'
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
-          keyboardType="email-address"
-          value={Text}
-          onChangeText={() => { setUsername(username1) }} />
+          onChangeText={text => setUsername(text)} />
 
-
-        {/* <InputField
-          label={'Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
-          inputType="password"
-          fieldButtonLabel={"Forgot?"}
-          fieldButtonFunction={() => { }}
-          secureTextEntry
+        <TextInput style={styles.input}
+          placeholder="Enter password..."
+          secureTextEntry={true}
           value={password}
-          onChangeText={setPassword}
-        /> */}
+          onChangeText={text => setPassword(text)} />
 
-        <CustomButton label={"Login"} onPress={() => { handleLogin() }} />
+        <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}
+        // onPress={() => handleLogin()} 
+        />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...
@@ -164,4 +171,21 @@ export default LoginScreen = ({ navigation }) => {
   );
 };
 
-  //export default LoginScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+});
