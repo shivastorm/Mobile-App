@@ -1,13 +1,12 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-function Home() {
-  const navigation = useNavigation();
+export default function ManageCategories() {
   return (
     <View>
       {/* Your dashboard screen UI components */}
-      <Text>home</Text>
+      <SafeAreaView><Text>managing user </Text></SafeAreaView>
       {/* <Button
         onPress={() => {
           navigation.navigate("settings");
@@ -19,4 +18,4 @@ function Home() {
   );
 }
 
-export default Home();
+//export default HomeScreen();

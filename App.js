@@ -18,9 +18,6 @@ const App = () => {
     'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
     'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
 
-
-
-
   });
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
