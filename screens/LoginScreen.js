@@ -6,59 +6,46 @@ import {
   TextInput,
   TouchableOpacity, Image, StyleSheet
 } from 'react-native';
-import * as Font from 'expo-font';
-// import { useFonts } from 'expo-font';
-
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
-import InputField from '../components/InputField';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default LoginScreen = ({ navigation }) => {
 
-  // const [fontsLoaded] = useFonts({
-  //   'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
-  // });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const handleLogin = () => {
-    console.log('Username:', username);
-    console.log('Password:', password);
+
+  const handleLogin = async () => {
+    console.log('username,pass=========', username, password)
+    try {
+      const response = await fetch('https://api.nurtem.com/oauth/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          grant_type: "password",
+          client_id: "8MONB4VIJX",
+          client_secret: "3C4I0UJUT8vuG17NWhhcguAQf6rJFj",
+          // username: "nurtemadmin@gmail.com",
+          // password: "Nurtem1!"
+        }),
+      });
+      const data = await response.json();
+      console.log("response======", await response.json())
+      try {
+        await AsyncStorage.setItem('access_token', data.access_token);
+        console.log('Access token stored successfully.');
+        console.log("response======2", data)
+      } catch (error) {
+        console.log('Failed to store access token:', error);
+      }
+
+    } catch (error) {
+      console.error('Error in login:', error);
+    }
   };
-
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await fetch('https://nurtemeventapi.nurtem.com/oauth/token', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         username: username,
-  //         password: password,
-  //         // grant_type: "password",
-
-  //         // client_id: "8MONB4VIJX",
-
-  //         // client_secret: "3C4I0UJUT8vuG17NWhhcguAQf6rJFj",
-
-  //         // username: "nurtemadmin@gmail.com",
-
-  //         // password: "Nurtem1!"
-  //       }),
-  //     });
-  //     console.log("response===", response)
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       // console.log("response==", data)
-  //       // Handle successful login, store tokens, navigate to next screen, etc.
-  //     } else {
-  //       // Handle error cases, display error messages, etc.
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <View style={{ paddingHorizontal: 25 }}>
@@ -96,9 +83,9 @@ export default LoginScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={password}
           onChangeText={text => setPassword(text)} />
-
-        <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}
-        // onPress={() => handleLogin()} 
+        {/* 
+        <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"} */}
+        <CustomButton onPress={() => handleLogin()} label={"Login"}
         />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>

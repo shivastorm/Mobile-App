@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import Home from "./HomeScreen";
+import ManageTutor from "./TutorScreen";
 import ManageUser from "../Drawer/Manageuser";
 import ManageClaim from "../Drawer/Manageclaim";
 import ManageCategories from "../Drawer/Managecategories";
@@ -37,7 +37,7 @@ export default function DashboardScreen() {
             )
           }}
 
-          component={Home} />
+          component={ManageTutor} />
         <Drawer.Screen name="Manage User"
           options={{
             headerShown: true,
