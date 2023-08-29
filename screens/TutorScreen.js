@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from "../components/starRating";
 import { TouchableOpacity } from "react-native-gesture-handler";
-export default function HomeScreen() {
+export default function TutorScreen() {
   useEffect(() => {
     // const proxy = {
     //   target: 'https://nurtemeventapi.nurtem.com',

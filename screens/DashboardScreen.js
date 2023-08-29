@@ -2,7 +2,7 @@ import * as React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { DrawerContentScrollView, createDrawerNavigator } from "@react-navigation/drawer";
 
-import Home from "./HomeScreen";
+import ManageTutor from "./TutorScreen";
 import ManageUser from "../Drawer/Manageuser";
 import ManageClaim from "../Drawer/Manageclaim";
 import ListCategory from "../Drawer/Listcategory";
@@ -28,7 +28,7 @@ export default function DashboardScreen() {
             )
           }}
 
-          component={Home} />
+          component={ManageTutor} />
         <Drawer.Screen name="Manage User"
           options={{
             headerShown: true,
