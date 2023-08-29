@@ -6,37 +6,38 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from "../components/starRating";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default function TutorScreen() {
-  useEffect(() => {
-    // const proxy = {
-    //   target: 'https://nurtemeventapi.nurtem.com',
-    //   changeOrigin: true,
-    // };
-    const getData = async () => {
-      const getTutors = await axios.get('https://api.nurtem.com/providers/list', {
-        headers: {
-          Authorization: 'Bearer ' + 'zgIHroStQsHDEUBYSiNjDrugZtW1hdx7VrOvwNblMtBoCdt9R37qVCcyLX2yyBeKAAFbQeineun2JMs6oI4nJxro89rim80MFYLZfL2ngtrosUhJHgZozKAffz9O3MgR2CFCgiFONVGwC39FesrTR4kBeosOOx0NXTvDylOxp5ZfhjcQEgDsPlX0uqJpYLHKNN395ldgZBHVVit2U3u68j61VYvdTdAp44eRnYesntLZ2mwiPI3j0dSXtwLThAo',
-        },
-        withCredentials: true,
-        changeOrigin: true,
-        params: { page: 1, count: 2, sort: 'created_at.desc' },
-      });
-      console.log("response", getTutors)
-      // if (getTutors.status === 200) {
-      //   dispatch(listTutor(getTutors.data))
-      //   return getTutors.data
-      // }
-    }
-    getData()
-  }, [])
-  // const [value, setValue] = useState(
-  //   [
-  //     { id: 1, tutorname: "angela yu", emailid: "emailID", services: "python java" },
-  //     { id: 2, tutorname: "micheal", emailid: "emailID", services: " java" },
-  //     { id: 3, tutorname: "Caleb", emailid: "emailID", services: "python,html java" },
-  //     { id: 4, tutorname: "angelina", emailid: "emailID", services: "python,flutter java" }
-  //   ]
-  // )
-  const [value, setValue] = useState(getTutors)
+  console.log('camheretotutor======')
+  // useEffect(() => {
+  //   // const proxy = {
+  //   //   target: 'https://nurtemeventapi.nurtem.com',
+  //   //   changeOrigin: true,
+  //   // };
+  //   const getData = async () => {
+  //     const getTutors = await axios.get('https://api.nurtem.com/providers/list', {
+  //       headers: {
+  //         Authorization: 'Bearer ' + 'zgIHroStQsHDEUBYSiNjDrugZtW1hdx7VrOvwNblMtBoCdt9R37qVCcyLX2yyBeKAAFbQeineun2JMs6oI4nJxro89rim80MFYLZfL2ngtrosUhJHgZozKAffz9O3MgR2CFCgiFONVGwC39FesrTR4kBeosOOx0NXTvDylOxp5ZfhjcQEgDsPlX0uqJpYLHKNN395ldgZBHVVit2U3u68j61VYvdTdAp44eRnYesntLZ2mwiPI3j0dSXtwLThAo',
+  //       },
+  //       withCredentials: true,
+  //       changeOrigin: true,
+  //       params: { page: 1, count: 2, sort: 'created_at.desc' },
+  //     });
+  //     console.log("response", getTutors)
+  //     // if (getTutors.status === 200) {
+  //     //   dispatch(listTutor(getTutors.data))
+  //     //   return getTutors.data
+  //     // }
+  //   }
+  //   getData()
+  // }, [])
+  const [value, setValue] = useState(
+    [
+      { id: 1, tutorname: "angela yu", emailid: "emailID", services: "python java" },
+      { id: 2, tutorname: "micheal", emailid: "emailID", services: " java" },
+      { id: 3, tutorname: "Caleb", emailid: "emailID", services: "python,html java" },
+      { id: 4, tutorname: "angelina", emailid: "emailID", services: "python,flutter java" }
+    ]
+  )
+  // const [value, setValue] = useState(getTutors)
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -47,194 +48,50 @@ export default function TutorScreen() {
     );
   };
 
+  return (
 
-  <SafeAreaView style={{ backgroundColor: "white" }}
-  >
-    <ScrollView style={{ backgroundColor: "white" }}  >
-      {value.map((value) => {
-        return (
-          // key={value.id}
-          <View style={styles.cardsWrapper}>
-            <View style={styles.card}>
-
-              <View style={styles.cardImgWrapper}>
-                <Image
-                  source={require("../assets/images/girl.webp")}
-                  style={styles.cardImg}
-                  resizeMode="cover"
-                />
-              </View>
-              <View style={styles.cardInfo}>
-                <TruncatedText text={value.tutorname} />
-                <Text style={styles.cardDetails}>{value.emailid}</Text>
-                <Text style={styles.cardDetails}>{value.id}</Text>
-                <Text style={styles.cardDetails}>
-                  {value.services}
-                </Text>
-                <TouchableOpacity style={{
-                  backgroundColor: "#e9b4f0",
-                  width: 80,
-                  height: 25,
-                  padding: 2,
-                  borderRadius: 10
-                }}>
-                  <Text style={{
-                    color: "black",
-                    fontSize: 14,
-                    textAlign: "center"
-                  }}>Active </Text>
-                </TouchableOpacity>
-
-
+    <SafeAreaView style={{ backgroundColor: "white" }}
+    >
+      <ScrollView style={{ backgroundColor: "white" }}  >
+        {value.map((value) => {
+          return (
+            <View key={value.id} style={styles.cardsWrapper}>
+              <View style={styles.card}>
+                <View style={styles.cardImgWrapper}>
+                  <Image
+                    source={require("../assets/images/girl.webp")}
+                    style={styles.cardImg}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={styles.cardInfo}>
+                  <TruncatedText text={value.tutorname} />
+                  <Text style={styles.cardDetails}>{value.emailid}</Text>
+                  <Text style={styles.cardDetails}>{value.id}</Text>
+                  <Text style={styles.cardDetails}>
+                    {value.services}
+                  </Text>
+                  <TouchableOpacity style={{
+                    backgroundColor: "#e9b4f0",
+                    width: 80,
+                    height: 25,
+                    padding: 2,
+                    borderRadius: 10
+                  }}>
+                    <Text style={{
+                      color: "black",
+                      fontSize: 14,
+                      textAlign: "center"
+                    }}>Active </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        )
-      })}
-
-      {/* <View style={styles.cardsWrapper}>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/girl.webp")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-          </View>
-          <View style={styles.cardInfo}>
-            <TruncatedText text="DR. Angela YU agshdfuygafuyasgff sufga sufdgasdfuasghfujh gfukfgsufdhagdug gdfjkag dduf   " />
-            <Text style={styles.cardDetails}>mail ID</Text>
-
-            <Text style={styles.cardDetails}>
-              services: python and java
-            </Text>
-            <TouchableOpacity style={{
-              backgroundColor: "#e9b4f0",
-              width: 80,
-              height: 25,
-              padding: 2,
-              borderRadius: 10
-            }}>
-              <Text style={{
-                color: "black",
-                fontSize: 14,
-                textAlign: "center"
-              }}>Active </Text>
-            </TouchableOpacity>
-
-
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/signup.png")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-
-          </View>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Amazing Food Place</Text>
-            <StarRating ratings={4} reviews={99} />
-            <Text style={styles.cardDetails}>
-              Amazing description for this amazing place
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/signup.png")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-
-          </View>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Amazing Food Place</Text>
-            <StarRating ratings={4} reviews={99} />
-            <Text style={styles.cardDetails}>
-              Amazing description for this amazing place
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/signup.png")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-
-          </View>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Amazing Food Place</Text>
-            <StarRating ratings={4} reviews={99} />
-            <Text style={styles.cardDetails}>
-              Amazing description for this amazing place
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/signup.png")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-
-          </View>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Amazing Food Place</Text>
-            <StarRating ratings={4} reviews={99} />
-            <Text style={styles.cardDetails}>
-              Amazing description for this amazing place
-            </Text>
-
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/signup.png")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-
-          </View>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Amazing Food Place</Text>
-            <StarRating ratings={4} reviews={99} />
-            <Text style={styles.cardDetails}>
-              Amazing description for this amazing place
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={require("../assets/images/signup.png")}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-
-          </View>
-          <View style={styles.cardInfo}>
-            <Text style={styles.cardTitle}>Amazing Food Place</Text>
-
-            <Text style={styles.cardDetails}>
-              Amazing description for this amazing place
-            </Text>
-          </View>
-        </View>
-      </View> */}
-    </ScrollView>
-
-  </SafeAreaView >
-
-
-
+          )
+        })}
+      </ScrollView>
+    </SafeAreaView >
+  )
 }
 
 //export default HomeScreen();

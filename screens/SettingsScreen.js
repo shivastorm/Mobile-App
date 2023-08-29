@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function ManageQuotes() {
+export default function SettingsScreen() {
     return (
         <View>
             {/* Your dashboard screen UI components */}
-            <SafeAreaView><Text>home</Text></SafeAreaView>
+            <SafeAreaView><Text>Settings Page</Text></SafeAreaView>
             {/* <Button
         onPress={() => {
           navigation.navigate("settings");

@@ -3,14 +3,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import DashboardScreen from "../screens/DashboardScreen";
+import DrawerScreen from "../Drawer/DrawerScreen";
 import { getAccessToken } from "../utils/get-access-token";
+import { removeAccessToken } from "../utils/remove-access-token";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  getAccessToken(setIsLoggedIn);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  //removeAccessToken();
+  //getAccessToken()
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -19,7 +20,7 @@ export default function AppNavigation() {
             <Stack.Screen
               name="Dashboard"
               options={{ headerShown: false }}
-              component={DashboardScreen} />
+              component={DrawerScreen} />
           </>
           :
           <>
