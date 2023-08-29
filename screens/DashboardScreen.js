@@ -1,35 +1,26 @@
 import * as React from "react";
-import { View, Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { DrawerContentScrollView, createDrawerNavigator } from "@react-navigation/drawer";
 
 import Home from "./HomeScreen";
 import ManageUser from "../Drawer/Manageuser";
 import ManageClaim from "../Drawer/Manageclaim";
-import ManageCategories from "../Drawer/Managecategories";
 import ListCategory from "../Drawer/Listcategory";
 import CreateCategory from "../Drawer/Createcategory";
-import ManageQuotes from "../Drawer/Managequotes";
 import ListQuotes from "../Drawer/Listquotes";
 import CreateQuotes from "../Drawer/CreateQuotes";
 import ManageServices from "../Drawer/ManageServices";
 import Configurations from "../Drawer/Configurations";
 import ManageTransaction from "../Drawer/ManageTransaction";
-//import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
-//import { Icon } from "react-native-vector-icons/icon";
-//import Settings from "../screens/";
+//import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 export default function DashboardScreen() {
   const Drawer = createDrawerNavigator();
   return (
     <>
-      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Dashboard screen</Text>
-      </View> */}
-      <Drawer.Navigator>
+      <Drawer.Navigator  >
         <Drawer.Screen name="Manage Tutor"
-
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
@@ -42,51 +33,57 @@ export default function DashboardScreen() {
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="desktop-mac" size={20} color={color} />
+              <Ionicons name="person-add-alt-1" size={20} color={color} />
             )
           }}
           component={ManageUser} />
-        <Drawer.Screen name="Manage claim"
+        <Drawer.Screen name="Manage Claim"
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="desktop-mac" size={20} color={color} />
+              <Ionicons name="assignment" size={20} color={color} />
             )
           }}
           component={ManageClaim} />
-        <Drawer.Screen name="Manage categories"
+
+        <Drawer.Screen name="List Category"
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="person" size={20} color={color} />
+              <Ionicons name="auto-awesome-motion" size={20} color={color} />
             )
           }}
-          component={ManageCategories} />
-        <Drawer.Screen name="Listcategory"
-          options={{ headerShown: true }}
           component={ListCategory} />
-        <Drawer.Screen name="Create category"
-          options={{ headerShown: true }}
-          component={CreateCategory} />
-        <Drawer.Screen name="Manage Quotes"
+        <Drawer.Screen name="Create Category"
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="person" size={20} color={color} />
+              <Ionicons name="dashboard-customize" size={20} color={color} />
             )
           }}
-          component={ManageQuotes} />
+          component={CreateCategory} />
+
         <Drawer.Screen name="List Quotes"
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="auto-awesome-motion" size={20} color={color} />
+            )
+          }}
           component={ListQuotes} />
         <Drawer.Screen name=" Create Quotes"
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="dashboard-customize" size={20} color={color} />
+            )
+          }}
           component={CreateQuotes} />
         <Drawer.Screen name="Manage Services"
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="people" size={20} color={color} />
+              <Ionicons name="corporate-fare" size={20} color={color} />
             )
           }}
           component={ManageServices} />
@@ -94,7 +91,7 @@ export default function DashboardScreen() {
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="people" size={20} color={color} />
+              <Ionicons name="settings-input-component" size={20} color={color} />
             )
           }}
           component={Configurations} />
@@ -102,7 +99,7 @@ export default function DashboardScreen() {
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
-              <Ionicons name="people" size={20} color={color} />
+              <Ionicons name="monetization-on" size={20} color={color} />
             )
           }}
           component={ManageTransaction} />
@@ -110,6 +107,16 @@ export default function DashboardScreen() {
 
         {/* <Drawer.Screen name="Settings" component={Settings} /> */}
       </Drawer.Navigator>
+
     </>
+
+
   );
 }
+const styles = StyleSheet.create({
+  drawer: {
+    fontFamily: "Roboto-Medium",
+    fontSize: 20,
+    fontFamily: "Roboto-Medium"
+  }
+})

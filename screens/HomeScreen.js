@@ -36,6 +36,7 @@ export default function HomeScreen() {
   //     { id: 4, tutorname: "angelina", emailid: "emailID", services: "python,flutter java" }
   //   ]
   // )
+  const [value, setValue] = useState(getTutors)
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -47,190 +48,190 @@ export default function HomeScreen() {
   };
 
 
-  // <SafeAreaView style={{ backgroundColor: "white" }}
-  // >
-  //   <ScrollView style={{ backgroundColor: "white" }}  >
-  //     {value.map((value) => {
-  //       return (
-  //         // key={value.id}
-  //         <View style={styles.cardsWrapper}>
-  //           <View style={styles.card}>
+  <SafeAreaView style={{ backgroundColor: "white" }}
+  >
+    <ScrollView style={{ backgroundColor: "white" }}  >
+      {value.map((value) => {
+        return (
+          // key={value.id}
+          <View style={styles.cardsWrapper}>
+            <View style={styles.card}>
 
-  //             <View style={styles.cardImgWrapper}>
-  //               <Image
-  //                 source={require("../assets/images/girl.webp")}
-  //                 style={styles.cardImg}
-  //                 resizeMode="cover"
-  //               />
-  //             </View>
-  //             <View style={styles.cardInfo}>
-  //               <TruncatedText text={value.tutorname} />
-  //               <Text style={styles.cardDetails}>{value.emailid}</Text>
-  //               <Text style={styles.cardDetails}>{value.id}</Text>
-  //               <Text style={styles.cardDetails}>
-  //                 {value.services}
-  //               </Text>
-  //               <TouchableOpacity style={{
-  //                 backgroundColor: "#e9b4f0",
-  //                 width: 80,
-  //                 height: 25,
-  //                 padding: 2,
-  //                 borderRadius: 10
-  //               }}>
-  //                 <Text style={{
-  //                   color: "black",
-  //                   fontSize: 14,
-  //                   textAlign: "center"
-  //                 }}>Active </Text>
-  //               </TouchableOpacity>
-
-
-  //             </View>
-  //           </View>
-  //         </View>
-  //       )
-  //     })}
-
-  //     {/* <View style={styles.cardsWrapper}>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/girl.webp")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <TruncatedText text="DR. Angela YU agshdfuygafuyasgff sufga sufdgasdfuasghfujh gfukfgsufdhagdug gdfjkag dduf   " />
-  //           <Text style={styles.cardDetails}>mail ID</Text>
-
-  //           <Text style={styles.cardDetails}>
-  //             services: python and java
-  //           </Text>
-  //           <TouchableOpacity style={{
-  //             backgroundColor: "#e9b4f0",
-  //             width: 80,
-  //             height: 25,
-  //             padding: 2,
-  //             borderRadius: 10
-  //           }}>
-  //             <Text style={{
-  //               color: "black",
-  //               fontSize: 14,
-  //               textAlign: "center"
-  //             }}>Active </Text>
-  //           </TouchableOpacity>
+              <View style={styles.cardImgWrapper}>
+                <Image
+                  source={require("../assets/images/girl.webp")}
+                  style={styles.cardImg}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={styles.cardInfo}>
+                <TruncatedText text={value.tutorname} />
+                <Text style={styles.cardDetails}>{value.emailid}</Text>
+                <Text style={styles.cardDetails}>{value.id}</Text>
+                <Text style={styles.cardDetails}>
+                  {value.services}
+                </Text>
+                <TouchableOpacity style={{
+                  backgroundColor: "#e9b4f0",
+                  width: 80,
+                  height: 25,
+                  padding: 2,
+                  borderRadius: 10
+                }}>
+                  <Text style={{
+                    color: "black",
+                    fontSize: 14,
+                    textAlign: "center"
+                  }}>Active </Text>
+                </TouchableOpacity>
 
 
-  //         </View>
-  //       </View>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/signup.png")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
+              </View>
+            </View>
+          </View>
+        )
+      })}
 
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <Text style={styles.cardTitle}>Amazing Food Place</Text>
-  //           <StarRating ratings={4} reviews={99} />
-  //           <Text style={styles.cardDetails}>
-  //             Amazing description for this amazing place
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/signup.png")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
+      {/* <View style={styles.cardsWrapper}>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/girl.webp")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={styles.cardInfo}>
+            <TruncatedText text="DR. Angela YU agshdfuygafuyasgff sufga sufdgasdfuasghfujh gfukfgsufdhagdug gdfjkag dduf   " />
+            <Text style={styles.cardDetails}>mail ID</Text>
 
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <Text style={styles.cardTitle}>Amazing Food Place</Text>
-  //           <StarRating ratings={4} reviews={99} />
-  //           <Text style={styles.cardDetails}>
-  //             Amazing description for this amazing place
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/signup.png")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
+            <Text style={styles.cardDetails}>
+              services: python and java
+            </Text>
+            <TouchableOpacity style={{
+              backgroundColor: "#e9b4f0",
+              width: 80,
+              height: 25,
+              padding: 2,
+              borderRadius: 10
+            }}>
+              <Text style={{
+                color: "black",
+                fontSize: 14,
+                textAlign: "center"
+              }}>Active </Text>
+            </TouchableOpacity>
 
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <Text style={styles.cardTitle}>Amazing Food Place</Text>
-  //           <StarRating ratings={4} reviews={99} />
-  //           <Text style={styles.cardDetails}>
-  //             Amazing description for this amazing place
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/signup.png")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
 
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <Text style={styles.cardTitle}>Amazing Food Place</Text>
-  //           <StarRating ratings={4} reviews={99} />
-  //           <Text style={styles.cardDetails}>
-  //             Amazing description for this amazing place
-  //           </Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/signup.png")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
 
-  //         </View>
-  //       </View>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/signup.png")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
+          </View>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Amazing Food Place</Text>
+            <StarRating ratings={4} reviews={99} />
+            <Text style={styles.cardDetails}>
+              Amazing description for this amazing place
+            </Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/signup.png")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
 
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <Text style={styles.cardTitle}>Amazing Food Place</Text>
-  //           <StarRating ratings={4} reviews={99} />
-  //           <Text style={styles.cardDetails}>
-  //             Amazing description for this amazing place
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <View style={styles.card}>
-  //         <View style={styles.cardImgWrapper}>
-  //           <Image
-  //             source={require("../assets/images/signup.png")}
-  //             style={styles.cardImg}
-  //             resizeMode="cover"
-  //           />
+          </View>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Amazing Food Place</Text>
+            <StarRating ratings={4} reviews={99} />
+            <Text style={styles.cardDetails}>
+              Amazing description for this amazing place
+            </Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/signup.png")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
 
-  //         </View>
-  //         <View style={styles.cardInfo}>
-  //           <Text style={styles.cardTitle}>Amazing Food Place</Text>
+          </View>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Amazing Food Place</Text>
+            <StarRating ratings={4} reviews={99} />
+            <Text style={styles.cardDetails}>
+              Amazing description for this amazing place
+            </Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/signup.png")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
 
-  //           <Text style={styles.cardDetails}>
-  //             Amazing description for this amazing place
-  //           </Text>
-  //         </View>
-  //       </View>
-  //     </View> */}
-  //   </ScrollView>
+          </View>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Amazing Food Place</Text>
+            <StarRating ratings={4} reviews={99} />
+            <Text style={styles.cardDetails}>
+              Amazing description for this amazing place
+            </Text>
 
-  // </SafeAreaView >
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/signup.png")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
+
+          </View>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Amazing Food Place</Text>
+            <StarRating ratings={4} reviews={99} />
+            <Text style={styles.cardDetails}>
+              Amazing description for this amazing place
+            </Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={require("../assets/images/signup.png")}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
+
+          </View>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>Amazing Food Place</Text>
+
+            <Text style={styles.cardDetails}>
+              Amazing description for this amazing place
+            </Text>
+          </View>
+        </View>
+      </View> */}
+    </ScrollView>
+
+  </SafeAreaView >
 
 
 
