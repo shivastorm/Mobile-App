@@ -1,8 +1,7 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { DrawerContentScrollView, createDrawerNavigator } from "@react-navigation/drawer";
-
-import ManageTutor from "./TutorScreen";
+import { StyleSheet } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import TutorScreen from "./TutorScreen";
 import ManageUser from "../Drawer/Manageuser";
 import ManageClaim from "../Drawer/Manageclaim";
 import ListCategory from "../Drawer/Listcategory";
@@ -12,8 +11,8 @@ import CreateQuotes from "../Drawer/CreateQuotes";
 import ManageServices from "../Drawer/ManageServices";
 import Configurations from "../Drawer/Configurations";
 import ManageTransaction from "../Drawer/ManageTransaction";
+import Settings from "../Drawer/Settings";
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
-//import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function DashboardScreen() {
   const Drawer = createDrawerNavigator();
@@ -28,7 +27,7 @@ export default function DashboardScreen() {
             )
           }}
 
-          component={ManageTutor} />
+          component={TutorScreen} />
         <Drawer.Screen name="Manage User"
           options={{
             headerShown: true,
@@ -103,14 +102,19 @@ export default function DashboardScreen() {
             )
           }}
           component={ManageTransaction} />
+        <Drawer.Screen name="Settings"
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="settings" size={20} color={color} />
+            )
+          }}
+          component={Settings} />
 
 
         {/* <Drawer.Screen name="Settings" component={Settings} /> */}
       </Drawer.Navigator>
-
     </>
-
-
   );
 }
 const styles = StyleSheet.create({
