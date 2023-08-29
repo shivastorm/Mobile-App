@@ -6,38 +6,33 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from "../components/starRating";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default function TutorScreen() {
-  console.log('camheretotutor======')
-  // useEffect(() => {
-  //   // const proxy = {
-  //   //   target: 'https://nurtemeventapi.nurtem.com',
-  //   //   changeOrigin: true,
-  //   // };
-  //   const getData = async () => {
-  //     const getTutors = await axios.get('https://api.nurtem.com/providers/list', {
-  //       headers: {
-  //         Authorization: 'Bearer ' + 'zgIHroStQsHDEUBYSiNjDrugZtW1hdx7VrOvwNblMtBoCdt9R37qVCcyLX2yyBeKAAFbQeineun2JMs6oI4nJxro89rim80MFYLZfL2ngtrosUhJHgZozKAffz9O3MgR2CFCgiFONVGwC39FesrTR4kBeosOOx0NXTvDylOxp5ZfhjcQEgDsPlX0uqJpYLHKNN395ldgZBHVVit2U3u68j61VYvdTdAp44eRnYesntLZ2mwiPI3j0dSXtwLThAo',
-  //       },
-  //       withCredentials: true,
-  //       changeOrigin: true,
-  //       params: { page: 1, count: 2, sort: 'created_at.desc' },
-  //     });
-  //     console.log("response", getTutors)
-  //     // if (getTutors.status === 200) {
-  //     //   dispatch(listTutor(getTutors.data))
-  //     //   return getTutors.data
-  //     // }
-  //   }
-  //   getData()
-  // }, [])
-  const [value, setValue] = useState(
-    [
-      { id: 1, tutorname: "angela yu", emailid: "emailID", services: "python java" },
-      { id: 2, tutorname: "micheal", emailid: "emailID", services: " java" },
-      { id: 3, tutorname: "Caleb", emailid: "emailID", services: "python,html java" },
-      { id: 4, tutorname: "angelina", emailid: "emailID", services: "python,flutter java" }
-    ]
-  )
-  // const [value, setValue] = useState(getTutors)
+
+  
+  const [value, setValue] = useState([])
+
+  useEffect(() => {
+    // const proxy = {
+    //   target: 'https://nurtemeventapi.nurtem.com',
+    //   changeOrigin: true,
+    // };
+    const getData = async () => {
+      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/providers/list', {
+        headers: {
+          Authorization: 'Bearer ' + 'wsP9cxjLMPV1AjttpJPMMDTMjXvCtwa5tgG8lHG2qB3EBBEcb9EeumIGp03KMoSMPrV7Ze20yfNnvAvBWDNxH4Yt2uX5lh36zNZ2wvmkG12CKXRuvheacFm42Ef5oZwcdGUUWhQnj5iCPEiDpiH3y7hmsEemdFZFQOrsWnfaCCn7t93zkdznBKXeR6epTDUupz2DOcBAlSjgZ2PNf8IlqlxBoE9fY00Vs09C3ie8D5cSDbbM2LQmtFrAmmCwMEj',
+        },
+        withCredentials: true,
+        changeOrigin: true,
+        params: { sort: 'created_at.DESC', page: 1},
+      });
+      // console.log("response ok ======", getTutors.data.items)
+      setValue(getTutors.data.items)
+      // if (getTutors.status === 200) {
+      //   dispatch(listTutor(getTutors.data))
+      //   return getTutors.data
+      // }
+    }
+    getData()
+  }, [])
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -49,52 +44,53 @@ export default function TutorScreen() {
   };
 
   return (
+  <SafeAreaView style={{ backgroundColor: "white" }}  >
+    
+    <ScrollView style={{ backgroundColor: "white" }}  >
+      {value.map((value) => {
+        return(
+          <View key={value.id} style={styles.cardsWrapper}>
+          
+            <View style={styles.card}>
 
-    <SafeAreaView style={{ backgroundColor: "white" }}
-    >
-      <ScrollView style={{ backgroundColor: "white" }}  >
-        {value.map((value) => {
-          return (
-            <View key={value.id} style={styles.cardsWrapper}>
-              <View style={styles.card}>
-                <View style={styles.cardImgWrapper}>
-                  <Image
-                    source={require("../assets/images/girl.webp")}
-                    style={styles.cardImg}
-                    resizeMode="cover"
-                  />
-                </View>
-                <View style={styles.cardInfo}>
-                  <TruncatedText text={value.tutorname} />
-                  <Text style={styles.cardDetails}>{value.emailid}</Text>
-                  <Text style={styles.cardDetails}>{value.id}</Text>
-                  <Text style={styles.cardDetails}>
-                    {value.services}
-                  </Text>
-                  <TouchableOpacity style={{
-                    backgroundColor: "#e9b4f0",
-                    width: 80,
-                    height: 25,
-                    padding: 2,
-                    borderRadius: 10
-                  }}>
-                    <Text style={{
-                      color: "black",
-                      fontSize: 14,
-                      textAlign: "center"
-                    }}>Active </Text>
-                  </TouchableOpacity>
-                </View>
+              <View style={styles.cardImgWrapper}>
+                <Image
+                  source={require("../assets/images/girl.webp")}
+                  style={styles.cardImg}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={styles.cardInfo}>
+                <TruncatedText text={value.type ==='Individual' ? value.firstname : value.businessname} />
+                <Text style={styles.cardDetails}>{value.email}</Text>
+                <Text style={styles.cardDetails}>{value.mobile_number}</Text>
+                <TouchableOpacity style={{
+                  backgroundColor: "#e9b4f0",
+                  width: 80,
+                  height: 25,
+                  margin:2,
+                  padding: 2,
+                  borderRadius: 10
+                }}>
+                  <Text style={{
+                    color: "black",
+                    fontSize: 14,
+                    textAlign: "center"
+                  }}>{value.user.status === 1 ? 'Active' : 'Deactive'} </Text>
+                </TouchableOpacity>
+
+      
               </View>
             </View>
-          )
-        })}
-      </ScrollView>
-    </SafeAreaView >
+          </View>
+        )
+      })}
+    </ScrollView>
+
+  </SafeAreaView >
   )
 }
 
-//export default HomeScreen();
 
 const styles = StyleSheet.create({
   container: {
@@ -177,6 +173,7 @@ const styles = StyleSheet.create({
   cardImg: {
     height: '50%',
     width: '75%',
+    borderRadius:10,
     alignSelf: 'center',
     borderColor: "black",
     //borderRadius: 8,
@@ -199,11 +196,12 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: 'bold',
+    fontSize: 15,
     /// fontFamily: "Roboto-Regular",
     paddingBottom: 5,
   },
   cardDetails: {
-    fontSize: 12,
+    fontSize: 15,
     paddingBottom: 2,
     color: '#444',
   },
