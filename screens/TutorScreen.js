@@ -4,11 +4,13 @@ import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from "../components/starRating";
-import { TouchableOpacity } from "react-native-gesture-handler";
-export default function TutorScreen() {
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
+
+export default function TutorScreen() {
   
   const [value, setValue] = useState([])
+  const [page,setPage] = useState(1)
 
   useEffect(() => {
     // const proxy = {
@@ -16,23 +18,26 @@ export default function TutorScreen() {
     //   changeOrigin: true,
     // };
     const getData = async () => {
-      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/providers/list', {
+      const  getTutors= await axios.get('https://nurtemeventapi.nurtem.com/providers/list', {
         headers: {
-          Authorization: 'Bearer ' + 'wsP9cxjLMPV1AjttpJPMMDTMjXvCtwa5tgG8lHG2qB3EBBEcb9EeumIGp03KMoSMPrV7Ze20yfNnvAvBWDNxH4Yt2uX5lh36zNZ2wvmkG12CKXRuvheacFm42Ef5oZwcdGUUWhQnj5iCPEiDpiH3y7hmsEemdFZFQOrsWnfaCCn7t93zkdznBKXeR6epTDUupz2DOcBAlSjgZ2PNf8IlqlxBoE9fY00Vs09C3ie8D5cSDbbM2LQmtFrAmmCwMEj',
+          Authorization: 'Bearer ' + 'NCX24CRbXTw8bnmx3eHYLrV1mdx2KAQdmE2B7WPWXtJmHztqWGwvNLa84LuxbP4D0j5xJ4C7fUn1b3EXoCkNmZ1YMEiAKZGD1M4HjfulFEgQNLmUdR9Ud27DmsCnJnVb70Caq0CbHMSWwzYhakRP04iMUObiuSdIIbLklh6b8NgmLNX1HY3IOoumqFJJPOfbrOQlKzE9ycvbbgp0Y3ewmRr8oofOaiVNJZiKjb0bLGsyl69v201wNYUguKlUroi',
         },
         withCredentials: true,
         changeOrigin: true,
-        params: { sort: 'created_at.DESC', page: 1},
+        params: { sort: 'created_at.DESC', page: {page} },
       });
       // console.log("response ok ======", getTutors.data.items)
+      // setValue([...value,...getTutors.data.items])
       setValue(getTutors.data.items)
+      console.log("id=================",getTutors.data.items)
+      console.log(page)
       // if (getTutors.status === 200) {
       //   dispatch(listTutor(getTutors.data))
       //   return getTutors.data
       // }
     }
     getData()
-  }, [])
+  }, [page])
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -46,11 +51,15 @@ export default function TutorScreen() {
   return (
   <SafeAreaView style={{ backgroundColor: "white" }}  >
     
-    <ScrollView style={{ backgroundColor: "white" }}  >
-      {value.map((value) => {
+    {/* <ScrollView style={{ backgroundColor: "white" }}  > */}
+      <FlatList
+      data={value}
+      // onEndReachedThreshold={0.5}
+      // onEndReached={()=>{setPage(page + 1)}}
+      renderItem={(value)=>{
         return(
-          <View key={value.id} style={styles.cardsWrapper}>
-          
+          <View key={value.item.id} style={styles.cardsWrapper}>
+            {console.log("index===========",value.item.id)}
             <View style={styles.card}>
 
               <View style={styles.cardImgWrapper}>
@@ -61,9 +70,9 @@ export default function TutorScreen() {
                 />
               </View>
               <View style={styles.cardInfo}>
-                <TruncatedText text={value.type ==='Individual' ? value.firstname : value.businessname} />
-                <Text style={styles.cardDetails}>{value.email}</Text>
-                <Text style={styles.cardDetails}>{value.mobile_number}</Text>
+                <TruncatedText text={value.item.type ==='Individual' ? value.item.firstname : value.item.businessname} />
+                <Text style={styles.cardDetails}>{value.item.email}</Text>
+                <Text style={styles.cardDetails}>{value.item.mobile_number}</Text>
                 <TouchableOpacity style={{
                   backgroundColor: "#e9b4f0",
                   width: 80,
@@ -76,7 +85,7 @@ export default function TutorScreen() {
                     color: "black",
                     fontSize: 14,
                     textAlign: "center"
-                  }}>{value.user.status === 1 ? 'Active' : 'Deactive'} </Text>
+                  }}>{value.item.user.status === 1 ? 'Active' : 'Deactive'} </Text>
                 </TouchableOpacity>
 
       
@@ -84,8 +93,10 @@ export default function TutorScreen() {
             </View>
           </View>
         )
-      })}
-    </ScrollView>
+      }}
+       />
+     
+    {/* </ScrollView>r */}
 
   </SafeAreaView >
   )

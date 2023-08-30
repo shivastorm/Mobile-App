@@ -46,6 +46,38 @@ export default function DrawerScreen() {
             )
           }}
           component={ManageUser} />
+        <Drawer.Screen name="List Category"
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="auto-awesome-motion" size={20} color={color} />
+            )
+          }}
+          component={ListCategories} />
+        <Drawer.Screen name="List Quotes"
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="auto-awesome-motion" size={20} color={color} />
+            )
+          }}
+          component={ListQuotes} />
+        <Drawer.Screen name="List Services"
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="corporate-fare" size={20} color={color} />
+            )
+          }}
+          component={ListServices} />
+        <Drawer.Screen name="List Transaction"
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="monetization-on" size={20} color={color} />
+            )
+          }}
+          component={ListTransaction} />
         <Drawer.Screen name="Manage Claim"
           options={{
             headerShown: true,
@@ -55,14 +87,6 @@ export default function DrawerScreen() {
           }}
           component={ManageClaim} />
 
-        <Drawer.Screen name="List Category"
-          options={{
-            headerShown: true,
-            drawerIcon: ({ color }) => (
-              <Ionicons name="auto-awesome-motion" size={20} color={color} />
-            )
-          }}
-          component={ListCategories} />
         <Drawer.Screen name="Create Category"
           options={{
             headerShown: true,
@@ -72,14 +96,6 @@ export default function DrawerScreen() {
           }}
           component={CreateCategory} />
 
-        <Drawer.Screen name="List Quotes"
-          options={{
-            headerShown: true,
-            drawerIcon: ({ color }) => (
-              <Ionicons name="auto-awesome-motion" size={20} color={color} />
-            )
-          }}
-          component={ListQuotes} />
         <Drawer.Screen name=" Create Quotes"
           options={{
             headerShown: true,
@@ -88,14 +104,7 @@ export default function DrawerScreen() {
             )
           }}
           component={CreateQuotes} />
-        <Drawer.Screen name="List Services"
-          options={{
-            headerShown: true,
-            drawerIcon: ({ color }) => (
-              <Ionicons name="corporate-fare" size={20} color={color} />
-            )
-          }}
-          component={ListServices} />
+        
         <Drawer.Screen name="Configurations"
           options={{
             headerShown: true,
@@ -104,14 +113,7 @@ export default function DrawerScreen() {
             )
           }}
           component={ListConfigurations} />
-        <Drawer.Screen name="List Transaction"
-          options={{
-            headerShown: true,
-            drawerIcon: ({ color }) => (
-              <Ionicons name="monetization-on" size={20} color={color} />
-            )
-          }}
-          component={ListTransaction} />
+        
         <Drawer.Screen name="Settings"
           options={{
             headerShown: true,
