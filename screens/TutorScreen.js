@@ -8,7 +8,7 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
 
 export default function TutorScreen() {
-  
+
   const [value, setValue] = useState([])
   const [page,setPage] = useState(1)
 
@@ -49,7 +49,7 @@ export default function TutorScreen() {
   };
 
   return (
-  <SafeAreaView style={{ backgroundColor: "white" }}  >
+  <SafeAreaView style={{backgroundColor:'white'}}  >
     
     {/* <ScrollView style={{ backgroundColor: "white" }}  > */}
       <FlatList
@@ -87,7 +87,6 @@ export default function TutorScreen() {
                     textAlign: "center"
                   }}>{value.item.user.status === 1 ? 'Active' : 'Deactive'} </Text>
                 </TouchableOpacity>
-
       
               </View>
             </View>
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
   },
   cardsWrapper: {
     marginTop: 5,
-    width: '99%',
+    width: '95%',
     borderColor: "black",
     alignSelf: 'center',
     borderBottomColor: "#fff",
@@ -170,19 +169,20 @@ const styles = StyleSheet.create({
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',
-
+    marginBottom: 2,
+    alignItems:'center',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,
-
+    
   },
   cardImgWrapper: {
     flex: 1,
 
   },
   cardImg: {
-    height: '50%',
+    height: '60%',
     width: '75%',
     borderRadius:10,
     alignSelf: 'center',
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
 
   },
   cardInfo: {
-    flex: 4,
+    flex: 3,
     padding: 0,
     borderColor: '#fff',
     borderWidth: 1,
