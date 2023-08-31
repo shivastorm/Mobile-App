@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, StyleSheet, Alert
+  TouchableOpacity, Image, StyleSheet, Alert,Link
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,9 +17,8 @@ export default LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     if (username === '' || password === '') {
       Alert.alert('Error', 'Username and password are required');
-      return; // Exit the function without making the API call
+      return; 
     }
-    // console.log('username,pass=========', username, password)
     try {
       const response = await fetch('https://nurtemeventapi.nurtem.com/oauth/token', {
         method: 'POST',
@@ -32,14 +31,13 @@ export default LoginScreen = ({ navigation }) => {
           grant_type: "password",
           client_id: "8MONB4VIJX",
           client_secret: "3C4I0UJUT8vuG17NWhhcguAQf6rJFj",
-          // username: "nurtemadmin@gmail.com",
-          // password: "Nurtem1!"
         }),
       });
       const data = await response.json();
       console.log("response====", data)
       try {
-        await AsyncStorage.setItem('access_token', data.access_token);
+        await AsyncStorage.setItem('access_token', JSON.stringify(data.access_token));
+        navigation.navigate('Dashboard')
 
       } catch (error) {
         console.log('Failed to store access token:', error);

@@ -9,9 +9,9 @@ import { removeAccessToken } from "../utils/remove-access-token";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   //removeAccessToken();
-  //getAccessToken()
+  getAccessToken(setIsLoggedIn)
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -33,6 +33,11 @@ export default function AppNavigation() {
               name="SignUp"
               options={{ headerShown: false }}
               component={SignUpScreen}
+            />
+            <Stack.Screen
+              name="Dashboard"
+              options={{ headerShown: false }}
+              component={DrawerScreen}
             />
           </>
         }
