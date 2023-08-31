@@ -51,7 +51,6 @@ export default function ListServices() {
         // onEndReached={()=>{setPage(page + 1)}}
         renderItem={(value) => {
           return (
-
             <View key={value.item.id} style={styles.cardsWrapper}>
               {/* {console.log("index===========", value.item.icon)} */}
               <View style={styles.card}>
@@ -75,7 +74,6 @@ export default function ListServices() {
                     margin: 2,
                     padding: 2,
                     borderRadius: 10,
-
                   }}>
                     <Text style={{
                       color: "black",
@@ -83,8 +81,6 @@ export default function ListServices() {
                       textAlign: "center"
                     }}>{value.item.status === 1 ? 'Active' : 'Deactive'}</Text>
                   </TouchableOpacity>
-
-
                 </View>
               </View>
             </View>
@@ -155,7 +151,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
   card: {
-    height: 130,
+    padding: 12,
+    maxHeight: 130,
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',
