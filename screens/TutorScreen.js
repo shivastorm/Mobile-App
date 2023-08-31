@@ -10,7 +10,7 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 export default function TutorScreen() {
 
   const [value, setValue] = useState([])
-  const [page,setPage] = useState(1)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     // const proxy = {
@@ -18,19 +18,19 @@ export default function TutorScreen() {
     //   changeOrigin: true,
     // };
     const getData = async () => {
-      const  getTutors= await axios.get('https://nurtemeventapi.nurtem.com/providers/list', {
+      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/providers/list', {
         headers: {
           Authorization: 'Bearer ' + 'NCX24CRbXTw8bnmx3eHYLrV1mdx2KAQdmE2B7WPWXtJmHztqWGwvNLa84LuxbP4D0j5xJ4C7fUn1b3EXoCkNmZ1YMEiAKZGD1M4HjfulFEgQNLmUdR9Ud27DmsCnJnVb70Caq0CbHMSWwzYhakRP04iMUObiuSdIIbLklh6b8NgmLNX1HY3IOoumqFJJPOfbrOQlKzE9ycvbbgp0Y3ewmRr8oofOaiVNJZiKjb0bLGsyl69v201wNYUguKlUroi',
         },
         withCredentials: true,
         changeOrigin: true,
-        params: { sort: 'created_at.DESC', page: {page} },
+        params: { sort: 'created_at.DESC', page: { page } },
       });
       // console.log("response ok ======", getTutors.data.items)
       // setValue([...value,...getTutors.data.items])
       setValue(getTutors.data.items)
-      console.log("id=================",getTutors.data.items)
-      console.log(page)
+      // console.log("id=================",getTutors.data.items)
+      //console.log(page)
       // if (getTutors.status === 200) {
       //   dispatch(listTutor(getTutors.data))
       //   return getTutors.data
@@ -49,55 +49,57 @@ export default function TutorScreen() {
   };
 
   return (
-  <SafeAreaView style={{backgroundColor:'white'}}  >
-    
-    {/* <ScrollView style={{ backgroundColor: "white" }}  > */}
-      <FlatList
-      data={value}
-      // onEndReachedThreshold={0.5}
-      // onEndReached={()=>{setPage(page + 1)}}
-      renderItem={(value)=>{
-        return(
-          <View key={value.item.id} style={styles.cardsWrapper}>
-            {console.log("index===========",value.item.id)}
-            <View style={styles.card}>
 
-              <View style={styles.cardImgWrapper}>
-                <Image
-                  source={require("../assets/images/girl.webp")}
-                  style={styles.cardImg}
-                  resizeMode="cover"
-                />
-              </View>
-              <View style={styles.cardInfo}>
-                <TruncatedText text={value.item.type ==='Individual' ? value.item.firstname : value.item.businessname} />
-                <Text style={styles.cardDetails}>{value.item.email}</Text>
-                <Text style={styles.cardDetails}>{value.item.mobile_number}</Text>
-                <TouchableOpacity style={{
-                  backgroundColor: "#e9b4f0",
-                  width: 80,
-                  height: 25,
-                  margin:2,
-                  padding: 2,
-                  borderRadius: 10
-                }}>
-                  <Text style={{
-                    color: "black",
-                    fontSize: 14,
-                    textAlign: "center"
-                  }}>{value.item.user.status === 1 ? 'Active' : 'Deactive'} </Text>
-                </TouchableOpacity>
-      
+    <SafeAreaView style={{ backgroundColor: 'white' }}  >
+
+      {/* <ScrollView style={{ backgroundColor: "white" }}  > */}
+      <FlatList
+        data={value}
+        // onEndReachedThreshold={0.5}
+        // onEndReached={()=>{setPage(page + 1)}}
+        renderItem={(value) => {
+          return (
+            <View key={value.item.id} style={styles.cardsWrapper}>
+              {/* {console.log("index===========", value.item.id)} */}
+              <View style={styles.card}>
+
+                <View style={styles.cardImgWrapper}>
+                  <Image
+                    source={require("../assets/images/girl.webp")}
+                    style={styles.cardImg}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={styles.cardInfo}>
+                  <TruncatedText text={value.item.type === 'Individual' ? value.item.firstname : value.item.businessname} />
+                  <Text style={styles.cardDetails}>{value.item.email}</Text>
+
+                  <Text style={styles.cardDetails}>{value.item.mobile_number}</Text>
+                  <TouchableOpacity style={{
+                    backgroundColor: "#e9b4f0",
+                    width: 80,
+                    height: 25,
+                    margin: 2,
+                    padding: 2,
+                    borderRadius: 10
+                  }}>
+                    <Text style={{
+                      color: "black",
+                      fontSize: 14,
+                      textAlign: "center"
+                    }}>{value.item.user.status === 1 ? 'Active' : 'Deactive'} </Text>
+                  </TouchableOpacity>
+
+                </View>
               </View>
             </View>
-          </View>
-        )
-      }}
-       />
-     
-    {/* </ScrollView>r */}
+          )
+        }}
+      />
 
-  </SafeAreaView >
+      {/* </ScrollView>r */}
+
+    </SafeAreaView >
   )
 }
 
@@ -170,12 +172,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     shadowColor: '#999',
     marginBottom: 2,
-    alignItems:'center',
+    alignItems: 'center',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,
-    
+
   },
   cardImgWrapper: {
     flex: 1,
@@ -184,7 +186,7 @@ const styles = StyleSheet.create({
   cardImg: {
     height: '60%',
     width: '75%',
-    borderRadius:10,
+    borderRadius: 10,
     alignSelf: 'center',
     borderColor: "black",
     //borderRadius: 8,

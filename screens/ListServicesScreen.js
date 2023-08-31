@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { FlatList,TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ListServices() {
-  
+
   const [value, setValue] = useState([])
-  const [page,setPage] = useState(1)
+  const [page, setPage] = useState(1)
+  const [imageURL, setImageURL] = useState(null);
 
   useEffect(() => {
     // const proxy = {
@@ -15,23 +16,19 @@ export default function ListServices() {
     //   changeOrigin: true,
     // };
     const getData = async () => {
-      const  getTutors= await axios.get('https://nurtemeventapi.nurtem.com/services/list', {
+      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/services/list', {
         headers: {
           Authorization: 'Bearer ' + 'NCX24CRbXTw8bnmx3eHYLrV1mdx2KAQdmE2B7WPWXtJmHztqWGwvNLa84LuxbP4D0j5xJ4C7fUn1b3EXoCkNmZ1YMEiAKZGD1M4HjfulFEgQNLmUdR9Ud27DmsCnJnVb70Caq0CbHMSWwzYhakRP04iMUObiuSdIIbLklh6b8NgmLNX1HY3IOoumqFJJPOfbrOQlKzE9ycvbbgp0Y3ewmRr8oofOaiVNJZiKjb0bLGsyl69v201wNYUguKlUroi',
         },
         withCredentials: true,
         changeOrigin: true,
-        params: { sort: 'created_at.DESC',page: {page} },
+        params: { sort: 'created_at.DESC', page: { page } },
       });
       // console.log("response ok ======", getTutors.data.items)
       // setValue([...value,...getTutors.data.items])
       setValue(getTutors.data.items)
-      console.log("id=================",getTutors.data.items)
-      console.log(page)
-      // if (getTutors.status === 200) {
-      //   dispatch(listTutor(getTutors.data))
-      //   return getTutors.data
-      // }
+      // console.log("id=================", getTutors.data.items)
+      // console.log(page)
     }
     getData()
   }, [page])
@@ -46,65 +43,57 @@ export default function ListServices() {
     );
   };
 
-    return (
-        <View style={{backgroundColor:'white'}}>
-            {/* Your dashboard screen UI components */}
-            {/* <SafeAreaView><Text>Services List</Text></SafeAreaView> */}
-        <FlatList
-      data={value}
-      // onEndReachedThreshold={0.5}
-      // onEndReached={()=>{setPage(page + 1)}}
-      renderItem={(value)=>{
-        return(
-          <View key={value.item.id} style={styles.cardsWrapper}>
-            {console.log("index===========",value.item.id)}
-            <View style={styles.card}>
+  return (
+    <View style={{ backgroundColor: 'white' }}>
+      <FlatList
+        data={value}
+        // onEndReachedThreshold={0.5}
+        // onEndReached={()=>{setPage(page + 1)}}
+        renderItem={(value) => {
+          return (
 
-              <View style={styles.cardImgWrapper}>
-                <Image
-                  source={require("../assets/images/girl.webp")}
-                  style={styles.cardImg}
-                  resizeMode="cover"
-                />
-              </View>
-              <View style={styles.cardInfo}>
-                <TruncatedText text={value.item.name} />
-                <Text style={styles.cardDetails}>{value.item.description}</Text>
-                <TouchableOpacity style={{
-                  backgroundColor: "#e9b4f0",
-                  width: 80,
-                  height: 25,
-                  margin:2,
-                  padding: 2,
-                  borderRadius: 10
-                }}>
-                  <Text style={{
-                    color: "black",
-                    fontSize: 14,
-                    textAlign: "center"
-                  }}>{value.item.status === 1 ? 'Active' : 'Deactive'}</Text>
-                </TouchableOpacity>
+            <View key={value.item.id} style={styles.cardsWrapper}>
+              {/* {console.log("index===========", value.item.icon)} */}
+              <View style={styles.card}>
+                {/* <Text>hi</Text> */}
+                <View style={styles.cardImgWrapper}>
+                  <Image
+                    source={value.item.icon ? { uri: value.item.icon } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/nurtemnobg.png" }}
+                    style={styles.cardImg}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={styles.cardInfo}>
+                  <TruncatedText text={value.item.name} />
+                  <Text numberOfLines={3} ellipsizeMode="tail" style={styles.cardDetails}>
+                    {value.item.description}
+                  </Text>
+                  <TouchableOpacity style={{
+                    backgroundColor: "#e9b4f0",
+                    width: 80,
+                    height: 25,
+                    margin: 2,
+                    padding: 2,
+                    borderRadius: 10,
 
-      
+                  }}>
+                    <Text style={{
+                      color: "black",
+                      fontSize: 14,
+                      textAlign: "center"
+                    }}>{value.item.status === 1 ? 'Active' : 'Deactive'}</Text>
+                  </TouchableOpacity>
+
+
+                </View>
               </View>
             </View>
-          </View>
-        )
-      }}
-       />
-            {/* <Button
-        onPress={() => {
-          navigation.navigate("settings");
+          )
         }}
-      >
-        go to settings
-      </Button> */}
-        </View>
-    );
+      />
+    </View>
+  );
 }
-
-//export default HomeScreen();
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -117,9 +106,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 8,
   },
-
   wrapper: {},
-
   slide: {
     flex: 1,
     justifyContent: 'center',
@@ -181,14 +168,14 @@ const styles = StyleSheet.create({
   },
   cardImgWrapper: {
     flex: 1,
-
   },
   cardImg: {
     height: '50%',
     width: '75%',
-    borderRadius:10,
+    borderRadius: 10,
     alignSelf: 'center',
-    borderColor: "black",
+    resizeMode: 'repeat',
+    //backgroundColor: "yellow"
     //borderRadius: 8,
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
@@ -211,11 +198,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
     /// fontFamily: "Roboto-Regular",
-    paddingBottom: 5,
+    paddingBottom: 3,
   },
   cardDetails: {
     fontSize: 15,
-    paddingBottom: 2,
-    color: '#444',
+    paddingBottom: 5,
+    color: '#7a7776',
   },
 });

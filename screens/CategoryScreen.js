@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { FlatList,TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ListCategories() {
 
   const [value, setValue] = useState([])
-  const [page,setPage] = useState(1)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     // const proxy = {
@@ -15,19 +15,19 @@ export default function ListCategories() {
     //   changeOrigin: true,
     // };
     const getData = async () => {
-      const  getTutors= await axios.get('https://nurtemeventapi.nurtem.com/services/list', {
+      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/services/list', {
         headers: {
           Authorization: 'Bearer ' + 'NCX24CRbXTw8bnmx3eHYLrV1mdx2KAQdmE2B7WPWXtJmHztqWGwvNLa84LuxbP4D0j5xJ4C7fUn1b3EXoCkNmZ1YMEiAKZGD1M4HjfulFEgQNLmUdR9Ud27DmsCnJnVb70Caq0CbHMSWwzYhakRP04iMUObiuSdIIbLklh6b8NgmLNX1HY3IOoumqFJJPOfbrOQlKzE9ycvbbgp0Y3ewmRr8oofOaiVNJZiKjb0bLGsyl69v201wNYUguKlUroi',
         },
         withCredentials: true,
         changeOrigin: true,
-        params: { page: {page} },
+        params: { page: { page } },
       });
       // console.log("response ok ======", getTutors.data.items)
       // setValue([...value,...getTutors.data.items])
       setValue(getTutors.data.items)
-      console.log("id=================",getTutors.data.items)
-      console.log(page)
+      // console.log("id=================", getTutors.data.items)
+      // console.log(page)
       // if (getTutors.status === 200) {
       //   dispatch(listTutor(getTutors.data))
       //   return getTutors.data
@@ -51,47 +51,52 @@ export default function ListCategories() {
       {/* Your dashboard screen UI components */}
       {/* <SafeAreaView><Text>Listing Categories</Text></SafeAreaView> */}
       <FlatList
-      data={value}
-      // onEndReachedThreshold={0.5}
-      // onEndReached={()=>{setPage(page + 1)}}
-      renderItem={(value)=>{
-        return(
-          <View key={value.item.id} style={styles.cardsWrapper}>
-            {console.log("index===========",value.item.id)}
-            <View style={styles.card}>
+        data={value}
+        // onEndReachedThreshold={0.5}
+        // onEndReached={()=>{setPage(page + 1)}}
+        renderItem={(value) => {
+          return (
+            <View key={value.item.id} style={styles.cardsWrapper}>
+              {/* {console.log("index===========", value.item.id)} */}
+              <View style={styles.card}>
 
-              <View style={styles.cardImgWrapper}>
-                <Image
-                  source={require("../assets/images/girl.webp")}
-                  style={styles.cardImg}
-                  resizeMode="cover"
-                />
-              </View>
-              <View style={styles.cardInfo}>
-                <TruncatedText text={value.item.name} />
-                <Text style={styles.cardDetails}>{value.item.description}</Text>
-                <TouchableOpacity style={{
-                  backgroundColor: "#e9b4f0",
-                  width: 80,
-                  height: 25,
-                  margin:2,
-                  padding: 2,
-                  borderRadius: 10
-                }}>
-                  <Text style={{
-                    color: "black",
-                    fontSize: 14,
-                    textAlign: "center"
-                  }}>{value.item.status === 1 ? 'Active' : 'Deactive'}</Text>
-                </TouchableOpacity>
+                <View style={styles.cardImgWrapper}>
+                  <Image
+                    source={value.item.icon ?
+                      { uri: value.item.icon }
+                      : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/nurtemnobg.png" }}
+                    style={styles.cardImg}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={styles.cardInfo}>
+                  <Text style={styles.cardTitle}>{value.item.name}</Text>
+                  <Text numberOfLines={3} ellipsizeMode="tail" style={styles.cardDetails}>
+                    {value.item.description}
+                  </Text>
 
-      
+                  <TouchableOpacity style={{
+                    backgroundColor: "#e9b4f0",
+                    width: 80,
+                    height: 25,
+                    margin: 2,
+                    padding: 2,
+                    borderRadius: 10
+                  }}>
+                    <Text style={{
+                      color: "black",
+                      fontSize: 14,
+                      textAlign: "center"
+                    }}>{value.item.status === 1 ? 'Active' : 'Deactive'}</Text>
+                  </TouchableOpacity>
+
+
+                </View>
               </View>
             </View>
-          </View>
-        )
-      }}
-       />
+          )
+        }}
+      />
       {/* <Button
         onPress={() => {
           navigation.navigate("settings");
@@ -187,7 +192,7 @@ const styles = StyleSheet.create({
   cardImg: {
     height: '50%',
     width: '75%',
-    borderRadius:10,
+    borderRadius: 10,
     alignSelf: 'center',
     borderColor: "black",
     //borderRadius: 8,
@@ -207,16 +212,19 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     borderTopRightRadius: 8,
     backgroundColor: '#fff',
+
   },
   cardTitle: {
     fontWeight: 'bold',
-    fontSize: 15,
-    /// fontFamily: "Roboto-Regular",
-    paddingBottom: 5,
+    fontSize: 16,
+    fontFamily: "Roboto-Bold",
+    paddingBottom: 2,
   },
   cardDetails: {
-    fontSize: 15,
+    // fontWeight: "900",
+    fontSize: 14,
     paddingBottom: 2,
-    color: '#444',
+    color: '#7a7776',
+    fontFamily: "Roboto-Regular",
   },
 });
