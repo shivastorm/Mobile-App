@@ -59,7 +59,7 @@ export default function ListServices() {
                   <Image
                     source={value.item.icon ? { uri: value.item.icon } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/nurtemnobg.png" }}
                     style={styles.cardImg}
-                    resizeMode="cover"
+                    resizeMode="contain"
                   />
                 </View>
                 <View style={styles.cardInfo}>
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardImg: {
-    height: '50%',
-    width: '75%',
+    height: '80%',
+    width: '80%',
     borderRadius: 10,
     alignSelf: 'center',
     resizeMode: 'repeat',

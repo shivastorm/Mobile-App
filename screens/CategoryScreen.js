@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
   card: {
-    height: 130,
+    maxHeight: 130,
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',

@@ -1,23 +1,34 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+//import filter from "lodash.filter"
 
 export default function ManageUser() {
-
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  //const [error, setError] = useState(null)
+
+
+  const handleChange = (query) => {
+    setSearchQuery(query)
+    const formattedQuery = query.toLowerCase()
+  }
 
   useEffect(() => {
     // const proxy = {
     //   target: 'https://nurtemeventapi.nurtem.com',
     //   changeOrigin: true,
     // };
+    setIsLoading(true);
     const getData = async () => {
       const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/users/list', {
         headers: {
-          Authorization: 'Bearer ' + 'NCX24CRbXTw8bnmx3eHYLrV1mdx2KAQdmE2B7WPWXtJmHztqWGwvNLa84LuxbP4D0j5xJ4C7fUn1b3EXoCkNmZ1YMEiAKZGD1M4HjfulFEgQNLmUdR9Ud27DmsCnJnVb70Caq0CbHMSWwzYhakRP04iMUObiuSdIIbLklh6b8NgmLNX1HY3IOoumqFJJPOfbrOQlKzE9ycvbbgp0Y3ewmRr8oofOaiVNJZiKjb0bLGsyl69v201wNYUguKlUroi',
+          Authorization: 'Bearer ' + '1DvVP1RIRTTj2FiR2VFYI7adZqoFq1NdyYpuwkrayyjhUc9c10mZRKLl4AJkABJgJhVVJvwlUdeJfwDPFzvZSpFepiF2cRFIh2Dg8YdrhIHTVGcgaAhu7h5VLJptVJAYJunLionmECiThAwxUPc6GwzduAMuebxnuZhvTkNpX7TKoM2weoYdvWXynGjSQBws2aryur2HD8gi2qF1PWp3sgHxK4byAer6fdVaJlRdtBNoKpKJ2r8CNgqtK18JVru',
         },
         withCredentials: true,
         changeOrigin: true,
@@ -26,13 +37,15 @@ export default function ManageUser() {
       // console.log("response ok ======", getTutors.data.items)
       // setValue([...value,...getTutors.data.items])
       setValue(getTutors.data.items)
-      // console.log("id=================",getTutors.data.items)
+      setIsLoading(false)
+      //  console.log("id=================", getTutors.data.items)
       // console.log(page)
       // if (getTutors.status === 200) {
       //   dispatch(listTutor(getTutors.data))
       //   return getTutors.data
       // }
     }
+
     getData()
   }, [page])
 
@@ -46,12 +59,47 @@ export default function ManageUser() {
     );
   };
 
+  if (isLoading) {
+    return (<View>
+      <ActivityIndicator size={"large"} color={"#e9b4f0"} />
+    </View>
+
+    )
+  }
   return (
+
     <View style={{ backgroundColor: "white" }} >
       {/* Your dashboard screen UI components */}
       {/* <SafeAreaView><Text>managing user </Text></SafeAreaView> */}
+      <View style={{
+        marginHorizontal: 10
+      }} >
+        <TextInput
+          placeholder="Search"
+          clearButtonMode="always"
+          style={styles.searchbox}
+          value={searchQuery}
+          onChangeText={(query) => handleChange(query)}
+        />
+      </View>
+      {/* <FlatList
+        data={value}
+        // keyExtractor={(value) => value.item.id}
+        renderItem={(value) => (
+          <><View style={styles.itemcontainer}>
+            <Image source={{ uri: value.item.photo }} style={styles.serachboximage} />
+
+            <View>
+              <Text style={styles.serachemail}>
+                {value.item.firstname}{value.item.email}
+              </Text>
+            </View>
+          </View>
+          </>
+        )} /> */}
       <FlatList
         data={value}
+
         // onEndReachedThreshold={0.5}
         // onEndReached={()=>{setPage(page + 1)}}
         renderItem={(value) => {
@@ -62,9 +110,9 @@ export default function ManageUser() {
 
                 <View style={styles.cardImgWrapper}>
                   <Image
-                    source={require("../assets/images/girl.webp")}
+                    source={value.item.photo ? { uri: value.item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
                     style={styles.cardImg}
-                    resizeMode="cover"
+                    resizeMode="contain"
                   />
                 </View>
                 <View style={styles.cardInfo}>
@@ -111,6 +159,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  serachboximage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  },
   sliderContainer: {
     height: 200,
     width: '90%',
@@ -118,6 +171,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     borderRadius: 8,
+  },
+  searchbox: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingRight: 20,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8
+  },
+  serachemail: {
+    fontSize: 14,
+    marginLeft: 10,
+    color: "grey"
   },
 
   wrapper: {},
@@ -161,6 +227,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
     color: '#de4f35',
+  },
+  itemcontainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 10,
+    marginTop: 10,
   },
   cardsWrapper: {
     marginTop: 5,
