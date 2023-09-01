@@ -6,14 +6,14 @@ import SignUpScreen from "../screens/SignUpScreen";
 import DrawerScreen from "../Drawer/DrawerScreen";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import { getAccessToken } from "../utils/get-access-token";
-import { removeAccessToken } from "../utils/remove-access-token";
+import { removeAllTokens } from "../utils/RemoveAllTokens";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isOnboarding, setIsOnboarding] = useState(false)
-  //removeAccessToken();
-  getAccessToken(setIsLoggedIn)
+  getAccessToken(setIsLoggedIn,setIsOnboarding)
+  //removeAllTokens();
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="OnBoard">
@@ -41,6 +41,11 @@ export default function AppNavigation() {
                 name="Dashboard"
                 options={{ headerShown: false }}
                 component={DrawerScreen} />
+              <Stack.Screen
+                name="Login"
+                options={{ headerShown: false }}
+                component={LoginScreen}
+              />
             </>
             :
             <>

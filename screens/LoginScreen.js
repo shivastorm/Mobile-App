@@ -4,23 +4,24 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, StyleSheet, Alert, Link
+  TouchableOpacity, Image, StyleSheet, Alert, ActivityIndicator
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginSave from '../utils/login/LoginSave';
 
 export default LoginScreen = ({ navigation }) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleLogin = async () => {
     if (username === '' || password === '') {
       Alert.alert('Error', 'Username and password are required');
       return;
     }
     try {
-      const response = await fetch('https://nurtemeventapi.nurtem.com/oauth/token', {
+      setIsLoading(true)
+      const response = await fetch('https://api.nurtem.com/oauth/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,14 +35,24 @@ export default LoginScreen = ({ navigation }) => {
         }),
       });
       const data = await response.json();
-      console.log("response====", data)
-      try {
-        await AsyncStorage.setItem('access_token', JSON.stringify(data.access_token));
-        navigation.navigate('Dashboard')
-
-      } catch (error) {
-        console.log('Failed to store access token:', error);
+      console.log("response====", data.status)
+      if (data.status && (data.status === 400 || data.status === 401 || data.status === 500)) {
+        console.log("response===2", data)
+        Alert.alert('Error', data.message);
+        setIsLoading(false)
+      } else {
+        try {
+          const success = await LoginSave(data);
+          if (success) {
+            navigation.navigate('Dashboard');
+          }
+          setIsLoading(false)
+        } catch (error) {
+          console.log('Failed to store access token:', error);
+          setIsLoading(false)
+        }
       }
+
 
     } catch (error) {
       console.error('Error in login:', error);
@@ -84,9 +95,11 @@ export default LoginScreen = ({ navigation }) => {
           value={password}
           onChangeText={text => setPassword(text)} />
 
-        <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}
-        // <CustomButton onPress={() => handleLogin()} label={"Login"}
-        />
+        {/* <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}/> */}
+        {isLoading ? <ActivityIndicator size="large" color="yellow" />
+          :
+          <CustomButton onPress={() => handleLogin()} label={"Login"} />
+        }
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...
