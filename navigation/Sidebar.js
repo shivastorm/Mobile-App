@@ -29,6 +29,10 @@ export default function AppNavigation() {
               options={{ headerShown: false }}
               component={LoginScreen}
             />
+            <Stack.Screen
+              name="Dashboard"
+              options={{ headerShown: false }}
+              component={DrawerScreen} />
           </>
           :
           isLoggedIn ?

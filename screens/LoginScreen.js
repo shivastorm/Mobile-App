@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, StyleSheet, Alert,Link
+  TouchableOpacity, Image, StyleSheet, Alert, Link
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +17,7 @@ export default LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     if (username === '' || password === '') {
       Alert.alert('Error', 'Username and password are required');
-      return; 
+      return;
     }
     try {
       const response = await fetch('https://nurtemeventapi.nurtem.com/oauth/token', {
@@ -83,9 +83,9 @@ export default LoginScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={password}
           onChangeText={text => setPassword(text)} />
-        {/* 
-        <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"} */}
-        <CustomButton onPress={() => handleLogin()} label={"Login"}
+
+        <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}
+        // <CustomButton onPress={() => handleLogin()} label={"Login"}
         />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>

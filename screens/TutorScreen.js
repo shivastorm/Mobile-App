@@ -56,13 +56,14 @@ export default function TutorScreen() {
 
           <View style={styles.cardImgWrapper}>
             <Image
-              source={require("../assets/images/girl.webp")}
+              source={item.photo ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
               style={styles.cardImg}
               resizeMode="cover"
             />
           </View>
           <View style={styles.cardInfo}>
             <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
+
             <Text style={styles.cardDetails}>{item.email}</Text>
             <Text style={styles.cardDetails}>{item.mobile_number}</Text>
             <TouchableOpacity style={{

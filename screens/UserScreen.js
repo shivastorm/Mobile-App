@@ -11,19 +11,7 @@ export default function ManageUser() {
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
-  //const [error, setError] = useState(null)
-
-
-  const handleChange = (query) => {
-    setSearchQuery(query)
-    const formattedQuery = query.toLowerCase()
-  }
-
   useEffect(() => {
-    // const proxy = {
-    //   target: 'https://nurtemeventapi.nurtem.com',
-    //   changeOrigin: true,
-    // };
     setIsLoading(true);
     const getData = async () => {
       const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/users/list', {
@@ -38,12 +26,7 @@ export default function ManageUser() {
       // setValue([...value,...getTutors.data.items])
       setValue(getTutors.data.items)
       setIsLoading(false)
-      //  console.log("id=================", getTutors.data.items)
-      // console.log(page)
-      // if (getTutors.status === 200) {
-      //   dispatch(listTutor(getTutors.data))
-      //   return getTutors.data
-      // }
+
     }
 
     getData()
@@ -66,11 +49,40 @@ export default function ManageUser() {
 
     )
   }
+  const renderItem = ({ item, index }) => {
+    return (
+      <View key={item.id} style={styles.cardsWrapper}>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={item.photo ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
+              style={styles.cardImg}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.cardInfo}>
+            <TruncatedText text={item.firstname} />
+            <Text style={styles.cardDetails}>{item.email}</Text>
+            <Text style={styles.cardDetails}>{item.mobile_number}</Text>
+            <TouchableOpacity style={{
+              backgroundColor: "#e9b4f0",
+              width: 80,
+              height: 25,
+              margin: 2,
+              padding: 2,
+              borderRadius: 10
+            }}>
+              <Text style={styles.activebutton}>
+                {item.user.status === 1 ? 'Active' : 'Deactive'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    )
+  }
   return (
-
     <View style={{ backgroundColor: "white" }} >
-      {/* Your dashboard screen UI components */}
-      {/* <SafeAreaView><Text>managing user </Text></SafeAreaView> */}
       <View style={{
         marginHorizontal: 10
       }} >
@@ -82,7 +94,19 @@ export default function ManageUser() {
           onChangeText={(query) => handleChange(query)}
         />
       </View>
-      {/* <FlatList
+      <FlatList
+        data={value}
+        onEndReachedThreshold={0.1}
+        onEndReached={() => { setPage(page + 1) }}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
+    </View>
+  )
+};
+
+
+{/* <FlatList
         data={value}
         // keyExtractor={(value) => value.item.id}
         renderItem={(value) => (
@@ -97,67 +121,15 @@ export default function ManageUser() {
           </View>
           </>
         )} /> */}
-      <FlatList
-        data={value}
-
-        // onEndReachedThreshold={0.5}
-        // onEndReached={()=>{setPage(page + 1)}}
-        renderItem={(value) => {
-          return (
-            <View key={value.item.id} style={styles.cardsWrapper}>
-              {/* {console.log("index===========",value.item.id)} */}
-              <View style={styles.card}>
-
-                <View style={styles.cardImgWrapper}>
-                  <Image
-                    source={value.item.photo ? { uri: value.item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
-                    style={styles.cardImg}
-                    resizeMode="contain"
-                  />
-                </View>
-                <View style={styles.cardInfo}>
-                  <TruncatedText text={value.item.firstname} />
-                  <Text style={styles.cardDetails}>{value.item.email}</Text>
-                  <Text style={styles.cardDetails}>{value.item.mobile_number}</Text>
-                  <TouchableOpacity style={{
-                    backgroundColor: "#e9b4f0",
-                    width: 80,
-                    height: 25,
-                    margin: 2,
-                    padding: 2,
-                    borderRadius: 10
-                  }}>
-                    <Text style={{
-                      color: "black",
-                      fontSize: 14,
-                      textAlign: "center"
-                    }}>{value.item.user.status === 1 ? 'Active' : 'Deactive'} </Text>
-                  </TouchableOpacity>
-
-
-                </View>
-              </View>
-            </View>
-          )
-        }}
-      />
-      {/* <Button
-        onPress={() => {
-          navigation.navigate("settings");
-        }}
-      >
-        go to settings
-      </Button> */}
-    </View>
-  );
-}
-
-//export default HomeScreen();
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  activebutton: {
+    color: "black",
+    fontSize: 14,
+    textAlign: "center"
   },
   serachboximage: {
     width: 50,
