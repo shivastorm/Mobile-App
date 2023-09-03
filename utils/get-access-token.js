@@ -8,8 +8,8 @@ export const getAccessToken = async (setIsLoggedIn,setIsOnboarding) => {
 
         accessToken ? setIsLoggedIn(true) : setIsLoggedIn(false);
         OnBoardToken ? setIsOnboarding(true) : setIsOnboarding(false);
-        console.log('responseaccess========', accessToken);
-        console.log('responseaccess========1', expires_in, OnBoardToken);
+        // console.log('responseaccess========', accessToken);
+        // console.log('responseaccess========1', expires_in, OnBoardToken);
         return ;
     } catch (error) {
         console.log('Failed to retrieve access token expires in:', error);

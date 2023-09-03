@@ -1,9 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 //import filter from "lodash.filter"
+import { getItem } from "../utils/only-token";
+import CustomButton from "../components/CustomButton";
 
 export default function ManageUser() {
   const [value, setValue] = useState([])
@@ -11,24 +12,36 @@ export default function ManageUser() {
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
+  const getData = async () => {
+    setIsLoading(true)
+    let onboarded = await getItem('access_token');
+    let convertedToken = JSON.parse(onboarded)
+    console.log('acessTOken=====', convertedToken)
+    fetch(`https://nurtemeventapi.nurtem.com/users/list?sort=created_at.ASC&limit=20&page=${page}`, {
+      method: "GET",
+      headers: {
+        headers: { 'Content-Type': 'application/json' },
+        Authorization: `Bearer ${convertedToken}`,
+      },
+    }).then((response) => response.json())
+      .then((json) => {
+        // Combine previous and new data
+        const newData = [...value, ...json?.items];
+
+        // Filter out duplicates based on item id
+        const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
+
+        setValue(uniqueData);
+        setIsLoading(false)
+
+      })
+      .catch(err => {
+        console.log('catch err in tutor list api=======', err)
+        setIsLoading(false)
+      })
+  }
+  //console.log('pagehere=======', page)
   useEffect(() => {
-    setIsLoading(true);
-    const getData = async () => {
-      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/users/list', {
-        headers: {
-          Authorization: 'Bearer ' + '1DvVP1RIRTTj2FiR2VFYI7adZqoFq1NdyYpuwkrayyjhUc9c10mZRKLl4AJkABJgJhVVJvwlUdeJfwDPFzvZSpFepiF2cRFIh2Dg8YdrhIHTVGcgaAhu7h5VLJptVJAYJunLionmECiThAwxUPc6GwzduAMuebxnuZhvTkNpX7TKoM2weoYdvWXynGjSQBws2aryur2HD8gi2qF1PWp3sgHxK4byAer6fdVaJlRdtBNoKpKJ2r8CNgqtK18JVru',
-        },
-        withCredentials: true,
-        changeOrigin: true,
-        params: { sort: 'created_at.DESC', page: { page } },
-      });
-      // console.log("response ok ======", getTutors.data.items)
-      // setValue([...value,...getTutors.data.items])
-      setValue(getTutors.data.items)
-      setIsLoading(false)
-
-    }
-
     getData()
   }, [page])
 
@@ -43,9 +56,10 @@ export default function ManageUser() {
   };
 
   if (isLoading) {
-    return (<View>
-      <ActivityIndicator size={"large"} color={"#e9b4f0"} />
-    </View>
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color={"#e9b4f0"} />
+      </View>
 
     )
   }

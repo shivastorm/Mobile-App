@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";  
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import StarRating from "../components/starRating";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../utils/only-token";
-
-export default function TutorScreen() {
+import CustomButton from "../components/CustomButton";
+export default function TutorScreen({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const getData = async () => {
+    setIsLoading(true)
     let onboarded = await getItem('access_token');
     let convertedToken = JSON.parse(onboarded)
-    //console.log('acessTOken=====', onboarded)
+    console.log('acessTOken=====', convertedToken)
     fetch(`https://nurtemeventapi.nurtem.com/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
       method: "GET",
       headers: {
@@ -29,12 +33,13 @@ export default function TutorScreen() {
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
 
         setValue(uniqueData);
+        setIsLoading(false)
       })
       .catch(err => {
         console.log('catch err in tutor list api=======', err)
+        setIsLoading(false)
       })
   }
-  //console.log('pagehere=======', page)
   useEffect(() => {
     getData()
   }, [page])
@@ -47,13 +52,27 @@ export default function TutorScreen() {
       </View>
     );
   };
+  const onRefresh = () => {
+    setIsRefreshing(true)
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 2000)
+  };
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color={"#e9b4f0"} />
+      </View>
+    )
+  };
+  const ViewProfile = (props) => {
+    //console.log('viewproffile======', props)
+    navigation.navigate('TutorView', {props});
+  };
   const renderItem = ({ item, index }) => {
-    // console.log('valueshereindex========', index)
-    // console.log('valueshere========', item.id)
     return (
       <View style={styles.cardsWrapper}>
         <View style={styles.card}>
-
           <View style={styles.cardImgWrapper}>
             <Image
               source={item.photo ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
@@ -62,24 +81,22 @@ export default function TutorScreen() {
             />
           </View>
           <View style={styles.cardInfo}>
-            <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
-
-            <Text style={styles.cardDetails}>{item.email}</Text>
-            <Text style={styles.cardDetails}>{item.mobile_number}</Text>
-            <TouchableOpacity style={{
-              backgroundColor: "#e9b4f0",
-              width: 80,
-              height: 25,
-              margin: 2,
-              padding: 2,
-              borderRadius: 10
-            }}>
-              <Text style={{
-                color: "black",
-                fontSize: 14,
-                textAlign: "center"
-              }}>{item.user.status === 1 ? 'Active' : 'Deactive'} </Text>
-            </TouchableOpacity>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Icon name="user" size={13} color="#900" style={{ marginRight: 5 }} />
+              <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="email" size={13} color="#900" style={{ marginRight: 5 }} />
+              <Text style={styles.cardDetails}>{item.email}</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="phone-iphone" size={13} color="#900" style={{ marginRight: 5 }} />
+              <Text style={styles.cardDetails}>{item.mobile_number}</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Active' : 'Deactive'} />
+              <CustomButton style={styles.cardButton} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View Profile'} />
+            </View>
           </View>
         </View>
       </View>
@@ -93,6 +110,8 @@ export default function TutorScreen() {
         onEndReached={() => { setPage(page + 1) }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing}
       />
     </SafeAreaView >
   )
@@ -166,12 +185,10 @@ const styles = StyleSheet.create({
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',
-
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,
-
   },
   cardImgWrapper: {
     flex: 1,
@@ -211,4 +228,17 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     color: '#444',
   },
+  cardButton: {
+    backgroundColor: "#e9b4f0",
+    width: 80,
+    height: 25,
+    margin: 2,
+    padding: 2,
+    borderRadius: 10
+  },
+  labelStyle: {
+    color: "black",
+    fontSize: 14,
+    textAlign: "center"
+  }
 });
