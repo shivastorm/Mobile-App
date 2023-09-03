@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "app-ui",
-    "slug": "app-ui",
+    "name": "Admin",
+    "slug": "Admin",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/footer-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/footer-logo.png",
+      "resizeMode": "center",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/footer-logo.png",
         "backgroundColor": "#ffffff"
       }
     },

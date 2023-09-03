@@ -35,9 +35,9 @@ export default LoginScreen = ({ navigation }) => {
         }),
       });
       const data = await response.json();
-      console.log("response====", data.status)
+      //console.log("response====", data.status)
       if (data.status && (data.status === 400 || data.status === 401 || data.status === 500)) {
-        console.log("response===2", data)
+        //console.log("response===2", data)
         Alert.alert('Error', data.message);
         setIsLoading(false)
       } else {
@@ -70,7 +70,6 @@ export default LoginScreen = ({ navigation }) => {
             }}
           />
         </View>
-
         <Text
           style={{
             fontFamily: "Roboto-Regular",
@@ -81,20 +80,17 @@ export default LoginScreen = ({ navigation }) => {
           }}>
           Login
         </Text>
-
         <TextInput
           style={styles.input}
           placeholder='Email ID'
           keyboardType="email-address"
           value={username}
           onChangeText={text => setUsername(text)} />
-
         <TextInput style={styles.input}
           placeholder="Enter password..."
           secureTextEntry={true}
           value={password}
           onChangeText={text => setPassword(text)} />
-
         {/* <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}/> */}
         {isLoading ? <ActivityIndicator size="large" color="yellow" />
           :
@@ -106,18 +102,10 @@ export default LoginScreen = ({ navigation }) => {
         </Text>
 
         <View
-          style={{
-
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 30,
-            paddingHorizontal: 20,
-
-          }}>
+          style={styles.footerIcons}>
           <TouchableOpacity
             onPress={() => { }}
             style={{
-
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
@@ -130,7 +118,6 @@ export default LoginScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => { }}
             style={{
-
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
@@ -143,7 +130,6 @@ export default LoginScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => { }}
             style={{
-
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
@@ -156,11 +142,7 @@ export default LoginScreen = ({ navigation }) => {
         </View>
 
         <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
+          style={styles.footer}>
           <Text>New to the app?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={{ color: '#AD40AF', fontWeight: '700' }}> Register</Text>
@@ -188,4 +170,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20,
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 30,
+  },
+  footerIcons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+    paddingHorizontal: 20,
+  }
 });
