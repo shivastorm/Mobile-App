@@ -11,13 +11,15 @@ const TutorViewScreen = (props) => {
 
     const getData = async () => {
         setIsLoading(true)
-        let onboarded = await getItem('access_token');
-        let convertedToken = JSON.parse(onboarded)
-        fetch(`https://nurtemeventapi.nurtem.com/providers/view/${items}/?id${items}&expand=user`, {
+        let access_token = await getItem('access_token');
+        let convertedToken = JSON.parse(access_token)
+        let Api = await getItem('api')
+        console.log('acessTOken=====', Api)
+        fetch(`${Api}/providers/view/${items}/?id${items}&expand=user`, {
             method: "GET",
             headers: {
                 headers: { 'Content-Type': 'application/json' },
-                Authorization: `Bearer ${convertedToken}`,
+                Authorization: `Bearer ${access_token}`,
             },
         }).then((response) => response.json())
             .then((json) => {
@@ -39,34 +41,8 @@ const TutorViewScreen = (props) => {
         console.log('item=================', value)
     }
     const statusHandle = (value) => {
-        const setStatus = async () => {
-            // setIsLoading(true)
-            let onboarded = await getItem('access_token');
-            let convertedToken = JSON.parse(onboarded)
-            fetch(`https://nurtemeventapi.nurtem.com/users/change-status`, {
-                method: "POST",
-                headers: {
-                    headers: { 'Content-Type': 'application/json' },
-                    Authorization: `Bearer ${convertedToken}`,
-                },
-                body: JSON.stringify({
-                    id: items,
-                    status: item.user.status,
-                }),
-            }).then((response) => response.json())
-                .then((json) => {
-                    // Combine previous and new data
-                    // const newData = json?.details
-                    console.log('acessTOken=====', json)
-                    // setValue(newData);
-                    //setIsLoading(false)
-                })
-                .catch(err => {
-                    console.log('catch err in tutor list api=======', err)
-                    setIsLoading(false)
-                })
-        }
-        setStatus()
+        console.log('item=================', value)
+
     }
     if (isLoading) {
         return (
@@ -114,8 +90,8 @@ const TutorViewScreen = (props) => {
                     </View>
                     <View style={styles.detailItem}>
                         <Text style={styles.detailLabel}>Status:</Text>
-                        <Text style={styles.detailValue}>{item.user.status === 0 ? "Deactivated" : 'Activated'} </Text>
-                        <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
+                        <Text style={styles.detailValue}>{item.user?.status === 0 ? "Deactivated" : 'Activated'} </Text>
+                        {/* <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Deactivate Now' : 'Activate Now'} /> */}
                     </View>
                     {/* Add more details as needed */}
                 </View>
@@ -178,7 +154,7 @@ const styles = StyleSheet.create({
         margin: 2,
         padding: 5,
         borderRadius: 10,
-        alignContent:'center'
+        alignContent: 'center'
     },
 });
 

@@ -4,11 +4,11 @@
     "slug": "Admin",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/footer-logo.png",
+    "icon": "./assets/nurtemnobg.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/footer-logo.png",
-      "resizeMode": "center",
+      "image": "./assets/nurtemnobg.png",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [

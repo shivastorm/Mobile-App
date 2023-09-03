@@ -4,24 +4,36 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, StyleSheet, Alert, ActivityIndicator
+  TouchableOpacity, Image, StyleSheet, Alert, ActivityIndicator, Picker
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import LoginSave from '../utils/login/LoginSave';
+import { setItem } from '../utils/only-token';
+import { getItem } from "../utils/only-token";
 
 export default LoginScreen = ({ navigation }) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const handleLogin = async () => {
+
+  const handleLogin = async (props) => {
     if (username === '' || password === '') {
       Alert.alert('Error', 'Username and password are required');
       return;
     }
+    let Api 
+    if (props === 'live') {
+      setItem('api', 'https://api.nurtem.com');
+      Api = 'https://api.nurtem.com'
+    } else {
+      setItem('api', 'https://nurtemeventapi.nurtem.com');
+      Api = "https://nurtemeventapi.nurtem.com"
+    }
+
     try {
       setIsLoading(true)
-      const response = await fetch('https://api.nurtem.com/oauth/token', {
+      const response = await fetch(`${Api}/oauth/token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,10 +103,13 @@ export default LoginScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={password}
           onChangeText={text => setPassword(text)} />
-        {/* <CustomButton onPress={() => navigation.navigate('Dashboard')} label={"Login"}/> */}
         {isLoading ? <ActivityIndicator size="large" color="yellow" />
           :
-          <CustomButton onPress={() => handleLogin()} label={"Login"} />
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+
+            <CustomButton onPress={() => handleLogin('live')} label={"Login Live"} />
+            <CustomButton onPress={() => handleLogin('dev')} label={"Login Dev"} />
+          </View>
         }
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>

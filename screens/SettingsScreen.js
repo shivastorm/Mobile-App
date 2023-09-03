@@ -9,6 +9,7 @@ export default function SettingsScreen({ navigation }) {
     removeItem('access_token')
     removeItem('refresh_token')
     removeItem('expires_in')
+    removeItem('api')
     navigation.navigate('Login');
   }
   return (

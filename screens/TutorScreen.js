@@ -15,10 +15,10 @@ export default function TutorScreen({ navigation }) {
 
   const getData = async () => {
     setIsLoading(true)
-    let onboarded = await getItem('access_token');
-    let convertedToken = JSON.parse(onboarded)
-    console.log('acessTOken=====', convertedToken)
-    fetch(`https://nurtemeventapi.nurtem.com/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
+    let access_token = await getItem('access_token');
+    let convertedToken = JSON.parse(access_token)
+    let Api = await getItem('api')
+    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -36,10 +36,11 @@ export default function TutorScreen({ navigation }) {
         setIsLoading(false)
       })
       .catch(err => {
-        console.log('catch err in tutor list api=======', err)
+        console.log('catch err in tutor list api call=======', err)
         setIsLoading(false)
       })
-  }
+  
+}
   useEffect(() => {
     getData()
   }, [page])
@@ -81,7 +82,7 @@ export default function TutorScreen({ navigation }) {
             />
           </View>
           <View style={styles.cardInfo}>
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <View style={{ display: 'flex', flexDirection: 'row',alignItems:'center',alignContent:'center' }}>
               <Icon name="user" size={13} color="#900" style={{ marginRight: 5 }} />
               <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
             </View>
