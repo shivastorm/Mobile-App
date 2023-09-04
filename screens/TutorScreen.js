@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";  
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import StarRating from "../components/starRating";
 import { FlatList } from "react-native-gesture-handler";
@@ -39,8 +38,8 @@ export default function TutorScreen({ navigation }) {
         console.log('catch err in tutor list api call=======', err)
         setIsLoading(false)
       })
-  
-}
+
+  }
   useEffect(() => {
     getData()
   }, [page])
@@ -68,7 +67,7 @@ export default function TutorScreen({ navigation }) {
   };
   const ViewProfile = (props) => {
     //console.log('viewproffile======', props)
-    navigation.navigate('TutorView', {props});
+    navigation.navigate('TutorView', { props });
   };
   const renderItem = ({ item, index }) => {
     return (
@@ -76,22 +75,22 @@ export default function TutorScreen({ navigation }) {
         <View style={styles.card}>
           <View style={styles.cardImgWrapper}>
             <Image
-              source={item.photo ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
+              source={{ uri: item.photo } ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
               style={styles.cardImg}
               resizeMode="cover"
             />
           </View>
           <View style={styles.cardInfo}>
-            <View style={{ display: 'flex', flexDirection: 'row',alignItems:'center',alignContent:'center' }}>
-              <Icon name="user" size={13} color="#900" style={{ marginRight: 5 }} />
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+              <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
               <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <MIcon name="email" size={13} color="#900" style={{ marginRight: 5 }} />
+              <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{item.email}</Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <MIcon name="phone-iphone" size={13} color="#900" style={{ marginRight: 5 }} />
+              <MIcon name="phone-iphone" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{item.mobile_number}</Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -173,6 +172,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
     color: '#de4f35',
+  }, cardicon: {
+    marginRight: 5, alignSelf: "center", marginRight: 10
   },
   cardsWrapper: {
     marginTop: 5,
@@ -208,6 +209,7 @@ const styles = StyleSheet.create({
 
   },
   cardInfo: {
+
     flex: 4,
     padding: 0,
     borderColor: '#fff',
@@ -224,6 +226,7 @@ const styles = StyleSheet.create({
     /// fontFamily: "Roboto-Regular",
     paddingBottom: 5,
   },
+
   cardDetails: {
     fontSize: 15,
     paddingBottom: 2,

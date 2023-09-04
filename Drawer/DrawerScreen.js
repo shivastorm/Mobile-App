@@ -1,6 +1,6 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { StyleSheet, View, Text } from "react-native";
+import { DrawerContentScrollView, createDrawerNavigator } from "@react-navigation/drawer";
 import DashboardScreen from "../screens/DashboardScreen";
 import TutorScreen from "../screens/TutorScreen";
 import ManageUser from "../screens/UserScreen";
@@ -13,23 +13,24 @@ import ListServices from "../screens/ListServicesScreen";
 import ListConfigurations from "../screens/ListConfiguration";
 import ListTransaction from "../screens/ListTransactions";
 import SettingsScreen from "../screens/SettingsScreen";
+import CreateServices from "../screens/CreateServices";
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
 
 export default function DrawerScreen() {
   const Drawer = createDrawerNavigator();
   return (
     <>
+      {/* drawerContent={props => <DrawerContent {...props} />} */}
       <Drawer.Navigator  >
+
         <Drawer.Screen name="Dashboard Page"
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
               <Ionicons name="person-add-alt-1" paddingleft={30} size={20} color={color} />
             )
-          }}
-
-          component={DashboardScreen} />
-        <Drawer.Screen name="Manage Tutor"
+          }} component={DashboardScreen} />
+        <Drawer.Screen name="Manage Tutors"
           options={{
             headerShown: true,
             drawerIcon: ({ color }) => (
@@ -95,7 +96,14 @@ export default function DrawerScreen() {
             )
           }}
           component={CreateCategory} />
-
+        <Drawer.Screen name="Create Services"
+          options={{
+            headerShown: true,
+            drawerIcon: ({ color }) => (
+              <Ionicons name="dashboard-customize" size={20} color={color} />
+            )
+          }}
+          component={CreateServices} />
         <Drawer.Screen name=" Create Quotes"
           options={{
             headerShown: true,
@@ -104,7 +112,7 @@ export default function DrawerScreen() {
             )
           }}
           component={CreateQuotes} />
-        
+
         <Drawer.Screen name="Configurations"
           options={{
             headerShown: true,
@@ -113,7 +121,7 @@ export default function DrawerScreen() {
             )
           }}
           component={ListConfigurations} />
-        
+
         <Drawer.Screen name="Settings"
           options={{
             headerShown: true,
@@ -122,7 +130,9 @@ export default function DrawerScreen() {
             )
           }}
           component={SettingsScreen} />
+
       </Drawer.Navigator>
+
     </>
   );
 }

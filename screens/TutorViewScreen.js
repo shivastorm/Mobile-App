@@ -14,7 +14,7 @@ const TutorViewScreen = (props) => {
         let access_token = await getItem('access_token');
         let convertedToken = JSON.parse(access_token)
         let Api = await getItem('api')
-        console.log('acessTOken=====', Api)
+        // console.log('acessTOken=====', Api)
         fetch(`${Api}/providers/view/${items}/?id${items}&expand=user`, {
             method: "GET",
             headers: {
@@ -25,7 +25,7 @@ const TutorViewScreen = (props) => {
             .then((json) => {
                 // Combine previous and new data
                 const newData = json?.details
-                console.log('acessTOken=====', json?.details)
+                // console.log('acessTOken=====', json?.details)
                 setValue(newData);
                 setIsLoading(false)
             })
@@ -63,8 +63,7 @@ const TutorViewScreen = (props) => {
                 <View style={styles.nameContainer}>
                     <Text style={styles.firstName}>{item.type === 'Individual' ? item.firstname : item.businessname}</Text>
                 </View>
-            </View>
-            <View style={styles.container}>
+
 
                 <View style={styles.detailsContainer}>
                     <View style={styles.detailItem}>
@@ -82,6 +81,23 @@ const TutorViewScreen = (props) => {
                     <View style={styles.detailItem}>
                         <Text style={styles.detailLabel}>Type:</Text>
                         <Text style={styles.detailValue}>{item.type} </Text>
+
+                    </View>
+                    <View style={styles.detailItem}>
+                        <Text style={styles.detailLabel}>Bio:</Text>
+                        <Text style={styles.detailValue}>{item.bio} </Text>
+                    </View>
+                    <View style={styles.detailItem}>
+                        <Text style={styles.detailLabel}>Experience:</Text>
+                        <Text style={styles.detailValue}>{item.years_of_experience} </Text>
+                    </View>
+                    <View style={styles.detailItem}>
+                        <Text style={styles.detailLabelstu}>Students Taught:</Text>
+                        <Text style={styles.detailValue}>{item.no_of_students_taught} </Text>
+                    </View>
+                    <View style={styles.detailItem}>
+                        <Text style={styles.detailLabel}>Teaching Modes:</Text>
+                        <Text style={styles.detailValue}>{item.teaching_modes} </Text>
                     </View>
                     <View style={styles.detailItem}>
                         <Text style={styles.detailLabel}>Claim:</Text>
@@ -96,6 +112,7 @@ const TutorViewScreen = (props) => {
                     {/* Add more details as needed */}
                 </View>
             </View>
+
         </>
     );
 }
@@ -103,12 +120,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#FFF',
-        flexDirection: 'column'
+        backgroundColor: '#ff',
+        flexDirection: 'column',
+        margin: 20,
+
     },
     profileImageContainer: {
         marginTop: 20,
         alignItems: 'center',
+    },
+    labelStyle: {
+        fontSize: 14,
+        color: "white",
+        fontFamily: 'Roboto-Bold',
+        textAlign: "center"
+
     },
     profileImage: {
         width: 150,
@@ -126,10 +152,10 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     detailsContainer: {
-        marginTop: 20,
+
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        padding: 10
+        padding: 25
 
     },
     detailItem: {
@@ -140,6 +166,14 @@ const styles = StyleSheet.create({
     detailLabel: {
         //width: 100,
         fontSize: 14,
+
+        fontFamily: 'Roboto-Bold',
+    },
+    detailLabelstu: {
+        //width: 100,
+        fontSize: 14,
+        textAlignVertical: "bottom",
+
         fontFamily: 'Roboto-Bold',
     },
     detailValue: {
@@ -149,8 +183,8 @@ const styles = StyleSheet.create({
     },
     cardButton: {
         backgroundColor: "#1b00b3",
-        width: 90,
-        height: 25,
+        width: 80,
+        height: 30,
         margin: 2,
         padding: 5,
         borderRadius: 10,

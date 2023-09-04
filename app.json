@@ -4,7 +4,7 @@
     "slug": "Admin",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/nurtemnobg.png",
+    "icon": "./assets/new.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/nurtemnobg.png",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/footer-logo.png",
+        "foregroundImage": "./assets/splashnew.png",
         "backgroundColor": "#ffffff"
       }
     },

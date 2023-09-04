@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaView } from "react-native-safe-area-context";
 //import filter from "lodash.filter"
 import { getItem } from "../utils/only-token";
@@ -75,9 +76,18 @@ export default function ManageUser() {
             />
           </View>
           <View style={styles.cardInfo}>
-            <TruncatedText text={item.firstname} />
-            <Text style={styles.cardDetails}>{item.email}</Text>
-            <Text style={styles.cardDetails}>{item.mobile_number}</Text>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="person" size={15} color="#900" style={styles.cardicon} />
+              <TruncatedText text={item.firstname} />
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardDetails}>{item.email}</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="phone-iphone" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardDetails}>{item.mobile_number}</Text>
+            </View>
             <TouchableOpacity style={{
               backgroundColor: "#e9b4f0",
               width: 80,
@@ -170,6 +180,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginLeft: 10,
     color: "grey"
+  }, cardicon: {
+    marginRight: 5, alignSelf: "center",
   },
 
   wrapper: {},
@@ -226,6 +238,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     alignSelf: 'center',
     borderBottomColor: "#fff",
+
   },
   card: {
     height: 130,
@@ -260,12 +273,12 @@ const styles = StyleSheet.create({
     flex: 4,
     padding: 0,
     borderColor: '#fff',
-    borderWidth: 1,
-    borderLeftWidth: 0,
+    borderWidth: 5,
     borderRightWidth: 13,
-    borderBottomRightRadius: 8,
     borderTopRightRadius: 8,
     backgroundColor: '#fff',
+    Height: 120,
+    // borderColor: "black"
   },
   cardTitle: {
     fontWeight: 'bold',
