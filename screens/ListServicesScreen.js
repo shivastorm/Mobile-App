@@ -1,33 +1,12 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { getItem } from "../utils/only-token";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MIcon from 'react-native-vector-icons/MaterialIcons';
+import CustomButton from "../components/CustomButton";
 
 export default function ListServices() {
-  // useEffect(() => {
-  //   // const proxy = {
-  //   //   target: 'https://nurtemeventapi.nurtem.com',
-  //   //   changeOrigin: true,
-  //   // };
-  //   const getData = async () => {
-  //     const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/services/list', {
-  //       headers: {
-  //         Authorization: 'Bearer ' + '3pSXmfET1seZwTYjdrFiWPn50b0HWLA6vJvKJ2tw8cwkqDnpNShK1LHkOYxMFIPZk6hQoLU7Pd7RCqS7JKXVWuyMJJ1JqYXGOD3Bb4GkmpVQpdSVvIyl8XjLi5N1mBbL7T5EXZqM33ai6Ryi7Ug2Fdnk7YZKddKMHwyqftvLMH20JfahHvAgJ11dN7NXjz8Bn8o40FQsbmxaHGR952iy0qUFictjuxD2jv8nOrptZNkFZSzHN6WWwVdYmAtnhLi',
-  //       },
-  //       withCredentials: true,
-  //       changeOrigin: true,
-  //       params: { sort: 'created_at.DESC', page: { page } },
-  //     });
-  //     // console.log("response ok ======", getTutors.data.items)
-  //     // setValue([...value,...getTutors.data.items])
-  //     setValue(getTutors.data.items)
-  //     // console.log("id=================", getTutors.data.items)
-  //     // console.log(page)
-  //   }
-  //   getData()
-  // }, [page])
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -38,7 +17,7 @@ export default function ListServices() {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
+    fetch(`${Api}/services/list?page=${page}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -49,7 +28,7 @@ export default function ListServices() {
         // Combine previous and new data
         const newData = [...value, ...json?.items];
         // console.log("hoivalue", newData)
-
+        //console.log('values=========', newData)
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
 
@@ -57,11 +36,11 @@ export default function ListServices() {
         setIsLoading(false)
       })
       .catch(err => {
-        console.log('catch err in tutor list api call=======', err)
+        console.log('catch err in service list api call=======', err)
         setIsLoading(false)
       })
-
   }
+
   useEffect(() => {
     getData()
   }, [page])
@@ -69,17 +48,20 @@ export default function ListServices() {
   const TruncatedText = ({ text }) => {
     return (
       <View  >
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.cardTitle}>
+        <Text numberOfLines={3} ellipsizeMode="tail" style={styles.cardDetails}>
           {text}
         </Text>
       </View>
     );
-  }; const onRefresh = () => {
+  };
+
+  const onRefresh = () => {
     setIsRefreshing(true)
     setTimeout(() => {
       setIsRefreshing(false);
     }, 2000)
   };
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -89,55 +71,52 @@ export default function ListServices() {
   };
 
   const renderItem = ({ item, index }) => {
-    // { console.log("index===========", item) }
-    <View key={item.id} style={styles.cardsWrapper}>
-      <View style={styles.card}>
-        <View style={styles.cardImgWrapper}>
-          <Image
-            source={item.icon ? { uri: item.icon } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/nurtemnobg.png" }}
-            style={styles.cardImg}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.cardInfo}>
-          <TruncatedText text={item.name} />
-          <Text numberOfLines={3} ellipsizeMode="tail" style={styles.cardDetails}>
-            {item.description}
-          </Text>
-          <TouchableOpacity style={{
-            backgroundColor: "#e9b4f0",
-            width: 80,
-            height: 25,
-            margin: 2,
-            padding: 2,
-            borderRadius: 10,
-          }}>
-            <Text style={{
-              color: "black",
-              fontSize: 14,
-              textAlign: "center"
-            }}>{item.status === 1 ? 'Active' : 'Deactive'}</Text>
-          </TouchableOpacity>
+    let date = new Date(item.created_at)
+    return (
+      <View style={styles.cardsWrapper}>
+        <View style={styles.card}>
+          <View style={styles.cardImgWrapper}>
+            <Image
+              source={{ uri: item.icon } ? { uri: item.icon } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={styles.cardInfo}>
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+              <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardTitle}> {item.name} </Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <TruncatedText style={styles.cardDetails} text={item.description} />
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
+            </View>
+          </View>
         </View>
       </View>
-    </View>
+    )
+  };
 
-  }
   return (
-    <View style={{ backgroundColor: 'white' }}>
+    <SafeAreaView style={{ backgroundColor: "white" }}  >
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
         onEndReached={() => { setPage(page + 1) }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        onRefresh={onRefresh}
-        refreshing={isRefreshing}
+      // onRefresh={onRefresh}
+      // refreshing={isRefreshing}
       />
-    </View>
+    </SafeAreaView>
 
   );
-}
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -150,7 +129,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 8,
   },
+
   wrapper: {},
+
   slide: {
     flex: 1,
     justifyContent: 'center',
@@ -190,6 +171,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
     color: '#de4f35',
+  }, cardicon: {
+    marginRight: 5, alignSelf: "center", marginRight: 10
   },
   cardsWrapper: {
     marginTop: 5,
@@ -199,28 +182,24 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
   card: {
-    padding: 12,
-    maxHeight: 130,
+    height: 130,
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',
-
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,
-
   },
   cardImgWrapper: {
     flex: 1,
   },
   cardImg: {
-    height: '80%',
-    width: '80%',
+    height: '50%',
+    width: '75%',
     borderRadius: 10,
     alignSelf: 'center',
-    resizeMode: 'repeat',
-    //backgroundColor: "yellow"
+    borderColor: "black",
     //borderRadius: 8,
     // borderTopLeftRadius: 30,
     // borderTopRightRadius: 30,
@@ -229,6 +208,7 @@ const styles = StyleSheet.create({
 
   },
   cardInfo: {
+
     flex: 4,
     padding: 0,
     borderColor: '#fff',
@@ -243,11 +223,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
     /// fontFamily: "Roboto-Regular",
-    paddingBottom: 3,
+    paddingBottom: 5,
   },
+
   cardDetails: {
     fontSize: 15,
-    paddingBottom: 5,
-    color: '#7a7776',
+    paddingBottom: 2,
+    color: '#444',
   },
+  cardButton: {
+    backgroundColor: "#e9b4f0",
+    width: 80,
+    height: 25,
+    margin: 2,
+    padding: 2,
+    borderRadius: 10
+  },
+  labelStyle: {
+    color: "black",
+    fontSize: 14,
+    textAlign: "center"
+  }
 });

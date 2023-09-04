@@ -1,38 +1,47 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MIcon from 'react-native-vector-icons/MaterialIcons';
+import { FlatList } from "react-native-gesture-handler";
+import { getItem } from "../utils/only-token";
+import CustomButton from "../components/CustomButton";
 
-export default function ListTransaction() {
-
+export default function ListTransactions({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getData = async () => {
+    setIsLoading(true)
+    let access_token = await getItem('access_token');
+    let convertedToken = JSON.parse(access_token)
+    let Api = await getItem('api')
+    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
+      method: "GET",
+      headers: {
+        headers: { 'Content-Type': 'application/json' },
+        Authorization: `Bearer ${convertedToken}`,
+      },
+    }).then((response) => response.json())
+      .then((json) => {
+        // Combine previous and new data
+        const newData = [...value, ...json?.items];
+
+        // Filter out duplicates based on item id
+        const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
+
+        setValue(uniqueData);
+        setIsLoading(false)
+      })
+      .catch(err => {
+        console.log('catch err in tutor list api call=======', err)
+        setIsLoading(false)
+      })
+
+  };
 
   useEffect(() => {
-    // const proxy = {
-    //   target: 'https://nurtemeventapi.nurtem.com',
-    //   changeOrigin: true,
-    // };
-    const getData = async () => {
-      const getTutors = await axios.get('https://nurtemeventapi.nurtem.com/classes/students-for-all', {
-        headers: {
-          Authorization: 'Bearer ' + 'NCX24CRbXTw8bnmx3eHYLrV1mdx2KAQdmE2B7WPWXtJmHztqWGwvNLa84LuxbP4D0j5xJ4C7fUn1b3EXoCkNmZ1YMEiAKZGD1M4HjfulFEgQNLmUdR9Ud27DmsCnJnVb70Caq0CbHMSWwzYhakRP04iMUObiuSdIIbLklh6b8NgmLNX1HY3IOoumqFJJPOfbrOQlKzE9ycvbbgp0Y3ewmRr8oofOaiVNJZiKjb0bLGsyl69v201wNYUguKlUroi',
-        },
-        withCredentials: true,
-        changeOrigin: true,
-        params: { page: { page }, expand: 'class_details,provider,user,payment_details' },
-      });
-      // console.log("response ok ======", getTutors.data.items)
-      // setValue([...value,...getTutors.data.items])
-      setValue(getTutors.data.items)
-      // console.log("id=================",getTutors.data.items)
-      // console.log(page)
-      // if (getTutors.status === 200) {
-      //   dispatch(listTutor(getTutors.data))
-      //   return getTutors.data
-      // }
-    }
     getData()
   }, [page])
 
@@ -46,66 +55,73 @@ export default function ListTransaction() {
     );
   };
 
+  const onRefresh = () => {
+    setIsRefreshing(true)
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 2000)
+  };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color={"#e9b4f0"} />
+      </View>
+    )
+  };
+
+  const ViewProfile = (props) => {
+    navigation.navigate('TutorView', { props });
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <View style={styles.cardsWrapper}>
+        <View style={styles.cardPadding}>
+          {/* <View style={styles.cardImgWrapper}>
+            <Image
+              source={{ uri: item.photo } ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
+              style={styles.cardImg}
+              resizeMode="cover"
+            />
+          </View> */}
+          <View style={styles.cardInfo}>
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+              <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
+              <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardDetails}>{item.email}</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <MIcon name="phone-iphone" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardDetails}>{item.mobile_number}</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Active' : 'Deactive'} />
+              <CustomButton style={styles.cardButton} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View Profile'} />
+            </View>
+          </View>
+        </View>
+      </View>
+    )
+  };
 
   return (
-    <View style={{ backgroundColor: 'white' }}>
-      {/* Your dashboard screen UI components */}
-      {/* <SafeAreaView><Text>List Transaction</Text></SafeAreaView> */}
+    <SafeAreaView style={{ backgroundColor: "white" }}  >
       <FlatList
         data={value}
-        // onEndReachedThreshold={0.5}
-        // onEndReached={()=>{setPage(page + 1)}}
-        renderItem={(value) => {
-          return (
-            <View key={value.item.id} style={styles.cardsWrapper}>
-              {/* {console.log("index===========",value.item.id)} */}
-              <View style={styles.card}>
-
-                <View style={styles.cardImgWrapper}>
-                  <Image
-                    source={require("../assets/images/girl.webp")}
-                    style={styles.cardImg}
-                    resizeMode="cover"
-                  />
-                </View>
-                <View style={styles.cardInfo}>
-                  <TruncatedText text={value.item.provider.firstname} />
-                  <Text style={styles.cardDetails}>{value.item.provider.email}</Text>
-                  <Text style={styles.cardDetails}>{value.item.provider.mobile_number}</Text>
-                  <TouchableOpacity style={{
-                    backgroundColor: "#e9b4f0",
-                    width: 80,
-                    height: 25,
-                    margin: 2,
-                    padding: 2,
-                    borderRadius: 10
-                  }}>
-                    <Text style={{
-                      color: "black",
-                      fontSize: 14,
-                      textAlign: "center"
-                    }}>{value.item.status === 1 ? 'Active' : 'Deactive'}</Text>
-                  </TouchableOpacity>
-
-
-                </View>
-              </View>
-            </View>
-          )
-        }}
+        onEndReachedThreshold={0.1}
+        onEndReached={() => { setPage(page + 1) }}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      // onRefresh={onRefresh}
+      // refreshing={isRefreshing}
       />
-      {/* <Button
-        onPress={() => {
-          navigation.navigate("settings");
-        }}
-      >
-        go to settings
-      </Button> */}
-    </View>
-  );
+    </SafeAreaView >
+  )
 }
-
-//export default HomeScreen();
 
 
 const styles = StyleSheet.create({
@@ -120,9 +136,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 8,
   },
-
-  wrapper: {},
-
+  cardPadding: {
+    padding: 15
+  },
   slide: {
     flex: 1,
     justifyContent: 'center',
@@ -162,6 +178,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
     color: '#de4f35',
+  }, cardicon: {
+    marginRight: 5, alignSelf: "center", marginRight: 10
   },
   cardsWrapper: {
     marginTop: 5,
@@ -175,16 +193,13 @@ const styles = StyleSheet.create({
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',
-
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,
-
   },
   cardImgWrapper: {
     flex: 1,
-
   },
   cardImg: {
     height: '50%',
@@ -200,6 +215,7 @@ const styles = StyleSheet.create({
 
   },
   cardInfo: {
+
     flex: 4,
     padding: 0,
     borderColor: '#fff',
@@ -216,9 +232,23 @@ const styles = StyleSheet.create({
     /// fontFamily: "Roboto-Regular",
     paddingBottom: 5,
   },
+
   cardDetails: {
     fontSize: 15,
     paddingBottom: 2,
     color: '#444',
   },
+  cardButton: {
+    backgroundColor: "#e9b4f0",
+    width: 80,
+    height: 25,
+    margin: 2,
+    padding: 2,
+    borderRadius: 10
+  },
+  labelStyle: {
+    color: "black",
+    fontSize: 14,
+    textAlign: "center"
+  }
 });

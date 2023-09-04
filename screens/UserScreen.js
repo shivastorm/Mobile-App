@@ -15,10 +15,10 @@ export default function ManageUser() {
 
   const getData = async () => {
     setIsLoading(true)
-    let onboarded = await getItem('access_token');
-    let convertedToken = JSON.parse(onboarded)
-    console.log('acessTOken=====', convertedToken)
-    fetch(`https://nurtemeventapi.nurtem.com/users/list?sort=created_at.ASC&limit=20&page=${page}`, {
+    let access_token = await getItem('access_token');
+    let convertedToken = JSON.parse(access_token)
+    let Api = await getItem('api')
+    fetch(`${Api}/users/list?sort=created_at.ASC&limit=20&page=${page}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -70,7 +70,7 @@ export default function ManageUser() {
         <View style={styles.card}>
           <View style={styles.cardImgWrapper}>
             <Image
-              source={item.photo ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
+              source={item.photo ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
               style={styles.cardImg}
               resizeMode="contain"
             />

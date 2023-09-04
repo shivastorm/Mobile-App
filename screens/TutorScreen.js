@@ -39,10 +39,12 @@ export default function TutorScreen({ navigation }) {
         setIsLoading(false)
       })
 
-  }
+  };
+
   useEffect(() => {
     getData()
   }, [page])
+
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -52,12 +54,14 @@ export default function TutorScreen({ navigation }) {
       </View>
     );
   };
+
   const onRefresh = () => {
     setIsRefreshing(true)
     setTimeout(() => {
       setIsRefreshing(false);
     }, 2000)
   };
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -65,17 +69,18 @@ export default function TutorScreen({ navigation }) {
       </View>
     )
   };
+
   const ViewProfile = (props) => {
-    //console.log('viewproffile======', props)
     navigation.navigate('TutorView', { props });
   };
+
   const renderItem = ({ item, index }) => {
     return (
       <View style={styles.cardsWrapper}>
         <View style={styles.card}>
           <View style={styles.cardImgWrapper}>
             <Image
-              source={{ uri: item.photo } ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/default-profile.png" }}
+              source={{ uri: item.photo } ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
               style={styles.cardImg}
               resizeMode="cover"
             />
@@ -110,8 +115,8 @@ export default function TutorScreen({ navigation }) {
         onEndReached={() => { setPage(page + 1) }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        onRefresh={onRefresh}
-        refreshing={isRefreshing}
+        // onRefresh={onRefresh}
+        // refreshing={isRefreshing}
       />
     </SafeAreaView >
   )
