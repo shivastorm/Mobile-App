@@ -24,29 +24,40 @@ export default function CreateCategory() {
       name: name,
       description: description
     }
-    fetch(`${Api}categories/create`, {
+    fetch(`${Api}/categories/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${convertedToken}`,
-        body: JSON.stringify(data),
-      }
+      },
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          console.error(`API request failed with status guys: ${response.status}`);
+          return response.json()
+            .then(errorData => {
+              console.error('Error response data:', errorData);
+              throw new Error('Network response was not ok');
+            });
         }
         return response.json();
       })
       .then((responseData) => {
         // Handle the API response here
-        console.log('API response:', responseData);
+        console.log('API response guys:', responseData);
+        console.log('status response hello:', responseData.status);
+        // if (responseData.status === 200) {
+        //   Alert.alert('category created sucessfully ');
+        //   return;
+        // }
       })
       .catch((error) => {
         // Handle errors here
         console.error('API request failed:', error);
       });
   };
+
 
   return (
     <View style={styles.container}>
@@ -57,6 +68,7 @@ export default function CreateCategory() {
         value={name}
         onChangeText={handleNameChange}
       />
+
 
       <Text style={styles.label}>Description:</Text>
       <TextInput
