@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, Image, ActivityIndicator,TextInput,Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon1 from 'react-native-vector-icons/Octicons';
-import StarRating from "../components/starRating";
 import { FlatList } from "react-native-gesture-handler";
+import StarRating from "../components/starRating";
 import { getItem } from "../utils/only-token";
 import CustomButton from "../components/CustomButton";
 export default function TutorScreen({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
+  const [searchQuery, setSearchQuery] = useState('')
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -18,20 +19,23 @@ export default function TutorScreen({ navigation }) {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
+    console.log("url ======",`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`)
+    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
         Authorization: `Bearer ${convertedToken}`,
       },
-    }).then((response) => response.json())
+       
+    })
+   // console.log("search response",)
+    .then((response) => response.json())
       .then((json) => {
         // Combine previous and new data
         const newData = [...value, ...json?.items];
-
+        console.log("search response ===",newData)
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
-
         setValue(uniqueData);
         setIsLoading(false)
       })
@@ -74,6 +78,16 @@ export default function TutorScreen({ navigation }) {
   const ViewProfile = (props) => {
     navigation.navigate('TutorView', { props });
   };
+  
+  const handleSearch = () => {
+    setPage(1)
+     (searchQuery ? getData():Alert.alert('Error', 'enter data') )
+  };
+    
+
+   // console.log('Searching for:',searchQuery);
+     
+  
 
   const renderItem = ({ item, index }) => {
     return (
@@ -121,6 +135,22 @@ export default function TutorScreen({ navigation }) {
   };
   return (
     <SafeAreaView style={{ backgroundColor: "white" }}  >
+      <View style={{marginHorizontal:10,flexDirection:"row",padding:10,marginBottom:-5}}>
+       <TextInput
+          placeholder="Search"
+          clearButtonMode="always"
+          style={styles.searchbox}
+          onChangeText={(query) => {
+            setSearchQuery(query);
+           // handleSearch(query);
+          }}
+          value={searchQuery}
+          
+          />
+           <MIcon name="search" size={20} color="#900" 
+           style={styles.searchboxicon} 
+           onPress={() => handleSearch()} />
+        </View>
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
@@ -154,7 +184,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.26,
-    elevation: 8,
+    elevation: 3,
     backgroundColor: 'white',
     borderRadius: 5,
     paddingTop: 10,
@@ -197,5 +227,24 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 14,
     textAlign: "center"
+  }, 
+   searchbox: {
+    width:"83%",
+    paddingHorizontal: 20,  
+    marginRight:5,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    flexDirection:"row"
+
+  },
+  searchboxicon:{
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingRight: 20,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    flexDirection:"row"
   }
 });

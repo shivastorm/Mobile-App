@@ -61,7 +61,6 @@ export default function ManageUser() {
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ActivityIndicator size={"large"} color={"#e9b4f0"} />
       </View>
-
     )
   }
   const renderItem = ({ item, index }) => {
@@ -107,9 +106,7 @@ export default function ManageUser() {
   }
   return (
     <View style={{ backgroundColor: "white" }} >
-      <View style={{
-        marginHorizontal: 10
-      }} >
+      <View style={{ marginHorizontal: 10 }} >
         <TextInput
           placeholder="Search"
           clearButtonMode="always"
@@ -245,7 +242,6 @@ const styles = StyleSheet.create({
     marginVertical: -5,
     flexDirection: 'row',
     shadowColor: '#999',
-
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
