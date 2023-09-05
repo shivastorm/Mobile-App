@@ -10,6 +10,7 @@ export default function SettingsScreen({ navigation }) {
     removeItem('refresh_token')
     removeItem('expires_in')
     removeItem('api')
+    removeItem('onboarded')
     navigation.navigate('Login');
   }
   return (

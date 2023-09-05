@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet
 } from 'react-native';
+import NoInternetConnection from "./utils/CheckInternetConnection";
 SplashScreen.preventAutoHideAsync();
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -30,9 +31,11 @@ const App = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <View style={styles.container} onLayout={onLayoutRootView}>
-          <Sidebar />
-        </View >
+        <NoInternetConnection>
+          <View style={styles.container} onLayout={onLayoutRootView}>
+            <Sidebar />
+          </View >
+        </NoInternetConnection>
       </SafeAreaView>
     </>
   );

@@ -4,6 +4,7 @@ import Onboarding from 'react-native-onboarding-swiper';
 import Lottie from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { setItem } from '../utils/only-token';
+import { color } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,12 +29,13 @@ export default function OnboardingScreen() {
             <Onboarding
                 onDone={handleDone}
                 onSkip={handleDone}
-                // bottomBarHighlight={false}
                 DoneButtonComponent={doneButton}
+                titleStyles={{color:'#fff'}}
+                subTitleStyles ={{color:'#fff'}}
                 containerStyles={{ paddingHorizontal: 15 }}
                 pages={[
                     {
-                        backgroundColor: '#a7f3d0',
+                        backgroundColor: '#17b8ff',
                         image: (
                             <View style={styles.lottie}>
                                 <Lottie source={require('../assets/animations/boost.json')} autoPlay loop />
@@ -44,7 +46,7 @@ export default function OnboardingScreen() {
                         subtitle: 'Subscribe this channel to boost your productivity level',
                     },
                     {
-                        backgroundColor: '#fef3c7',
+                        backgroundColor: '#3cff3d',
                         image: (
                             <View style={styles.lottie}>
                                 <Lottie source={require('../assets/animations/work.json')} autoPlay loop />
@@ -83,6 +85,8 @@ const styles = StyleSheet.create({
     },
     doneButton: {
         padding: 20,
+        fontFamily:'Roboto-Regular',
+        color:'#fff'
         // backgroundColor: 'white',
         // borderTopLeftRadius: '100%',
         // borderBottomLeftRadius: '100%'

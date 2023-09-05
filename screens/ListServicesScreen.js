@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, StyleSheet, Image,  ActivityIndicator } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../utils/only-token";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -9,7 +9,6 @@ import CustomButton from "../components/CustomButton";
 export default function ListServices() {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
-  const [isRefreshing, setIsRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const getData = async () => {
@@ -53,13 +52,6 @@ export default function ListServices() {
         </Text>
       </View>
     );
-  };
-
-  const onRefresh = () => {
-    setIsRefreshing(true)
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 2000)
   };
 
   if (isLoading) {
@@ -109,8 +101,6 @@ export default function ListServices() {
         onEndReached={() => { setPage(page + 1) }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-      // onRefresh={onRefresh}
-      // refreshing={isRefreshing}
       />
     </SafeAreaView>
 
@@ -118,114 +108,50 @@ export default function ListServices() {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  sliderContainer: {
-    height: 200,
-    width: '90%',
-    marginTop: 10,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    borderRadius: 8,
-  },
 
-  wrapper: {},
-
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    borderRadius: 8,
-  },
-  sliderImage: {
-    height: '100%',
-    width: '100%',
-    alignSelf: 'center',
-    borderRadius: 8,
-  },
-  categoryContainer: {
-    flexDirection: 'row',
-    width: '90%',
-    alignSelf: 'center',
-    marginTop: 25,
-    marginBottom: 10,
-  },
-  categoryBtn: {
-    flex: 1,
-    width: '30%',
-    marginHorizontal: 0,
-    alignSelf: 'center',
-  },
-  categoryIcon: {
-    borderWidth: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    width: 70,
-    height: 70,
-    backgroundColor: '#fdeae7' /* '#FF6347' */,
-    borderRadius: 50,
-  },
-  categoryBtnTxt: {
-    alignSelf: 'center',
-    marginTop: 5,
-    color: '#de4f35',
-  }, cardicon: {
-    marginRight: 5, alignSelf: "center", marginRight: 10
+  cardicon: {
+    alignSelf: "center",
+    marginRight: 5
   },
   cardsWrapper: {
-    marginTop: 5,
-    width: '99%',
-    borderColor: "black",
+    marginTop: 20,
+    width: '100%',
     alignSelf: 'center',
     borderBottomColor: "#fff",
   },
   card: {
-    height: 130,
-    marginVertical: -5,
+    maxHeight: 145,
     flexDirection: 'row',
-    shadowColor: '#999',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
     elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   cardImgWrapper: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   cardImg: {
     height: '50%',
-    width: '75%',
+    width: '80%',
     borderRadius: 10,
-    alignSelf: 'center',
-    borderColor: "black",
-    //borderRadius: 8,
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
-    // borderBottomLeftRadius: 30,
-    // borderBottomRightRadius: 30,
-
+    padding: 30,
   },
   cardInfo: {
-
     flex: 4,
-    padding: 0,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 13,
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-    backgroundColor: '#fff',
+    paddingRight: 5,
   },
   cardTitle: {
-    fontWeight: 'bold',
     fontSize: 15,
-    /// fontFamily: "Roboto-Regular",
+    fontFamily: "Roboto-Bold",
     paddingBottom: 5,
   },
-
   cardDetails: {
     fontSize: 15,
     paddingBottom: 2,
@@ -243,5 +169,24 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 14,
     textAlign: "center"
+  }, 
+   searchbox: {
+    width:"83%",
+    paddingHorizontal: 20,  
+    marginRight:5,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    flexDirection:"row"
+
+  },
+  searchboxicon:{
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingRight: 20,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    flexDirection:"row"
   }
 });

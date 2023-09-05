@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {ActivityIndicator ,View,Image} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
@@ -13,8 +14,28 @@ const Stack = createNativeStackNavigator();
 export default function AppNavigation() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isOnboarding, setIsOnboarding] = useState(false)
-  getAccessToken(setIsLoggedIn, setIsOnboarding)
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    getAccessToken(setIsLoggedIn, setIsOnboarding)
+    .then(() => setIsLoading(false))
+    .catch((error) => {
+      console.log('Failed to retrieve access token and onboarding status:', error);
+      setIsLoading(false);
+    });
+  }, []);
   //removeAllTokens();
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+          <Image
+              source={require('../assets/nurtemnobg.png')}
+              style={{ width: "100%", height: 180, alignSelf: 'center', marginTop: 50 }}
+              resizeMode="cover"
+            />
+        <ActivityIndicator size={"large"} color={"#002c83"} />
+      </View>
+    )
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="OnBoard">

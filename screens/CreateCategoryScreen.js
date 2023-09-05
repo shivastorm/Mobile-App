@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, TextInput, } from "react-native";
+import { View, Text, Button, StyleSheet, TextInput, Alert } from "react-native";
 import { getItem } from "../utils/only-token";
 import { useState } from "react";
 
@@ -17,9 +17,7 @@ export default function CreateCategory() {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    // console.log('Name:', name),
-    //     console.log('Description:', description)
-    // Add your logic to send data to the server or perform any other action
+
     const data = {
       name: name,
       description: description
@@ -32,29 +30,17 @@ export default function CreateCategory() {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        if (!response.ok) {
-          console.error(`API request failed with status guys: ${response.status}`);
-          return response.json()
-            .then(errorData => {
-              console.error('Error response data:', errorData);
-              throw new Error('Network response was not ok');
-            });
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status === 200) {
+          Alert.alert('category created sucessfully ');
+          return;
+        } else {
+          Alert.alert('Error! ');
         }
-        return response.json();
-      })
-      .then((responseData) => {
-        // Handle the API response here
-        console.log('API response guys:', responseData);
-        console.log('status response hello:', responseData.status);
-        // if (responseData.status === 200) {
-        //   Alert.alert('category created sucessfully ');
-        //   return;
-        // }
       })
       .catch((error) => {
-        // Handle errors here
-        console.error('API request failed:', error);
+        console.error('API request failed in create category====>', error);
       });
   };
 
@@ -68,8 +54,6 @@ export default function CreateCategory() {
         value={name}
         onChangeText={handleNameChange}
       />
-
-
       <Text style={styles.label}>Description:</Text>
       <TextInput
         style={styles.input}
@@ -77,7 +61,6 @@ export default function CreateCategory() {
         value={description}
         onChangeText={handleDescriptionChange}
       />
-
       <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
@@ -103,7 +86,3 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 });
-
-
-
-
