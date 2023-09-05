@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import {styles} from './styleSheet';
 import { SafeAreaView } from "react-native-safe-area-context";
 //import filter from "lodash.filter"
 import { getItem } from "../utils/only-token";
@@ -65,7 +66,7 @@ export default function ManageUser() {
   }
   const renderItem = ({ item, index }) => {
     return (
-      <View key={item.id} style={styles.cardsWrapper}>
+      <View key={item.id} style={styles.userCardsWrapper}>
         <View style={styles.card}>
           <View style={styles.cardImgWrapper}>
             <Image
@@ -143,148 +144,148 @@ export default function ManageUser() {
           </>
         )} /> */}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  activebutton: {
-    color: "black",
-    fontSize: 14,
-    textAlign: "center"
-  },
-  serachboximage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25
-  },
-  sliderContainer: {
-    height: 200,
-    width: '90%',
-    marginTop: 10,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    borderRadius: 8,
-  },
-  searchbox: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    paddingRight: 20,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8
-  },
-  serachemail: {
-    fontSize: 14,
-    marginLeft: 10,
-    color: "grey"
-  }, cardicon: {
-    marginRight: 5, alignSelf: "center",
-  },
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   activebutton: {
+//     color: "black",
+//     fontSize: 14,
+//     textAlign: "center"
+//   },
+//   serachboximage: {
+//     width: 50,
+//     height: 50,
+//     borderRadius: 25
+//   },
+//   sliderContainer: {
+//     height: 200,
+//     width: '90%',
+//     marginTop: 10,
+//     justifyContent: 'center',
+//     alignSelf: 'center',
+//     borderRadius: 8,
+//   },
+//   searchbox: {
+//     paddingHorizontal: 20,
+//     paddingVertical: 10,
+//     paddingRight: 20,
+//     borderColor: '#ccc',
+//     borderWidth: 1,
+//     borderRadius: 8
+//   },
+//   serachemail: {
+//     fontSize: 14,
+//     marginLeft: 10,
+//     color: "grey"
+//   }, cardicon: {
+//     marginRight: 5, alignSelf: "center",
+//   },
 
-  wrapper: {},
+//   wrapper: {},
 
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    borderRadius: 8,
-  },
-  sliderImage: {
-    height: '100%',
-    width: '100%',
-    alignSelf: 'center',
-    borderRadius: 8,
-  },
-  categoryContainer: {
-    flexDirection: 'row',
-    width: '90%',
-    alignSelf: 'center',
-    marginTop: 25,
-    marginBottom: 10,
-  },
-  categoryBtn: {
-    flex: 1,
-    width: '30%',
-    marginHorizontal: 0,
-    alignSelf: 'center',
-  },
-  categoryIcon: {
-    borderWidth: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    width: 70,
-    height: 70,
-    backgroundColor: '#fdeae7' /* '#FF6347' */,
-    borderRadius: 50,
-  },
-  categoryBtnTxt: {
-    alignSelf: 'center',
-    marginTop: 5,
-    color: '#de4f35',
-  },
-  itemcontainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 10,
-    marginTop: 10,
-  },
-  cardsWrapper: {
-    marginTop: 5,
-    width: '99%',
-    borderColor: "black",
-    alignSelf: 'center',
-    borderBottomColor: "#fff",
+//   slide: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     backgroundColor: 'transparent',
+//     borderRadius: 8,
+//   },
+//   sliderImage: {
+//     height: '100%',
+//     width: '100%',
+//     alignSelf: 'center',
+//     borderRadius: 8,
+//   },
+//   categoryContainer: {
+//     flexDirection: 'row',
+//     width: '90%',
+//     alignSelf: 'center',
+//     marginTop: 25,
+//     marginBottom: 10,
+//   },
+//   categoryBtn: {
+//     flex: 1,
+//     width: '30%',
+//     marginHorizontal: 0,
+//     alignSelf: 'center',
+//   },
+//   categoryIcon: {
+//     borderWidth: 0,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     alignSelf: 'center',
+//     width: 70,
+//     height: 70,
+//     backgroundColor: '#fdeae7' /* '#FF6347' */,
+//     borderRadius: 50,
+//   },
+//   categoryBtnTxt: {
+//     alignSelf: 'center',
+//     marginTop: 5,
+//     color: '#de4f35',
+//   },
+//   itemcontainer: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     marginLeft: 10,
+//     marginTop: 10,
+//   },
+//   cardsWrapper: {
+//     marginTop: 5,
+//     width: '99%',
+//     borderColor: "black",
+//     alignSelf: 'center',
+//     borderBottomColor: "#fff",
 
-  },
-  card: {
-    height: 130,
-    marginVertical: -5,
-    flexDirection: 'row',
-    shadowColor: '#999',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 3,
+//   },
+//   card: {
+//     height: 130,
+//     marginVertical: -5,
+//     flexDirection: 'row',
+//     shadowColor: '#999',
+//     shadowOffset: { width: 0, height: 1 },
+//     shadowOpacity: 0.8,
+//     shadowRadius: 2,
+//     elevation: 3,
 
-  },
-  cardImgWrapper: {
-    flex: 1,
+//   },
+//   cardImgWrapper: {
+//     flex: 1,
 
-  },
-  cardImg: {
-    height: '50%',
-    width: '75%',
-    borderRadius: 10,
-    alignSelf: 'center',
-    borderColor: "black",
-    //borderRadius: 8,
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
-    // borderBottomLeftRadius: 30,
-    // borderBottomRightRadius: 30,
+//   },
+//   cardImg: {
+//     height: '50%',
+//     width: '75%',
+//     borderRadius: 10,
+//     alignSelf: 'center',
+//     borderColor: "black",
+//     //borderRadius: 8,
+//     // borderTopLeftRadius: 30,
+//     // borderTopRightRadius: 30,
+//     // borderBottomLeftRadius: 30,
+//     // borderBottomRightRadius: 30,
 
-  },
-  cardInfo: {
-    flex: 4,
-    padding: 0,
-    borderColor: '#fff',
-    borderWidth: 5,
-    borderRightWidth: 13,
-    borderTopRightRadius: 8,
-    backgroundColor: '#fff',
-    Height: 120,
-    // borderColor: "black"
-  },
-  cardTitle: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    /// fontFamily: "Roboto-Regular",
-    paddingBottom: 5,
-  },
-  cardDetails: {
-    fontSize: 15,
-    paddingBottom: 2,
-    color: '#444',
-  },
-});
+//   },
+//   cardInfo: {
+//     flex: 4,
+//     padding: 0,
+//     borderColor: '#fff',
+//     borderWidth: 5,
+//     borderRightWidth: 13,
+//     borderTopRightRadius: 8,
+//     backgroundColor: '#fff',
+//     Height: 120,
+//     // borderColor: "black"
+//   },
+//   cardTitle: {
+//     fontWeight: 'bold',
+//     fontSize: 15,
+//     /// fontFamily: "Roboto-Regular",
+//     paddingBottom: 5,
+//   },
+//   cardDetails: {
+//     fontSize: 15,
+//     paddingBottom: 2,
+//     color: '#444',
+//   },
+// });

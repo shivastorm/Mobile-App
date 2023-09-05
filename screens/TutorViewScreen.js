@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from '../components/CustomButton';
+import {styles} from './styleSheet';
 import React, { useState, useEffect } from "react";
 import { getItem } from "../utils/only-token";
 
@@ -116,80 +117,81 @@ const TutorViewScreen = (props) => {
         </>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#ff',
-        flexDirection: 'column',
-        margin: 20,
 
-    },
-    profileImageContainer: {
-        marginTop: 20,
-        alignItems: 'center',
-    },
-    labelStyle: {
-        fontSize: 14,
-        color: "white",
-        fontFamily: 'Roboto-Bold',
-        textAlign: "center"
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         alignItems: 'center',
+//         backgroundColor: '#ff',
+//         flexDirection: 'column',
+//         margin: 20,
 
-    },
-    profileImage: {
-        width: 150,
-        height: 150,
-        borderRadius: 75, // To make the image round
-    },
-    nameContainer: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    firstName: {
-        fontSize: 24,
-        fontFamily: 'Roboto-Bold',
-        marginRight: 10,
-    },
-    detailsContainer: {
+//     },
+//     profileImageContainer: {
+//         marginTop: 20,
+//         alignItems: 'center',
+//     },
+//     labelStyle: {
+//         fontSize: 14,
+//         color: "white",
+//         fontFamily: 'Roboto-Bold',
+//         textAlign: "center"
 
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        padding: 25
+//     },
+//     profileImage: {
+//         width: 150,
+//         height: 150,
+//         borderRadius: 75, // To make the image round
+//     },
+//     nameContainer: {
+//         marginTop: 20,
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//     },
+//     firstName: {
+//         fontSize: 24,
+//         fontFamily: 'Roboto-Bold',
+//         marginRight: 10,
+//     },
+//     detailsContainer: {
 
-    },
-    detailItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    detailLabel: {
-        //width: 100,
-        fontSize: 14,
+//         alignItems: 'flex-start',
+//         justifyContent: 'flex-start',
+//         padding: 25
 
-        fontFamily: 'Roboto-Bold',
-    },
-    detailLabelstu: {
-        //width: 100,
-        fontSize: 14,
-        textAlignVertical: "bottom",
+//     },
+//     detailItem: {
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//         marginBottom: 10,
+//     },
+//     detailLabel: {
+//         //width: 100,
+//         fontSize: 14,
 
-        fontFamily: 'Roboto-Bold',
-    },
-    detailValue: {
-        fontSize: 14,
-        marginLeft: 10,
-        fontFamily: 'Roboto-Regular',
-    },
-    cardButton: {
-        backgroundColor: "#1b00b3",
-        width: 80,
-        height: 30,
-        margin: 2,
-        padding: 5,
-        borderRadius: 10,
-        alignContent: 'center'
-    },
-});
+//         fontFamily: 'Roboto-Bold',
+//     },
+//     detailLabelstu: {
+//         //width: 100,
+//         fontSize: 14,
+//         textAlignVertical: "bottom",
+
+//         fontFamily: 'Roboto-Bold',
+//     },
+//     detailValue: {
+//         fontSize: 14,
+//         marginLeft: 10,
+//         fontFamily: 'Roboto-Regular',
+//     },
+//     cardButton: {
+//         backgroundColor: "#1b00b3",
+//         width: 80,
+//         height: 30,
+//         margin: 2,
+//         padding: 5,
+//         borderRadius: 10,
+//         alignContent: 'center'
+//     },
+// });
 
 export default TutorViewScreen
