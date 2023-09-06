@@ -3,7 +3,7 @@ import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
 import Lottie from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
-import { setItem } from '../utils/only-token';
+import { setItem } from '../../utils/only-token';
 import { color } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
@@ -38,7 +38,7 @@ export default function OnboardingScreen() {
                         backgroundColor: '#17b8ff',
                         image: (
                             <View style={styles.lottie}>
-                                <Lottie source={require('../assets/animations/boost.json')} autoPlay loop />
+                                <Lottie source={require('../../assets/animations/boost.json')} autoPlay loop />
 
                             </View>
                         ),
@@ -49,7 +49,7 @@ export default function OnboardingScreen() {
                         backgroundColor: '#3cff3d',
                         image: (
                             <View style={styles.lottie}>
-                                <Lottie source={require('../assets/animations/work.json')} autoPlay loop />
+                                <Lottie source={require('../../assets/animations/work.json')} autoPlay loop />
                             </View>
                         ),
                         title: 'Work Seamlessly',
@@ -59,7 +59,7 @@ export default function OnboardingScreen() {
                         backgroundColor: '#a78bfa',
                         image: (
                             <View style={styles.lottie}>
-                                <Lottie source={require('../assets/animations/achieve.json')} autoPlay loop />
+                                <Lottie source={require('../../assets/animations/achieve.json')} autoPlay loop />
                             </View>
                         ),
                         title: 'Achieve Higher Goals',

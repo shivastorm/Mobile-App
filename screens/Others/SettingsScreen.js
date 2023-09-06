@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "../components/CustomButton";
-import { removeItem } from "../utils/only-token";
+import CustomButton from "../../components/CustomButton";
+import { removeItem } from "../../utils/only-token";
 export default function SettingsScreen({ navigation }) {
   const logoutHandle = () => {
     console.log('handled logut')
@@ -17,7 +17,7 @@ export default function SettingsScreen({ navigation }) {
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}  >
       <View style={styles.container}>
         <Text style={styles.Titile}>Logout:</Text>
-        <CustomButton label={"Logout"} onPress={logoutHandle} />
+        <CustomButton label={"Logout"} onPress={logoutHandle} style={styles.loginbtn} />
       </View>
     </SafeAreaView>
   );
@@ -31,7 +31,14 @@ const styles = StyleSheet.create({
   },
   Titile: {
     fontFamily: 'Roboto-Bold',
-    padding: 10
+    padding: 5
+  },
+  loginbtn: {
+    backgroundColor: "#9303a3",
+    fontFamily: 'Roboto-Bold',
+    padding: 5,
+    borderRadius: 10,
+    width: "25%"
   }
 
 });

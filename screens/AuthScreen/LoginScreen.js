@@ -6,10 +6,10 @@ import {
   TextInput,
   TouchableOpacity, Image, StyleSheet, Alert, ActivityIndicator, Picker
 } from 'react-native';
-import CustomButton from '../components/CustomButton';
-import LoginSave from '../utils/login/LoginSave';
-import { setItem } from '../utils/only-token';
-import { getItem } from "../utils/only-token";
+import CustomButton from '../../components/CustomButton';
+import LoginSave from '../../utils/login/LoginSave';
+import { setItem } from '../../utils/only-token';
+import { getItem } from "../../utils/only-token";
 
 export default LoginScreen = ({ navigation }) => {
 

@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { FlatList } from "react-native-gesture-handler";
-import { getItem } from "../utils/only-token";
-import CustomButton from "../components/CustomButton";
+import { getItem } from "../../utils/only-token";
+import CustomButton from "../../components/CustomButton";
 
 export default function ListTransactions({ navigation }) {
   const [value, setValue] = useState([])

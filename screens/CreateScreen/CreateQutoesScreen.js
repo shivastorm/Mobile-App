@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Button, StyleSheet, TextInput, Alert } from "react-native";
-import { getItem } from "../utils/only-token";
+import { getItem } from "../../utils/only-token";
 import { useState } from "react";
 
 export default function CreateQutoes() {

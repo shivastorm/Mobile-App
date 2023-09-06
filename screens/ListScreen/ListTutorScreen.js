@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, Image, ActivityIndicator,TextInput,Alert } from
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon1 from 'react-native-vector-icons/Octicons';
-import {styles} from './styleSheet';
+import {styles} from '../../Styles/styleSheet';
 import { FlatList } from "react-native-gesture-handler";
-import StarRating from "../components/starRating";
-import { getItem } from "../utils/only-token";
-import CustomButton from "../components/CustomButton";
+import StarRating from "../../components/starRating";
+import { getItem } from "../../utils/only-token";
+import CustomButton from "../../components/CustomButton";
 export default function TutorScreen({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
@@ -34,7 +34,7 @@ export default function TutorScreen({ navigation }) {
       .then((json) => {
         // Combine previous and new data
         const newData = [...value, ...json?.items];
-       console.log("search response ===",newData)
+     //  console.log("search response ===",newData)
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
         setValue(uniqueData);

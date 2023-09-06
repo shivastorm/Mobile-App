@@ -3,7 +3,7 @@ import axios from "axios";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import StarRating from "../components/starRating";
+import StarRating from "../../components/starRating";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
 export default function TutorScreen() {

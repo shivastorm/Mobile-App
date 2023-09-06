@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from '../components/CustomButton';
-import {styles} from './styleSheet';
+import CustomButton from '../../components/CustomButton';
+import {styles} from '../../Styles/styleSheet';
 import React, { useState, useEffect } from "react";
-import { getItem } from "../utils/only-token";
+import { getItem } from "../../utils/only-token";
 
 const TutorViewScreen = (props) => {
     const items = props.route.params.props.id

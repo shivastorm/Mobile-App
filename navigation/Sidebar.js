@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import {ActivityIndicator ,View,Image} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../screens/LoginScreen";
-import SignUpScreen from "../screens/SignUpScreen";
+import LoginScreen from "../screens/AuthScreen/LoginScreen";
+import SignUpScreen from "../screens/AuthScreen/SignUpScreen";
 import DrawerScreen from "../Drawer/DrawerScreen";
-import OnboardingScreen from "../screens/OnboardingScreen";
+import OnboardingScreen from "../screens/Others/OnboardingScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
-import TutorViewScreen from "../screens/TutorViewScreen";
+import TutorViewScreen from "../screens/Tutors/TutorViewScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {

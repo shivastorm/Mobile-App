@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from './styleSheet';
+import {styles} from '../../Styles/styleSheet';
 import { SafeAreaView } from "react-native-safe-area-context";
 //import filter from "lodash.filter"
-import { getItem } from "../utils/only-token";
-import CustomButton from "../components/CustomButton";
+import { getItem } from "../../utils/only-token";
+import CustomButton from "../../components/CustomButton";
 
 export default function ManageUser() {
   const [value, setValue] = useState([])

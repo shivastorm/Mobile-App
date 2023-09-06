@@ -1,18 +1,18 @@
 import { Image } from 'react-native';
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import DashboardScreen from "../screens/DashboardScreen";
-import TutorScreen from "../screens/TutorScreen";
-import ManageUser from "../screens/UserScreen";
-import ManageClaim from "../screens/ClaimScreen";
-import ListCategories from "../screens/CategoryScreen";
-import CreateCategory from "../screens/CreateCategoryScreen";
-import ListQuotes from "../screens/ListQuotesScreen.js";
-import CreateQuotes from "../screens/CreateQutoesScreen";
-import ListServices from "../screens/ListServicesScreen";
-import ListConfigurations from "../screens/ListConfiguration";
-import ListTransaction from "../screens/ListTransactions";
-import SettingsScreen from "../screens/SettingsScreen";
-import CreateServices from "../screens/CreateServices";
+import DashboardScreen from "../screens/Others/DashboardScreen";
+import TutorScreen from "../screens/ListScreen/ListTutorScreen";
+import ManageUser from "../screens/ListScreen/ListUserScreen";
+import ManageClaim from "../screens/Others/ClaimScreen";
+import ListCategories from "../screens/ListScreen/ListCategoryScreen";
+import CreateCategory from "../screens/CreateScreen/CreateCategoryScreen";
+import ListQuotes from "../screens/ListScreen/ListQuotesScreen.js";
+import CreateQuotes from "../screens/CreateScreen/CreateQutoesScreen";
+import ListServices from "../screens/ListScreen/ListServicesScreen";
+import ListConfigurations from "../screens/ListScreen/ListConfiguration";
+import ListTransaction from "../screens/ListScreen/ListTransactions";
+import SettingsScreen from "../screens/Others/SettingsScreen";
+import CreateServices from "../screens/CreateScreen/CreateServices";
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
 
 export default function DrawerScreen() {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, Image,  ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { getItem } from "../utils/only-token";
+import { getItem } from "../../utils/only-token";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import CustomButton from "../components/CustomButton";
+import CustomButton from "../../components/CustomButton";
 
-export default function ListQuotes() {
+export default function ListServices() {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -16,7 +16,7 @@ export default function ListQuotes() {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/servicesquotes/list?page=${page}`, {
+    fetch(`${Api}/services/list?page=${page}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -24,14 +24,18 @@ export default function ListQuotes() {
       },
     }).then((response) => response.json())
       .then((json) => {
+        // Combine previous and new data
         const newData = [...value, ...json?.items];
+        // console.log("hoivalue", newData)
+        //console.log('values=========', newData)
+        // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
 
         setValue(uniqueData);
         setIsLoading(false)
       })
       .catch(err => {
-        console.log('catch err in qutoes list api call=======', err)
+        console.log('catch err in service list api call=======', err)
         setIsLoading(false)
       })
   }
@@ -59,30 +63,30 @@ export default function ListQuotes() {
   };
 
   const renderItem = ({ item, index }) => {
-    let date = new Date(item.updated_at)
+    let date = new Date(item.created_at)
     return (
       <View style={styles.cardsWrapper}>
         <View style={styles.card}>
           <View style={styles.cardImgWrapper}>
             <Image
-              source={{ uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
+              source={{ uri: item.icon } ? { uri: item.icon } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
               style={styles.cardImg}
               resizeMode="cover"
             />
           </View>
           <View style={styles.cardInfo}>
-            {/* <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
               <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
               <Text style={styles.cardTitle}> {item.name} </Text>
-            </View> */}
+            </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <TruncatedText style={styles.cardDetails} text={item.description} />
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
               <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
             </View>
-            <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
           </View>
         </View>
       </View>
@@ -159,31 +163,30 @@ const styles = StyleSheet.create({
     height: 25,
     margin: 2,
     padding: 2,
-    borderRadius: 10,
-    marginLeft: 5,
+    borderRadius: 10
   },
   labelStyle: {
     color: "black",
     fontSize: 14,
     textAlign: "center"
-  },
-  searchbox: {
-    width: "83%",
-    paddingHorizontal: 20,
-    marginRight: 5,
+  }, 
+   searchbox: {
+    width:"83%",
+    paddingHorizontal: 20,  
+    marginRight:5,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
-    flexDirection: "row"
+    flexDirection:"row"
 
   },
-  searchboxicon: {
+  searchboxicon:{
     paddingHorizontal: 20,
     paddingVertical: 10,
     paddingRight: 20,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
-    flexDirection: "row"
+    flexDirection:"row"
   }
 });

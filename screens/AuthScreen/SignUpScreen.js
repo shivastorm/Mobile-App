@@ -10,10 +10,10 @@ import {
 //import { RobotoMedium } from './assets/fonts/Roboto-Medium.ttf';
 //import DatePicker from 'react-native-date-picker';
 
-import InputField from '../components/InputField';
+import InputField from '../../components/InputField';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomButton from '../components/CustomButton';
+import CustomButton from '../../components/CustomButton';
 
 const RegisterScreen = ({ navigation }) => {
   const [usermail, setUsermail] = useState('');

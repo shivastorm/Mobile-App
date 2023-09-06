@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image,  ActivityIndicator } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { getItem } from "../utils/only-token";
+import { getItem } from "../../utils/only-token";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import CustomButton from "../components/CustomButton";
+import CustomButton from "../../components/CustomButton";
 
-export default function ListServices() {
+export default function ListCategories() {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -16,7 +16,7 @@ export default function ListServices() {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/services/list?page=${page}`, {
+    fetch(`${Api}/categories/list?sort=updated_at.asc&page=${page}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -24,11 +24,7 @@ export default function ListServices() {
       },
     }).then((response) => response.json())
       .then((json) => {
-        // Combine previous and new data
         const newData = [...value, ...json?.items];
-        // console.log("hoivalue", newData)
-        //console.log('values=========', newData)
-        // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
 
         setValue(uniqueData);
@@ -63,17 +59,10 @@ export default function ListServices() {
   };
 
   const renderItem = ({ item, index }) => {
-    let date = new Date(item.created_at)
+    let date = new Date(item.updated_at)
     return (
       <View style={styles.cardsWrapper}>
         <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={{ uri: item.icon } ? { uri: item.icon } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-          </View>
           <View style={styles.cardInfo}>
             <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
               <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
@@ -129,19 +118,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: 'white',
     borderRadius: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  cardImgWrapper: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardImg: {
-    height: '50%',
-    width: '80%',
-    borderRadius: 10,
-    padding: 30,
+    padding: 10,
   },
   cardInfo: {
     flex: 4,
@@ -169,24 +146,5 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 14,
     textAlign: "center"
-  }, 
-   searchbox: {
-    width:"83%",
-    paddingHorizontal: 20,  
-    marginRight:5,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    flexDirection:"row"
-
-  },
-  searchboxicon:{
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    paddingRight: 20,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    flexDirection:"row"
   }
 });
