@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/AuthScreen/LoginScreen";
 import SignUpScreen from "../screens/AuthScreen/SignUpScreen";
 import DrawerScreen from "../Drawer/DrawerScreen";
- import OnboardingScreen from "../screens/Others/OnboardingScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
 import TutorViewScreen from "../screens/Tutors/TutorViewScreen";
@@ -40,25 +39,7 @@ export default function AppNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="OnBoard">
-        {!isOnboarding ?
-          <>
-            <Stack.Screen
-              name="OnBoard"
-              options={{ headerShown: false }}
-              component={OnboardingScreen}
-            />
-            <Stack.Screen
-              name="Login"
-              options={{ headerShown: false }}
-              component={LoginScreen}
-            />
-            <Stack.Screen
-              name="Dashboard"
-              options={{ headerShown: false }}
-              component={DrawerScreen} />
-                
-          </>
-          :
+        {
           isLoggedIn ?
             <>
               <Stack.Screen

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View,Text } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
-import Lottie from 'lottie-react-native';
+
 
 const NoInternetConnection = (props) => {
     const [isOnline, setOnline] = useState(true);
@@ -21,7 +21,7 @@ const NoInternetConnection = (props) => {
     } else {
         return (
             <View>
-                <Lottie source={require('../assets/animations/NoInternetConnection.json')} autoPlay loop />
+                <Text>No Internet</Text>
 
             </View>
         );
