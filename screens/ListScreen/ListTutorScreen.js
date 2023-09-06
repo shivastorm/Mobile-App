@@ -20,32 +20,29 @@ export default function TutorScreen({ navigation }) {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-   // console.log("url ======",`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`)
     fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`, {
       method: "GET",
       headers: {
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         Authorization: `Bearer ${convertedToken}`,
       },
-       
-    })
-   // console.log("search response",)
-    .then((response) => response.json())
+    }).then((response) => response.json())
       .then((json) => {
         // Combine previous and new data
         const newData = [...value, ...json?.items];
-     //  console.log("search response ===",newData)
+
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
+
         setValue(uniqueData);
         setIsLoading(false)
+
       })
       .catch(err => {
-        console.log('catch err in tutor list api call=======', err)
+        console.log('catch err in tutor list api=======', err)
         setIsLoading(false)
       })
-
-  };
+  }
 
   useEffect(() => {
     getData()

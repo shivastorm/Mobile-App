@@ -34,7 +34,7 @@ const RegisterScreen = ({ navigation }) => {
 
         </View>
         <Image
-          source={require("../assets/images/login.png")}
+          source={require("../../assets/images/login.png")}
           style={{
             width: 200, height: 200,
             marginTop: 60, marginLeft: 60
@@ -70,7 +70,7 @@ const RegisterScreen = ({ navigation }) => {
               paddingVertical: 10,
             }}>
             <Image
-              source={require("../assets/icons/facebook.png")}
+              source={require("../../assets/icons/facebook.png")}
               className="w-5 h-5"
               style={{ height: 35, width: 35 }}
             />
@@ -83,7 +83,7 @@ const RegisterScreen = ({ navigation }) => {
               paddingVertical: 10,
             }}>
             <Image
-              source={require("../assets/icons/apple.png")}
+              source={require("../../assets/icons/apple.png")}
               className="w-10 h-10"
               style={{ height: 35, width: 35 }}
             />
@@ -96,7 +96,7 @@ const RegisterScreen = ({ navigation }) => {
               paddingVertical: 10,
             }}>
             <Image
-              source={require("../assets/icons/google.png")}
+              source={require("../../assets/icons/google.png")}
               className="w-10 h-10"
               style={{ height: 35, width: 35 }}
             />

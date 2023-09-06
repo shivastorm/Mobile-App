@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, Image, ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from '../../components/CustomButton';
-import {styles} from '../../Styles/styleSheet';
+import { styles } from '../../Styles/styleSheet';
 import React, { useState, useEffect } from "react";
 import { getItem } from "../../utils/only-token";
+import { TextInput } from "react-native-gesture-handler";
 
 const TutorViewScreen = (props) => {
     const items = props.route.params.props.id
@@ -16,12 +17,14 @@ const TutorViewScreen = (props) => {
         let convertedToken = JSON.parse(access_token)
         let Api = await getItem('api')
         // console.log('acessTOken=====', Api)
+        
         fetch(`${Api}/providers/view/${items}/?id${items}&expand=user`, {
             method: "GET",
             headers: {
                 headers: { 'Content-Type': 'application/json' },
                 Authorization: `Bearer ${access_token}`,
             },
+            
         }).then((response) => response.json())
             .then((json) => {
                 // Combine previous and new data
@@ -54,66 +57,81 @@ const TutorViewScreen = (props) => {
     };
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.profileImageContainer}>
-                    <Image
-                        source={{ uri: 'https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg' }}
-                        style={styles.profileImage}
-                    />
-                </View>
-                <View style={styles.nameContainer}>
-                    <Text style={styles.firstName}>{item.type === 'Individual' ? item.firstname : item.businessname}</Text>
-                </View>
+            <SafeAreaView>
 
 
-                <View style={styles.detailsContainer}>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Email:</Text>
-                        <Text style={styles.detailValue}>{item.email}</Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Address:</Text>
-                        <Text style={styles.detailValue}>{item.address}</Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Phone:</Text>
-                        <Text style={styles.detailValue}>{item.mobile_number} </Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Type:</Text>
-                        <Text style={styles.detailValue}>{item.type} </Text>
+                <ScrollView>
 
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Bio:</Text>
-                        <Text style={styles.detailValue}>{item.bio} </Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Experience:</Text>
-                        <Text style={styles.detailValue}>{item.years_of_experience} </Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabelstu}>Students Taught:</Text>
-                        <Text style={styles.detailValue}>{item.no_of_students_taught} </Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Teaching Modes:</Text>
-                        <Text style={styles.detailValue}>{item.teaching_modes} </Text>
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Claim:</Text>
-                        <Text style={styles.detailValue}>{item.claim === 0 ? "Claimed" : 'Unclaimed'} </Text>
-                        <CustomButton style={styles.cardButton} onPress={() => claimHandle(item.id)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
-                    </View>
-                    <View style={styles.detailItem}>
-                        <Text style={styles.detailLabel}>Status:</Text>
-                        <Text style={styles.detailValue}>{item.user?.status === 0 ? "Deactivated" : 'Activated'} </Text>
-                        {/* <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Deactivate Now' : 'Activate Now'} /> */}
-                    </View>
-                    {/* Add more details as needed */}
-                </View>
-            </View>
+                    <View style={styles.container}>
+                        <View style={styles.profileImageContainer}>
+                            <Image
+                                source={{ uri: 'https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg' }}
+                                style={styles.profileImage}
+                            />
+                        </View>
+                        <View style={styles.nameContainer}>
+                            <Text style={styles.firstName}>{item.type === 'Individual' ? item.firstname : item.businessname}</Text>
+                        </View>
+                        <View style={styles.detailsContainer}>
+                        <View style={{ display: 'flex', flexDirection: 'row',justifyContent:'space-around',marginVertical:15 }}>
+                                
+                                    {/* <Text style={styles.detailLabel}>Claim:</Text>
+                                      <Text  >{item.claim === 0 ? "Claimed" : 'Unclaimed'} </Text> */}
+                                    <CustomButton style={styles.cardButton}  onPress={() => claimHandle(item.id)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
+                               
+                                    {/* <Text style={styles.detailLabel}>Status:</Text>
+                                   <Text style={styles.detailValue}>{item.user?.status === 0 ? "Deactivated" : 'Activated'} </Text> */}
+                                    <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
+                                 
+                            </View>
+                            <View style={styles.detailItem}>
+                                <Text style={styles.detailLabel}>Email:</Text>
+                                {/* <TextInput
+                                style={styles.detailValue}
+                                disabled="true"
+                                editable={false}
+                                value={item.email}
+                            >
+                            </TextInput> */}
+                                <Text style={styles.detailValue}>{item.email}</Text>
+                            </View>
+                            <View style={styles.detailItem}>
+                                <Text style={styles.detailLabel}>Address:</Text>
+                                <Text style={styles.detailValue}>{item.address}</Text>
+                            </View>
+                            <View style={styles.detailItem}>
+                                <Text style={styles.detailLabel}>Phone:</Text>
+                                <Text style={styles.detailValue}>{item.mobile_number} </Text>
+                            </View>
+                            <View style={styles.detailItem}>
+                                <Text style={styles.detailLabel}>Type:</Text>
+                                <Text style={styles.detailValue}>{item.type} </Text>
 
+                            </View>
+                            <View style={styles.detailItem}>
+                                <Text style={styles.detailLabel}>Bio:</Text>
+                                <Text style={styles.detailValue}>{item.bio} </Text>
+                            </View>
+                            <View  >
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>Experience:</Text>
+                                    <Text style={styles.detailValue}>{item.years_of_experience} </Text>
+                                </View>
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>Students Taught:</Text>
+                                    <Text style={styles.detailValue}>{item.no_of_students_taught} </Text>
+                                </View>
+                            </View>
+                            <View style={styles.detailItem}>
+                                <Text style={styles.detailLabel}>Teaching Modes:</Text>
+                                <Text style={styles.detailValue}>{item.teaching_modes} </Text>
+                            </View>
+                          
+                            {/* Add more details as needed */}
+                        </View>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         </>
     );
 }

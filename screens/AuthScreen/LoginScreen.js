@@ -75,7 +75,7 @@ export default LoginScreen = ({ navigation }) => {
       <View style={{ paddingHorizontal: 25 }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={require("../assets/images/signup.png")}
+            source={require("../../assets/images/signup.png")}
             style={{
               width: 300, height: 200, justifyContent: 'center',
               marginTop: 50,
@@ -125,7 +125,7 @@ export default LoginScreen = ({ navigation }) => {
               paddingVertical: 10,
             }}>
             <Image
-              source={require("../assets/icons/facebook.png")}
+              source={require("../../assets/icons/facebook.png")}
               className="w-10 h-10"
               style={{ height: 35, width: 35 }}
             />
@@ -137,7 +137,7 @@ export default LoginScreen = ({ navigation }) => {
               paddingVertical: 10,
             }}>
             <Image
-              source={require("../assets/icons/apple.png")}
+              source={require("../../assets/icons/apple.png")}
               className="w-10 h-10"
               style={{ height: 35, width: 35 }}
             />
@@ -149,7 +149,7 @@ export default LoginScreen = ({ navigation }) => {
               paddingVertical: 10,
             }}>
             <Image
-              source={require("../assets/icons/google.png")}
+              source={require("../../assets/icons/google.png")}
               className="w-10 h-10"
               style={{ height: 35, width: 35 }}
             />

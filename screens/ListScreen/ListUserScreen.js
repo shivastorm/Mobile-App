@@ -82,7 +82,7 @@ export default function ManageUser() {
           <View style={styles.cardInfo}>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <MIcon name="person" size={15} color="#900" style={styles.cardicon} />
-              <TruncatedText text={item.firstname} />
+              <TruncatedText text={item.firstname + ("  ") + item.lastname} />
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
