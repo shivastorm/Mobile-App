@@ -7,19 +7,19 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   cardsWrapper: {
-    marginTop: 20,
+    marginBottom: 20,
     width: '100%',
     alignSelf: 'center',
     borderBottomColor: "#fff",
   },
   card: {
     maxHeight: 145,
-    flexDirection: 'row',
+    flexDirection: 'row',     
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.26,
-    elevation: 8,
+    shadowRadius: 2,
+    shadowOpacity: 0.06,
+    elevation: 3,
     backgroundColor: 'white',
     borderRadius: 5,
     paddingTop: 10,
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: 14,
-    color: "white",
-    fontFamily: 'Roboto-Bold',
+    color: "black",
+    fontFamily: 'Roboto-Regular',
     textAlign: "center"
 
   },

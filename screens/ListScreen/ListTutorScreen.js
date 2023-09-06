@@ -134,7 +134,7 @@ export default function TutorScreen({ navigation }) {
   };
   return (
     <SafeAreaView style={{ backgroundColor: "white" }}  >
-      <View style={{marginHorizontal:10,flexDirection:"row",padding:10,marginBottom:-5}}>
+      <View style={{ flexDirection: "row", padding: 20,}}>
        <TextInput
           placeholder="Search"
           clearButtonMode="always"

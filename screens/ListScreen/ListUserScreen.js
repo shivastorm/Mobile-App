@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from '../../Styles/styleSheet';
+import { styles } from '../../Styles/styleSheet';
 import { SafeAreaView } from "react-native-safe-area-context";
-//import filter from "lodash.filter"
+ 
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
 
-export default function ManageUser() {
+export default function ManageUser(navigation) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -48,8 +48,8 @@ export default function ManageUser() {
   }, [page])
 
   const handleSearch = () => {
-    (searchQuery ? getData():Alert.alert('Error', 'enter data') )
-    setPage(1)     
+    (searchQuery ? getData() : Alert.alert('Error', 'enter data'))
+    setPage(1)
   };
   const TruncatedText = ({ text }) => {
     return (
@@ -60,7 +60,10 @@ export default function ManageUser() {
       </View>
     );
   };
-
+  const ViewProfile = () => {
+    navigation.navigate('UserView');
+  };
+  
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -92,18 +95,22 @@ export default function ManageUser() {
               <MIcon name="phone-iphone" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{item.mobile_number}</Text>
             </View>
-            <TouchableOpacity style={{
-              backgroundColor: "#e9b4f0",
-              width: 80,
-              height: 25,
-              margin: 2,
-              padding: 2,
-              borderRadius: 10
-            }}>
-              <Text style={styles.activebutton}>
-                {item.user.status === 1 ? 'Active' : 'Deactive'}
-              </Text>
-            </TouchableOpacity>
+            <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+              <TouchableOpacity style={{
+                backgroundColor: "#e9b4f0",
+                width: 80,
+                height: 25,
+                margin: 2,
+                padding: 2,
+                borderRadius: 10
+              }}>
+                <Text style={styles.activebutton}>
+                  {item.user.status === 1 ? 'Active' : 'Deactive'}
+                </Text>
+              </TouchableOpacity>
+              <CustomButton style={styles.cardButton1} onPress={() => ViewProfile()} labelStyle={styles.labelStyle} label={'View'} />
+
+            </View>
           </View>
         </View>
       </View>
@@ -111,20 +118,20 @@ export default function ManageUser() {
   }
   return (
     <View style={{ backgroundColor: "white" }} >
-      <View style={{ marginHorizontal: 10 ,flexDirection:"row",padding:10}} >
+      <View style={{   flexDirection: "row", padding: 20, }} >
         <TextInput
           placeholder="Search"
           clearButtonMode="always"
           style={styles.tutorsearchbox}
-          onChangeText={(query) =>{
+          onChangeText={(query) => {
             //  handleChange(query)
             setSearchQuery(query);
-           }}
-        value={searchQuery}
+          }}
+          value={searchQuery}
         />
-         <MIcon name="search" size={20} color="#900" 
-           style={styles.tutorsearchboxicon} 
-           onPress={() => handleSearch()} />
+        <MIcon name="search" size={20} color="#900"
+          style={styles.tutorsearchboxicon}
+          onPress={() => handleSearch()} />
       </View>
       <FlatList
         data={value}

@@ -73,7 +73,7 @@ const TutorViewScreen = (props) => {
                             <Text style={styles.firstName}>{item.type === 'Individual' ? item.firstname : item.businessname}</Text>
                         </View>
                         <View style={styles.detailsContainer}>
-                        <View style={{ display: 'flex', flexDirection: 'row',justifyContent:'space-around',marginVertical:15 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row',justifyContent:"space-between",marginVertical:15 }}>
                                 
                                     {/* <Text style={styles.detailLabel}>Claim:</Text>
                                       <Text  >{item.claim === 0 ? "Claimed" : 'Unclaimed'} </Text> */}

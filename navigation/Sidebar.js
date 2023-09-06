@@ -5,10 +5,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/AuthScreen/LoginScreen";
 import SignUpScreen from "../screens/AuthScreen/SignUpScreen";
 import DrawerScreen from "../Drawer/DrawerScreen";
-import OnboardingScreen from "../screens/Others/OnboardingScreen";
+ import OnboardingScreen from "../screens/Others/OnboardingScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
 import TutorViewScreen from "../screens/Tutors/TutorViewScreen";
+import UserViewScreen from "../screens/UserViewScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
@@ -55,6 +56,7 @@ export default function AppNavigation() {
               name="Dashboard"
               options={{ headerShown: false }}
               component={DrawerScreen} />
+                
           </>
           :
           isLoggedIn ?
@@ -77,6 +79,11 @@ export default function AppNavigation() {
                 name="TutorView"
                 options={{ headerShown: false }}
                 component={TutorViewScreen}
+              />
+                <Stack.Screen
+                name="UserView"
+                options={{ headerShown: false }}
+                component={UserViewScreen}
               />
             </>
             :
