@@ -23,7 +23,7 @@ export default function DrawerScreen() {
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 3,
-  }
+      }
   return (
     <Drawer.Navigator screenOptions={{
       drawerStyle: {
