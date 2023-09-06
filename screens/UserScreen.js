@@ -47,6 +47,10 @@ export default function ManageUser() {
     getData()
   }, [page])
 
+  const handleSearch = () => {
+    (searchQuery ? getData():Alert.alert('Error', 'enter data') )
+    setPage(1)     
+  };
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -107,14 +111,20 @@ export default function ManageUser() {
   }
   return (
     <View style={{ backgroundColor: "white" }} >
-      <View style={{ marginHorizontal: 10 }} >
+      <View style={{ marginHorizontal: 10 ,flexDirection:"row",padding:10}} >
         <TextInput
           placeholder="Search"
           clearButtonMode="always"
-          style={styles.searchbox}
-          value={searchQuery}
-          onChangeText={(query) => handleChange(query)}
+          style={styles.tutorsearchbox}
+          onChangeText={(query) =>{
+            //  handleChange(query)
+            setSearchQuery(query);
+           }}
+        value={searchQuery}
         />
+         <MIcon name="search" size={20} color="#900" 
+           style={styles.tutorsearchboxicon} 
+           onPress={() => handleSearch()} />
       </View>
       <FlatList
         data={value}

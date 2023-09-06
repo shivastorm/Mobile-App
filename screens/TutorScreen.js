@@ -24,7 +24,7 @@ export default function TutorScreen({ navigation }) {
     fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`, {
       method: "GET",
       headers: {
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         Authorization: `Bearer ${convertedToken}`,
       },
        
@@ -34,7 +34,7 @@ export default function TutorScreen({ navigation }) {
       .then((json) => {
         // Combine previous and new data
         const newData = [...value, ...json?.items];
-       // console.log("search response ===",newData)
+       console.log("search response ===",newData)
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
         setValue(uniqueData);
@@ -81,8 +81,9 @@ export default function TutorScreen({ navigation }) {
   };
   
   const handleSearch = () => {
+    (searchQuery ? getData():Alert.alert('Error', 'enter data') )
     setPage(1)
-     (searchQuery ? getData():Alert.alert('Error', 'enter data') )
+     
   };
     
 
