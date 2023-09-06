@@ -4,12 +4,13 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, StyleSheet, Alert, ActivityIndicator, Picker
+  TouchableOpacity, Image, Alert, ActivityIndicator, Picker
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import LoginSave from '../../utils/login/LoginSave';
 import { setItem } from '../../utils/only-token';
 import { getItem } from "../../utils/only-token";
+import { styles } from '../../Styles/AuthScreenStyleSheet';
 
 export default LoginScreen = ({ navigation }) => {
 
@@ -22,7 +23,7 @@ export default LoginScreen = ({ navigation }) => {
       Alert.alert('Error', 'Username and password are required');
       return;
     }
-    let Api 
+    let Api
     if (props === 'live') {
       setItem('api', 'https://api.nurtem.com');
       Api = 'https://api.nurtem.com'
@@ -167,33 +168,3 @@ export default LoginScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 30,
-  },
-  footerIcons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 30,
-    paddingHorizontal: 20,
-  }
-});

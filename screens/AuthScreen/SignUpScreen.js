@@ -5,7 +5,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, StyleSheet
+  TouchableOpacity, Image
 } from 'react-native';
 //import { RobotoMedium } from './assets/fonts/Roboto-Medium.ttf';
 //import DatePicker from 'react-native-date-picker';
@@ -14,6 +14,7 @@ import InputField from '../../components/InputField';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../../components/CustomButton';
+import { styles } from '../../Styles/AuthScreenStyleSheet';
 
 const RegisterScreen = ({ navigation }) => {
   const [usermail, setUsermail] = useState('');
@@ -204,20 +205,3 @@ const RegisterScreen = ({ navigation }) => {
 };
 
 export default RegisterScreen;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-});

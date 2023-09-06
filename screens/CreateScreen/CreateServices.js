@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, TextInput, } from "react-native";
+import { View, Text, Button, TextInput, } from "react-native";
 import { getItem } from "../../utils/only-token";
 import { useState } from "react";
+import { styles } from '../../Styles/CreateStyleSheet'
 
 export default function CreateServices() {
     const [name, setName] = useState('');
@@ -70,28 +71,3 @@ export default function CreateServices() {
         </View>
     );
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-        backgroundColor: "#fff"
-    },
-    label: {
-        fontSize: 18,
-        marginBottom: 8,
-    },
-    input: {
-        fontSize: 16,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 4,
-        padding: 8,
-        marginBottom: 16,
-    },
-});
-
-
-
-
