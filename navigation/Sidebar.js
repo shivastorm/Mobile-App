@@ -40,72 +40,38 @@ export default function AppNavigation() {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="OnBoard">
-        {!isOnboarding ?
-          <>
-            <Stack.Screen
-              name="OnBoard"
-              options={{ headerShown: false }}
-              component={OnboardingScreen}
-            />
-            <Stack.Screen
-              name="Login"
-              options={{ headerShown: false }}
-              component={LoginScreen}
-            />
-            <Stack.Screen
-              name="Dashboard"
-              options={{ headerShown: false }}
-              component={DrawerScreen} />
-
-          </>
-          :
-          isLoggedIn ?
-            <>
-              <Stack.Screen
-                name="Dashboard"
-                options={{ headerShown: false }}
-                component={DrawerScreen} />
-              <Stack.Screen
-                name="Login"
-                options={{ headerShown: false }}
-                component={LoginScreen}
-              />
-              <Stack.Screen
-                name="SignUp"
-                options={{ headerShown: false }}
-                component={SignUpScreen}
-              />
-              <Stack.Screen
-                name="TutorView"
-                options={{ headerShown: false }}
-                component={TutorViewScreen}
-              />
-              <Stack.Screen
-                name="UserView"
-                options={{ headerShown: false }}
-                component={UserViewScreen}
-              />
-            </>
-            :
-            <>
-              <Stack.Screen
-                name="Login"
-                options={{ headerShown: false }}
-                component={LoginScreen}
-              />
-              <Stack.Screen
-                name="SignUp"
-                options={{ headerShown: false }}
-                component={SignUpScreen}
-              />
-              <Stack.Screen
-                name="Dashboard"
-                options={{ headerShown: false }}
-                component={DrawerScreen}
-              />
-            </>
+      <Stack.Navigator
+        initialRouteName={
+          !isOnboarding ? "OnBoard" :
+            isLoggedIn ? "Dashboard" : "Login"
         }
+      >
+        <>
+          <Stack.Screen
+            name="OnBoard"
+            options={{ headerShown: false }}
+            component={OnboardingScreen}
+          />
+          <Stack.Screen
+            name="Login"
+            options={{ headerShown: false }}
+            component={LoginScreen}
+          />
+          <Stack.Screen
+            name="Dashboard"
+            options={{ headerShown: false }}
+            component={DrawerScreen} />
+          <Stack.Screen
+            name="TutorView"
+            options={{ headerShown: false }}
+            component={TutorViewScreen}
+          />
+          <Stack.Screen
+            name="UserView"
+            options={{ headerShown: false }}
+            component={UserViewScreen}
+          />
+        </>
       </Stack.Navigator>
     </NavigationContainer>
   );

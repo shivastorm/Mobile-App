@@ -17,14 +17,14 @@ const TutorViewScreen = (props) => {
         let convertedToken = JSON.parse(access_token)
         let Api = await getItem('api')
         // console.log('acessTOken=====', Api)
-        
+
         fetch(`${Api}/providers/view/${items}/?id${items}&expand=user`, {
             method: "GET",
             headers: {
                 headers: { 'Content-Type': 'application/json' },
-                Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${convertedToken}`,
             },
-            
+
         }).then((response) => response.json())
             .then((json) => {
                 // Combine previous and new data
@@ -58,10 +58,7 @@ const TutorViewScreen = (props) => {
     return (
         <>
             <SafeAreaView>
-
-
                 <ScrollView>
-
                     <View style={styles.container}>
                         <View style={styles.profileImageContainer}>
                             <Image
@@ -73,16 +70,16 @@ const TutorViewScreen = (props) => {
                             <Text style={styles.firstName}>{item.type === 'Individual' ? item.firstname : item.businessname}</Text>
                         </View>
                         <View style={styles.detailsContainer}>
-                        <View style={{ display: 'flex', flexDirection: 'row',justifyContent:"space-between",marginVertical:15 }}>
-                                
-                                    {/* <Text style={styles.detailLabel}>Claim:</Text>
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", marginVertical: 15 }}>
+
+                                {/* <Text style={styles.detailLabel}>Claim:</Text>
                                       <Text  >{item.claim === 0 ? "Claimed" : 'Unclaimed'} </Text> */}
-                                    <CustomButton style={styles.cardButton}  onPress={() => claimHandle(item.id)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
-                               
-                                    {/* <Text style={styles.detailLabel}>Status:</Text>
+                                <CustomButton style={styles.cardButton} onPress={() => claimHandle(item.id)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
+
+                                {/* <Text style={styles.detailLabel}>Status:</Text>
                                    <Text style={styles.detailValue}>{item.user?.status === 0 ? "Deactivated" : 'Activated'} </Text> */}
-                                    <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
-                                 
+                                <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
+
                             </View>
                             <View style={styles.detailItem}>
                                 <Text style={styles.detailLabel}>Email:</Text>
@@ -126,7 +123,7 @@ const TutorViewScreen = (props) => {
                                 <Text style={styles.detailLabel}>Teaching Modes:</Text>
                                 <Text style={styles.detailValue}>{item.teaching_modes} </Text>
                             </View>
-                          
+
                             {/* Add more details as needed */}
                         </View>
                     </View>

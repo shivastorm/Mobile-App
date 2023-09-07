@@ -6,7 +6,7 @@ import { styles } from '../../Styles/styleSheet';
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
 
-export default function ManageUser(navigation) {
+export default function ManageUser({navigation}) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
