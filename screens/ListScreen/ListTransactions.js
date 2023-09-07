@@ -109,7 +109,7 @@ export default function ListTransactions({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}  >
+    <View style={{ backgroundColor: "white" }}  >
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
@@ -119,7 +119,7 @@ export default function ListTransactions({ navigation }) {
       // onRefresh={onRefresh}
       // refreshing={isRefreshing}
       />
-    </SafeAreaView >
+    </View >
   )
 }
 

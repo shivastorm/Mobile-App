@@ -83,7 +83,7 @@ export default function ListCategories() {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}  >
+<View style={{ backgroundColor: "white" }} >
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
@@ -91,7 +91,7 @@ export default function ListCategories() {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
-    </SafeAreaView>
+    </View>
 
   );
 };

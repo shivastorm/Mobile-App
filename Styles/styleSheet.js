@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#fff",
   },
   card: {
-    maxHeight: 145,
+    maxHeight: 160,
     flexDirection: 'row',     
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   cardDetails: {
     fontSize: 15,
+    paddingEnd:10,
     paddingBottom: 2,
     color: '#444',
   },
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   tutorsearchbox: {
+     
     width: "83%",
     paddingHorizontal: 20,
     marginRight: 5,

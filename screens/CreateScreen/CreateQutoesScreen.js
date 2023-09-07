@@ -33,6 +33,7 @@ export default function CreateQutoes() {
       .then((json) => {
         if (json.status === 200) {
           Alert.alert('category created sucessfully ');
+          setDescription(null)
           return;
         } else {
           Alert.alert('Error! ');

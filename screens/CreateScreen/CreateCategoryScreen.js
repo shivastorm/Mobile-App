@@ -34,7 +34,10 @@ export default function CreateCategory() {
       .then((json) => {
         if (json.status === 200) {
           Alert.alert('category created sucessfully ');
+          setName(null)
+          setDescription(null)
           return;
+
         } else {
           Alert.alert('Error! ');
         }

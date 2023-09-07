@@ -19,6 +19,7 @@ export default function DrawerScreen() {
   const Drawer = createDrawerNavigator();
   const headerStyle = {
     shadowColor: 'black',
+   
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.26,
@@ -27,15 +28,16 @@ export default function DrawerScreen() {
   return (
     <Drawer.Navigator screenOptions={{
       drawerStyle: {
+        color:"black",
         backgroundColor: '#f1f1f1',
         width: 230,
-        paddingTop: 20
+        paddingTop: 50
       },
       drawerContent: (props) => (
         <View>
           <Image
             source={require('../assets/nurtemnobg.png')}
-            style={{ width: 80, height: 180, alignSelf: 'center', marginTop: 50 }}
+            style={{ width: 180, height: 180, marginTop: 60 }}
           />
         </View>
       )

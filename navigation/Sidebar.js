@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {ActivityIndicator ,View,Image} from "react-native";
+import { ActivityIndicator, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/AuthScreen/LoginScreen";
 import SignUpScreen from "../screens/AuthScreen/SignUpScreen";
+import OnboardingScreen from "../screens/Others/OnboardingScreen";
+
 import DrawerScreen from "../Drawer/DrawerScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
@@ -17,21 +19,21 @@ export default function AppNavigation() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAccessToken(setIsLoggedIn, setIsOnboarding)
-    .then(() => setIsLoading(false))
-    .catch((error) => {
-      console.log('Failed to retrieve access token and onboarding status:', error);
-      setIsLoading(false);
-    });
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        console.log('Failed to retrieve access token and onboarding status:', error);
+        setIsLoading(false);
+      });
   }, []);
   //removeAllTokens();
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-          <Image
-              source={require('../assets/nurtemnobg.png')}
-              style={{ width: "100%", height: 180, alignSelf: 'center', marginTop: 50 }}
-              resizeMode="cover"
-            />
+        <Image
+          source={require('../assets/nurtemnobg.png')}
+          style={{ width: "100%", height: 180, alignSelf: 'center', marginTop: 50 }}
+          resizeMode="cover"
+        />
         <ActivityIndicator size={"large"} color={"#002c83"} />
       </View>
     )
@@ -39,7 +41,25 @@ export default function AppNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="OnBoard">
-        {
+        {!isOnboarding ?
+          <>
+            <Stack.Screen
+              name="OnBoard"
+              options={{ headerShown: false }}
+              component={OnboardingScreen}
+            />
+            <Stack.Screen
+              name="Login"
+              options={{ headerShown: false }}
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              name="Dashboard"
+              options={{ headerShown: false }}
+              component={DrawerScreen} />
+
+          </>
+          :
           isLoggedIn ?
             <>
               <Stack.Screen
@@ -61,7 +81,7 @@ export default function AppNavigation() {
                 options={{ headerShown: false }}
                 component={TutorViewScreen}
               />
-                <Stack.Screen
+              <Stack.Screen
                 name="UserView"
                 options={{ headerShown: false }}
                 component={UserViewScreen}

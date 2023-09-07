@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View,Text } from 'react-native';
+import { View,Text, Image } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 
 
@@ -21,6 +21,9 @@ const NoInternetConnection = (props) => {
     } else {
         return (
             <View>
+                <Image
+                source={require('../assets/images/noInternet.jpg')}
+                />
                 <Text>No Internet</Text>
 
             </View>

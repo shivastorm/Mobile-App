@@ -90,7 +90,7 @@ export default function ListQuotes() {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}  >
+    <View style={{ backgroundColor: "white" }} >
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
@@ -98,7 +98,7 @@ export default function ListQuotes() {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
-    </SafeAreaView>
+    </View>
 
   );
 };

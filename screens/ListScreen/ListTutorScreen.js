@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator,TextInput,Alert } from "react-native";
+import { View, Text, StyleSheet, Image, ActivityIndicator, TextInput, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon1 from 'react-native-vector-icons/Octicons';
-import {styles} from '../../Styles/styleSheet';
-import { FlatList } from "react-native-gesture-handler";
+import { styles } from '../../Styles/styleSheet';
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 import StarRating from "../../components/starRating";
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
@@ -20,7 +20,7 @@ export default function TutorScreen({ navigation }) {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`, {
+    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=10&page=${page}&email=${searchQuery}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -65,30 +65,30 @@ export default function TutorScreen({ navigation }) {
     }, 2000)
   };
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} color={"#e9b4f0"} />
-      </View>
-    )
-  };
+  // if (isLoading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center" }}>
+  //       <ActivityIndicator size={"large"} color={"#e9b4f0"} />
+  //     </View>
+  //   )
+  // };
 
   const ViewProfile = (props) => {
     navigation.navigate('TutorView', { props });
   };
-  
+
   const handleSearch = () => {
-    (searchQuery ? getData():Alert.alert('Error', 'enter data') )
+    (searchQuery ? getData() : Alert.alert('Error', 'enter data'))
     setPage(1)
-     
+
   };
-    
 
-   // console.log('Searching for:',searchQuery);
-     
-  
 
-  const renderItem = ({ item, index }) => {
+  // console.log('Searching for:',searchQuery);
+
+
+
+  const renderItem =({ item, index }) => {
     return (
       <View style={styles.cardsWrapper}>
         <View style={styles.card}>
@@ -103,13 +103,13 @@ export default function TutorScreen({ navigation }) {
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
               <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
-              {item.verified ===1 ? 
-             <MIcon1 name="verified" size={20} color="#197808" style={{marginLeft:5}} />
-             :
-            <MIcon1 name="unverified" size={20} color="#197808" style={{marginLeft:5}} />
-            }
+              {item.verified === 1 ?
+                <MIcon1 name="verified" size={20} color="#197808" style={{ marginLeft: 5 }} />
+                :
+                <MIcon1 name="unverified" size={20} color="#197808" style={{ marginLeft: 5 }} />
+              }
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <View style={{ display: 'flex', flexDirection: 'row',paddingEnd:5 }}>
               <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{item.email}</Text>
             </View>
@@ -133,23 +133,23 @@ export default function TutorScreen({ navigation }) {
     )
   };
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}  >
-      <View style={{ flexDirection: "row", padding: 20,}}>
-       <TextInput
+    <View style={{ backgroundColor: "white" }}  >
+      <View style={{ flexDirection: "row", padding: 20 }}>
+        <TextInput
           placeholder="Search"
           clearButtonMode="always"
           style={styles.tutorsearchbox}
           onChangeText={(query) => {
             setSearchQuery(query);
-           // handleSearch(query);
+            // handleSearch(query);
           }}
           value={searchQuery}
-          
-          />
-           <MIcon name="search" size={20} color="#900" 
-           style={styles.tutorsearchboxicon} 
-           onPress={() => handleSearch()} />
-        </View>
+
+        />
+        <MIcon name="search" size={20} color="#900"
+          style={styles.tutorsearchboxicon}
+          onPress={() => handleSearch()} />
+      </View>
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
@@ -159,7 +159,7 @@ export default function TutorScreen({ navigation }) {
       // onRefresh={onRefresh}
       // refreshing={isRefreshing}
       />
-    </SafeAreaView >
+    </View >
   )
 }
 
@@ -226,10 +226,10 @@ export default function TutorScreen({ navigation }) {
 //     color: "black",
 //     fontSize: 14,
 //     textAlign: "center"
-//   }, 
+//   },
 //    searchbox: {
 //     width:"83%",
-//     paddingHorizontal: 20,  
+//     paddingHorizontal: 20,
 //     marginRight:5,
 //     borderColor: '#ccc',
 //     borderWidth: 1,
