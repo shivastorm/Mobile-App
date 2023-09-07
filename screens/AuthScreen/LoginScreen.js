@@ -4,8 +4,9 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity, Image, Alert, ActivityIndicator, Picker
+  TouchableOpacity, Image, ActivityIndicator, Keyboard
 } from 'react-native';
+import Toast from 'react-native-root-toast';
 import CustomButton from '../../components/CustomButton';
 import LoginSave from '../../utils/login/LoginSave';
 import { setItem } from '../../utils/only-token';
@@ -20,9 +21,10 @@ export default LoginScreen = ({ navigation }) => {
 
   const handleLogin = async (props) => {
     if (username === '' || password === '') {
-      Alert.alert('Error', 'Username and password are required');
+      Toast.show('Username and password are required!!🤷‍♀️')
       return;
     }
+    Keyboard.dismiss();
     let Api
     if (props === 'live') {
       setItem('api', 'https://api.nurtem.com');
@@ -51,7 +53,7 @@ export default LoginScreen = ({ navigation }) => {
       //console.log("response====", data.status)
       if (data.status && (data.status === 400 || data.status === 401 || data.status === 500)) {
         //console.log("response===2", data)
-        Alert.alert('Error', data.message);
+        Toast.show('❌ Wrong username or password ❌')
         setIsLoading(false)
       } else {
         try {

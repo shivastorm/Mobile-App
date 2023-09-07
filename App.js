@@ -9,6 +9,7 @@ import {
   StyleSheet
 } from 'react-native';
 import NoInternetConnection from "./utils/CheckInternetConnection";
+import { RootSiblingParent } from 'react-native-root-siblings';
 SplashScreen.preventAutoHideAsync();
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -30,13 +31,15 @@ const App = () => {
   }
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <NoInternetConnection>
-          <View style={styles.container} onLayout={onLayoutRootView}>
-            <Sidebar />
-          </View >
-        </NoInternetConnection>
-      </SafeAreaView>
+      <RootSiblingParent>
+        <SafeAreaView style={styles.container}>
+          <NoInternetConnection>
+            <View style={styles.container} onLayout={onLayoutRootView}>
+              <Sidebar />
+            </View >
+          </NoInternetConnection>
+        </SafeAreaView>
+      </RootSiblingParent>
     </>
   );
 }

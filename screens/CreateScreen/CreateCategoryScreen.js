@@ -1,11 +1,14 @@
 import React from "react";
-import { View, Text, Button, TextInput, Alert } from "react-native";
+import { View, Text, Button, TextInput, Keyboard, ActivityIndicator } from "react-native";
+import Toast from 'react-native-root-toast';
 import { getItem } from "../../utils/only-token";
 import { useState } from "react";
 import { styles } from '../../Styles/CreateStyleSheet'
 export default function CreateCategory() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleNameChange = (text) => {
     setName(text);
   };
@@ -14,6 +17,8 @@ export default function CreateCategory() {
   };
 
   const handleSubmit = async () => {
+    Keyboard.dismiss();
+    setIsLoading(true)
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
@@ -33,20 +38,22 @@ export default function CreateCategory() {
       .then((response) => response.json())
       .then((json) => {
         if (json.status === 200) {
-          Alert.alert('category created sucessfully ');
           setName(null)
           setDescription(null)
+          setIsLoading(false)
+          Toast.show('✌️Success✌️')
           return;
-
         } else {
-          Alert.alert('Error! ');
+          setIsLoading(false)
+          Toast.show('😞Error😞')
         }
       })
       .catch((error) => {
+        setIsLoading(false)
+        Toast.show('😞Error😞')
         console.error('API request failed in create category====>', error);
       });
   };
-
 
   return (
     <View style={styles.container}>
@@ -64,7 +71,15 @@ export default function CreateCategory() {
         value={description}
         onChangeText={handleDescriptionChange}
       />
-      <Button title="Submit" onPress={handleSubmit} />
+      {isLoading ? (
+        <ActivityIndicator size="large" color="rose" />
+      ) : (
+        <Button
+          title={"Submit"}
+          onPress={handleSubmit}
+          disabled={isLoading}
+        />
+      )}
     </View>
   );
 }
