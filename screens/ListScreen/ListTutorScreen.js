@@ -80,7 +80,8 @@ export default function TutorScreen({ navigation }) {
   };
 
   const ViewProfile = (props) => {
-    navigation.navigate('TutorView', { props });
+    console.log('propsnow========',props.id)
+    navigation.navigate('TutorView', (props.id));
   };
 
   const handleSearch = () => {

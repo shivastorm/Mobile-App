@@ -5,12 +5,12 @@ import { styles } from '../../Styles/styleSheet';
 import React, { useState, useEffect } from "react";
 import { getItem } from "../../utils/only-token";
 import { TextInput } from "react-native-gesture-handler";
+import Toast from 'react-native-root-toast';
 
 const TutorViewScreen = (props) => {
-    const items = props.route.params.props.id
+    const items = props.route.params
     const [isLoading, setIsLoading] = useState(false)
     const [item, setValue] = useState([])
-
     const getData = async () => {
         setIsLoading(true)
         let access_token = await getItem('access_token');
@@ -37,15 +37,56 @@ const TutorViewScreen = (props) => {
                 console.log('catch err in tutor list api=======', err)
                 setIsLoading(false)
             })
-    }
+    };
+
     useEffect(() => {
         getData()
     }, [items])
-    const claimHandle = (value) => {
-        console.log('item=================', value)
-    }
-    const statusHandle = (value) => {
-        console.log('item=================', value)
+
+    const claimHandle = async (id, status) => {
+
+
+    };
+
+    const statusHandle = async (id, status) => {
+        setIsLoading(true)
+        let access_token = await getItem('access_token');
+        let convertedToken = JSON.parse(access_token)
+        let Api = await getItem('api')
+        // console.log('acessTOken=====', Api)
+
+        const data = {
+            id: id,
+            status: status === 1 ? 0 : 1,
+        }
+        console.log('acessTOken1=====', data)
+        fetch(`${Api}/users/change-status?page=1&sort=created_at.desc`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${convertedToken}`,
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((json) => {
+         console.log('acessTOken=====', json)
+
+                if (json.status === 200) {
+                    setIsLoading(false)
+                    Toast.show('✌️Success✌️')
+                    getData()
+                    return;
+                } else {
+                    setIsLoading(false)
+                    Toast.show('😞Error😞')
+                }
+            })
+            .catch((error) => {
+                setIsLoading(false)
+                Toast.show('😞Error😞')
+                console.error('API request failed in chagnge status category====>', error);
+            });
 
     }
     if (isLoading) {
@@ -57,6 +98,7 @@ const TutorViewScreen = (props) => {
     };
     return (
         <>
+            {/* {console.log('itemshere======', item)} */}
             <SafeAreaView>
                 <ScrollView>
                     <View style={styles.container}>
@@ -74,11 +116,11 @@ const TutorViewScreen = (props) => {
 
                                 {/* <Text style={styles.detailLabel}>Claim:</Text>
                                       <Text  >{item.claim === 0 ? "Claimed" : 'Unclaimed'} </Text> */}
-                                <CustomButton style={styles.cardButton} onPress={() => claimHandle(item.id)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
+                                <CustomButton style={styles.cardButton} onPress={() => claimHandle(item.id, item.user?.status)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
 
                                 {/* <Text style={styles.detailLabel}>Status:</Text>
                                    <Text style={styles.detailValue}>{item.user?.status === 0 ? "Deactivated" : 'Activated'} </Text> */}
-                                <CustomButton style={styles.cardButton} onPress={() => statusHandle()} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
+                                <CustomButton style={styles.cardButton} onPress={() => statusHandle(item.id, item.user?.status)} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
 
                             </View>
                             <View style={styles.detailItem}>

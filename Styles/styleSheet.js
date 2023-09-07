@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: 14,
-    color: "black",
+    color: "#fff",
     fontFamily: 'Roboto-Regular',
     textAlign: "center"
 
