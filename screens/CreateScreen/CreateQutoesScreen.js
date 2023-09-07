@@ -1,19 +1,21 @@
 import React from "react";
-import { View, Text, Button, TextInput, Alert } from "react-native";
+import { View, Text, Button, TextInput, ActivityIndicator, Keyboard } from "react-native";
 import { getItem } from "../../utils/only-token";
 import { useState } from "react";
 import { styles } from '../../Styles/CreateStyleSheet'
+import Toast from 'react-native-root-toast';
 
 export default function CreateQutoes() {
   const [description, setDescription] = useState('');
-  const handleNameChange = (text) => {
-    setName(text);
-  };
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleDescriptionChange = (text) => {
     setDescription(text);
   };
 
   const handleSubmit = async () => {
+    Keyboard.dismiss();
+    setIsLoading(true)
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
@@ -32,18 +34,21 @@ export default function CreateQutoes() {
       .then((response) => response.json())
       .then((json) => {
         if (json.status === 200) {
-          Alert.alert('category created sucessfully ');
+          Toast.show('✌️Success✌️')
+          setIsLoading(false)
           setDescription(null)
           return;
         } else {
-          Alert.alert('Error! ');
+          setIsLoading(false)
+          Toast.show('😞Error😞')
         }
       })
       .catch((error) => {
+        Toast.show('😞Error😞')
+        setIsLoading(false)
         console.error('API request failed in create category====>', error);
       });
   };
-
 
   return (
     <View style={styles.container}>
@@ -54,7 +59,11 @@ export default function CreateQutoes() {
         value={description}
         onChangeText={handleDescriptionChange}
       />
-      <Button title="Submit" onPress={handleSubmit} />
+      {isLoading ? (
+        <ActivityIndicator size="large" color="rose" />
+      ) : (
+        <Button title="Submit" onPress={handleSubmit} />
+      )}
     </View>
   );
 }
