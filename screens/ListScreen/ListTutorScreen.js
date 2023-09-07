@@ -14,9 +14,11 @@ export default function TutorScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
   const getData = async () => {
-    setIsLoading(true)
+    
+    
+      setIsLoading(true)
+    
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
@@ -35,12 +37,16 @@ export default function TutorScreen({ navigation }) {
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
 
         setValue(uniqueData);
-        setIsLoading(false)
+         
+          setIsLoading(false)
+          
 
       })
       .catch(err => {
         console.log('catch err in tutor list api=======', err)
-        setIsLoading(false)
+        
+          setIsLoading(false)
+        
       })
   }
 
@@ -65,13 +71,13 @@ export default function TutorScreen({ navigation }) {
     }, 2000)
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center" }}>
-  //       <ActivityIndicator size={"large"} color={"#e9b4f0"} />
-  //     </View>
-  //   )
-  // };
+  if (isLoading && page === 1) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color={"#e9b4f0"} />
+      </View>
+    )
+  };
 
   const ViewProfile = (props) => {
     navigation.navigate('TutorView', { props });
@@ -88,7 +94,7 @@ export default function TutorScreen({ navigation }) {
 
 
 
-  const renderItem =({ item, index }) => {
+  const renderItem = ({ item, index }) => {
     return (
       <View style={styles.cardsWrapper}>
         <View style={styles.card}>
@@ -109,7 +115,7 @@ export default function TutorScreen({ navigation }) {
                 <MIcon1 name="unverified" size={20} color="#197808" style={{ marginLeft: 5 }} />
               }
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row',paddingEnd:5 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', paddingEnd: 5 }}>
               <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{item.email}</Text>
             </View>
