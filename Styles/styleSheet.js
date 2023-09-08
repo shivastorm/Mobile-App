@@ -38,7 +38,11 @@ const styles = StyleSheet.create({
   },
   cardInfo: {
     flex: 4,
-    paddingRight: 5,
+    paddingRight:5,
+  },
+  categorycardInfo: {
+    flex: 4,
+    padding:10,
   },
   cardTitle: {
     fontSize: 15,
@@ -50,6 +54,12 @@ const styles = StyleSheet.create({
     paddingEnd:10,
     paddingBottom: 2,
     color: '#444',
+  },
+  daterow:{
+    display: 'flex', 
+    flexDirection: 'row', 
+    alignItems: "center", 
+    justifyContent: "space-between"
   },
   cardButton1: {
     backgroundColor: "#e9b4f0",
