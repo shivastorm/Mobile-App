@@ -14,14 +14,14 @@ export default function TutorScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const getData = async () => {
-    
-    
+  const getData = async () => {    
       setIsLoading(true)
+      let newData
     
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
+   // console.log("res",`${Api}/providers/list?sort=created_at.ASC&limit=10&page=${page}&email=${searchQuery}`)
     fetch(`${Api}/providers/list?sort=created_at.ASC&limit=10&page=${page}&email=${searchQuery}`, {
       method: "GET",
       headers: {
@@ -31,11 +31,21 @@ export default function TutorScreen({ navigation }) {
     }).then((response) => response.json())
       .then((json) => {
         // Combine previous and new data
-        const newData = [...value, ...json?.items];
-
+       // console.log("res =====",json)
+      // const newData = [...value, ...json?.items];
+      if (searchQuery) {
+        // If there's a search query, set newData to the JSON items
+        newData = json?.items;
+        setSearchQuery(null);
+      } else {
+        // If there's no search query, concatenate the previous data and the new JSON items
+        newData = [...value, ...json?.items];
+      }    
+        
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
-
+        
+        //console.log("res =====",uniqueData)
         setValue(uniqueData);
          
           setIsLoading(false)
@@ -80,13 +90,14 @@ export default function TutorScreen({ navigation }) {
   };
 
   const ViewProfile = (props) => {
-    console.log('propsnow========',props.id)
+    //console.log('propsnow========',props.id)
     navigation.navigate('TutorView', (props.id));
   };
 
   const handleSearch = () => {
     (searchQuery ? getData() : Alert.alert('Error', 'enter data'))
     setPage(1)
+    console.log("resv======",searchQuery)
 
   };
 
@@ -129,7 +140,7 @@ export default function TutorScreen({ navigation }) {
             </View>
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
-              <CustomButton style={styles.cardButton1} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Active' : 'Deactive'} />
+              <CustomButton style={styles.cardButton1} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Active' : 'Deactive'} />
               <CustomButton style={styles.cardButton1} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View'} />
 
             </View>

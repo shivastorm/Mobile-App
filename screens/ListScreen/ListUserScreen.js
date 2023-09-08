@@ -14,10 +14,11 @@ export default function ManageUser({navigation}) {
 
   const getData = async () => {
     setIsLoading(true)
+    let newData
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/users/list?sort=created_at.ASC&limit=20&page=${page}`, {
+    fetch(`${Api}/users/list?sort=created_at.ASC&limit=20&page=${page}&email=${searchQuery}`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -26,7 +27,14 @@ export default function ManageUser({navigation}) {
     }).then((response) => response.json())
       .then((json) => {
         // Combine previous and new data
-        const newData = [...value, ...json?.items];
+        if (searchQuery) {
+          // If there's a search query, set newData to the JSON items
+          newData = json?.items;
+          setSearchQuery(null);
+        } else {
+          // If there's no search query, concatenate the previous data and the new JSON items
+          newData = [...value, ...json?.items];
+        }    
 
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
@@ -62,7 +70,7 @@ export default function ManageUser({navigation}) {
     navigation.navigate('UserView');
   };
   
-  if (isLoading) {
+  if (isLoading && page === 1) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ActivityIndicator size={"large"} color={"#e9b4f0"} />
