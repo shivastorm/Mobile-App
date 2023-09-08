@@ -6,7 +6,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import {
   SafeAreaView,
   View,
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 import NoInternetConnection from "./utils/CheckInternetConnection";
 import { RootSiblingParent } from 'react-native-root-siblings';
@@ -33,6 +34,7 @@ const App = () => {
     <>
       <RootSiblingParent>
         <SafeAreaView style={styles.container}>
+          <StatusBar style="dark"/>
           <NoInternetConnection>
             <View style={styles.container} onLayout={onLayoutRootView}>
               <Sidebar />
