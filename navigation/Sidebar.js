@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/AuthScreen/LoginScreen";
 import SignUpScreen from "../screens/AuthScreen/SignUpScreen";
 import OnboardingScreen from "../screens/Others/OnboardingScreen";
-
+import EditCategory from "../screens/EditScreen/EditCategory";
 import DrawerScreen from "../Drawer/DrawerScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
@@ -70,6 +70,11 @@ export default function AppNavigation() {
             name="UserView"
             options={{ headerShown: false }}
             component={UserViewScreen}
+          />
+          <Stack.Screen
+            name="EditCategory"
+            options={{ headerShown: false }}
+            component={EditCategory}
           />
         </>
       </Stack.Navigator>

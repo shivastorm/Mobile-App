@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import { styles } from '../../Styles/styleSheet';
@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
 
-export default function ListCategories() {
+export default function ListCategories({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -35,7 +35,7 @@ export default function ListCategories() {
         console.log('catch err in service list api call=======', err)
         setIsLoading(false)
       })
-  }
+  };
 
   useEffect(() => {
     getData()
@@ -51,6 +51,11 @@ export default function ListCategories() {
     );
   };
 
+  const EditCategory = (id, nameValue, desc) => {
+    // Pass the values as an object
+    navigation.navigate('EditCategory', { id, nameValue, desc });
+  };
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -61,26 +66,33 @@ export default function ListCategories() {
 
   const renderItem = ({ item, index }) => {
     let date = new Date(item.updated_at)
+    let id = item.id
+    let nameValue = item.name
+    let desc = item.description
     return (
       <View style={styles.cardsWrapper}>
-        <View style={styles.card}>
-          <View style={styles.categorycardInfo}>
-            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
-              <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
-              <Text style={styles.cardTitle}> {item.name} </Text>
-            </View>
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <TruncatedText style={styles.cardDetails} text={item.description} />
-            </View>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
-                <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+        <TouchableOpacity
+          onPress={() => EditCategory(id, nameValue, desc)}
+        >
+          <View style={styles.cardcategory}>
+            <View style={styles.categorycardInfo}>
+              <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+                <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
+                <Text style={styles.cardTitle}> {nameValue} </Text>
               </View>
-              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <TruncatedText style={styles.cardDetails} text={desc} />
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
+                  <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+                </View>
+                <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     )
   };
