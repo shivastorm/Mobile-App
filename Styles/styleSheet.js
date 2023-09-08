@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     paddingTop: 10,
-   padding:10
+    padding:10
   },
   cardImgWrapper: {
     flex: 1,
