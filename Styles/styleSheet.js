@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     borderBottomColor: "#fff",
+    
   },
   card: {
     maxHeight: 160,
@@ -24,6 +25,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingTop: 10,
     paddingBottom: 10,
+  },
+  cardcategory: {
+    maxHeight: 160,
+    flexDirection: 'row',     
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.06,
+    elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingTop: 10,
+   padding:10
   },
   cardImgWrapper: {
     flex: 1,
@@ -71,8 +85,12 @@ const styles = StyleSheet.create({
   },
 
   labelStyle: {
-    color: "black",
+    //color: "black",
     fontSize: 14,
+    textAlign: "center",
+    paddingTop:2,fontSize: 14,
+    color: "#fff",
+    fontFamily: 'Roboto-Regular',
     textAlign: "center"
   },
   tutorsearchbox: {
@@ -108,13 +126,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
   },
-  labelStyle: {
-    fontSize: 14,
-    color: "#fff",
-    fontFamily: 'Roboto-Regular',
-    textAlign: "center"
-
-  },
+  
   profileImage: {
     width: 150,
     height: 150,
@@ -183,11 +195,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
    // alignContent: 'center'
   },
-  activebutton: {
-    color: "black",
-    fontSize: 14,
-    textAlign: "center"
-  },
+  
   serachboximage: {
     width: 50,
     height: 50,
