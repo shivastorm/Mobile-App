@@ -63,7 +63,7 @@ export default function ListTransactions({ navigation }) {
       setIsRefreshing(false);
     }, 2000)
   };
-  if (isLoading) {
+  if (isLoading && page === 1) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ActivityIndicator size={"large"} color={"#e9b4f0"} />

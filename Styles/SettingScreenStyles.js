@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
+    maincontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingTop: 10,
+    },
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -28,7 +33,12 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor: "white"
 
-    }, TopCardsContainer: {
+    },
+     cardstyle: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    TopCardsContainer: {
         marginTop: 5,
         // borderWidth: 1,
         borderColor: 'black',
