@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { View, Text, Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import { styles } from "../../Styles/styleSheet"
-import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
 
-export default function ListQuotes() {
+export default function ListQuotes({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -51,6 +50,11 @@ export default function ListQuotes() {
     );
   };
 
+  const EditQutoes = (id, desc) => {
+    // Pass the values as an object
+    navigation.navigate('EditQutoes', { id, desc });
+  };
+
   if (isLoading && page === 1) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -59,41 +63,43 @@ export default function ListQuotes() {
     )
   };
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     let date = new Date(item.updated_at)
+    let id = item.id
+    let desc = item.description
     return (
       <View style={styles.cardsWrapper}>
-        <View style={styles.card}>
-          <View style={styles.cardImgWrapper}>
-            <Image
-              source={{ uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-          </View>
-          <View style={styles.cardInfo}>
-            {/* <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
-              <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
-              <Text style={styles.cardTitle}> {item.name} </Text>
-            </View> */}
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <TruncatedText style={styles.cardDetails} text={item.description} />
+        <TouchableOpacity
+          onPress={() => EditQutoes(id, desc)}
+        >
+          <View style={styles.card}>
+            <View style={styles.cardImgWrapper}>
+              <Image
+                source={{ uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
+                style={styles.cardImg}
+                resizeMode="cover"
+              />
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
-                <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+            <View style={styles.cardInfo}>
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <TruncatedText style={styles.cardDetails} text={item.description} />
               </View>
-              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
+                  <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+                </View>
+                <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity >
       </View>
     )
   };
 
   return (
-    <View style={{ backgroundColor: "white" }} >
+    <View >
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}
@@ -102,6 +108,5 @@ export default function ListQuotes() {
         renderItem={renderItem}
       />
     </View>
-
   );
 };

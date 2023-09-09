@@ -6,6 +6,7 @@ import LoginScreen from "../screens/AuthScreen/LoginScreen";
 import SignUpScreen from "../screens/AuthScreen/SignUpScreen";
 import OnboardingScreen from "../screens/Others/OnboardingScreen";
 import EditCategory from "../screens/EditScreen/EditCategory";
+import EditQutoes from "../screens/EditScreen/EditQutoes";
 import DrawerScreen from "../Drawer/DrawerScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
@@ -75,6 +76,11 @@ export default function AppNavigation() {
             name="EditCategory"
             options={{ headerShown: false }}
             component={EditCategory}
+          />
+          <Stack.Screen
+            name="EditQutoes"
+            options={{ headerShown: false }}
+            component={EditQutoes}
           />
         </>
       </Stack.Navigator>

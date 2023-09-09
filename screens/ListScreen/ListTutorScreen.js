@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator, TextInput, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text,  Image, ActivityIndicator, TextInput, Alert } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon1 from 'react-native-vector-icons/Octicons';
 import { styles } from '../../Styles/styleSheet';
@@ -8,57 +7,57 @@ import { FlatList, ScrollView } from "react-native-gesture-handler";
 import StarRating from "../../components/starRating";
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
+import axios from "axios";
+import Toast from 'react-native-root-toast';
+
 export default function TutorScreen({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const getData = async () => {    
-      setIsLoading(true)
-      let newData
-    
+  const getData = async () => {
+    setIsLoading(true);
+
     let access_token = await getItem('access_token');
-    let convertedToken = JSON.parse(access_token)
-    let Api = await getItem('api')
-   // console.log("res",`${Api}/providers/list?sort=created_at.ASC&limit=10&page=${page}&email=${searchQuery}`)
-    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=10&page=${page}&email=${searchQuery}`, {
-      method: "GET",
-      headers: {
-        headers: { 'Content-Type': 'application/json' },
-        Authorization: `Bearer ${convertedToken}`,
-      },
-    }).then((response) => response.json())
-      .then((json) => {
-        // Combine previous and new data
-       // console.log("res =====",json)
-      // const newData = [...value, ...json?.items];
+    let convertedToken = JSON.parse(access_token);
+    let api = await getItem('api');
+
+    try {
+      const response = await axios.get(`${api}/providers/list`, {
+        params: {
+          sort: 'created_at.ASC',
+          limit: 10,
+          page,
+          email: searchQuery
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${convertedToken}`
+        }
+      });
+
+      let newData;
+
       if (searchQuery) {
-        // If there's a search query, set newData to the JSON items
-        newData = json?.items;
+        newData = response.data.items;
         setSearchQuery(null);
       } else {
-        // If there's no search query, concatenate the previous data and the new JSON items
-        newData = [...value, ...json?.items];
-      }    
-        
-        // Filter out duplicates based on item id
-        const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
-        
-        //console.log("res =====",uniqueData)
-        setValue(uniqueData);
-         
-          setIsLoading(false)
-          
+        newData = [...value, ...response.data.items];
+      }
 
-      })
-      .catch(err => {
-        console.log('catch err in tutor list api=======', err)
-        
-          setIsLoading(false)
-        
-      })
-  }
+      const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
+
+      setValue(uniqueData);
+
+    } catch (err) {
+      Toast.show('😞Error😞');
+      console.log('catch err in tutor list api=======', err);
+    } finally {
+      setIsLoading(false);
+    }
+
+  };
 
   useEffect(() => {
     getData()
@@ -90,21 +89,13 @@ export default function TutorScreen({ navigation }) {
   };
 
   const ViewProfile = (props) => {
-    //console.log('propsnow========',props.id)
     navigation.navigate('TutorView', (props.id));
   };
 
   const handleSearch = () => {
     (searchQuery ? getData() : Alert.alert('Error', 'enter data'))
     setPage(1)
-    console.log("resv======",searchQuery)
-
   };
-
-
-  // console.log('Searching for:',searchQuery);
-
-
 
   const renderItem = ({ item, index }) => {
     return (
@@ -138,7 +129,7 @@ export default function TutorScreen({ navigation }) {
             <View style={styles.cardDetails}>
               <StarRating ratings={item.average_rating} reviews={item.rating_count} />
             </View>
-             
+
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
               <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Active' : 'Deactive'} />
               <CustomButton style={styles.cardButton} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View'} />
@@ -150,6 +141,7 @@ export default function TutorScreen({ navigation }) {
       </View>
     )
   };
+
   return (
     <View style={{ backgroundColor: "white" }}  >
       <View style={{ flexDirection: "row", padding: 20 }}>
@@ -180,9 +172,6 @@ export default function TutorScreen({ navigation }) {
     </View >
   )
 }
-
-
-// const styles = StyleSheet.create({
 
 //   cardicon: {
 //     alignSelf: "center",

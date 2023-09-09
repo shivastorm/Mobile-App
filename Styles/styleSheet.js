@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     borderBottomColor: "#fff",
-    
+
   },
   card: {
     maxHeight: 160,
-    flexDirection: 'row',     
+    flexDirection: 'row',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 2,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   cardcategory: {
     maxHeight: 160,
-    flexDirection: 'row',     
+    flexDirection: 'row',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 2,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     paddingTop: 10,
-    padding:10
+    padding: 10
   },
   cardImgWrapper: {
     flex: 1,
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
   },
   cardInfo: {
     flex: 4,
-    paddingRight:5,
+    paddingRight: 5,
   },
   categorycardInfo: {
     flex: 4,
-    padding:10,
+    padding: 10,
   },
   cardTitle: {
     fontSize: 15,
@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
   },
   cardDetails: {
     fontSize: 15,
-    paddingEnd:10,
+    paddingEnd: 10,
     paddingBottom: 2,
     color: '#444',
   },
-  daterow:{
-    display: 'flex', 
-    flexDirection: 'row', 
-    alignItems: "center", 
+  daterow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: "center",
     justifyContent: "space-between"
   },
   cardButton1: {
@@ -85,16 +85,14 @@ const styles = StyleSheet.create({
   },
 
   labelStyle: {
-    //color: "black",
     fontSize: 14,
-    textAlign: "center",
-    paddingTop:2,fontSize: 14,
+    paddingTop: 0,
     color: "#fff",
     fontFamily: 'Roboto-Regular',
-    textAlign: "center"
+    textAlign: "center",
+    alignSelf: 'center'
   },
   tutorsearchbox: {
-     
     width: "83%",
     paddingHorizontal: 20,
     marginRight: 5,
@@ -102,7 +100,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     flexDirection: "row"
-
   },
   tutorsearchboxicon: {
     paddingHorizontal: 20,
@@ -118,15 +115,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
-    flexDirection: 'column',
-    //margin: 20,
-
+   // flexDirection: 'column',
+    marginBottom: 10
   },
   profileImageContainer: {
     marginTop: 20,
     alignItems: 'center',
   },
-  
+
   profileImage: {
     width: 150,
     height: 150,
@@ -145,46 +141,36 @@ const styles = StyleSheet.create({
   detailsContainer: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-
-
   },
   detailItem: {
     display: "flex",
     flexDirection: 'column',
-    //alignItems: "flex-start",
-    //alignItems: 'center',
     marginBottom: 10,
-
   },
   detailItemclaim: {
-   display: "flex",
+    display: "flex",
     flexDirection: 'row',
     alignItems: "flex-start",
-   // alignItems: 'center',
     marginBottom: 10,
-
   },
   detailLabel: {
     fontSize: 14,
     marginBottom: 10,
     fontFamily: 'Roboto-Bold',
   },
- 
+
   detailValue: {
     width: 340,
     fontSize: 14,
-    marginLeft: 10,
     fontFamily: 'Roboto-Regular',
     borderWidth: 1,
     borderColor: "#aaa2ab",
     borderRadius: 7,
     padding: 10,
   },
-  detailValueclaim:{
-    display:"flex",
-    flexDirection:"row",
-
-
+  detailValueclaim: {
+    display: "flex",
+    flexDirection: "row",
   },
   cardButton: {
     backgroundColor: "#1b00b3",
@@ -193,9 +179,9 @@ const styles = StyleSheet.create({
     margin: 2,
     padding: 5,
     borderRadius: 10,
-   // alignContent: 'center'
+    // alignContent: 'center'
   },
-  
+
   serachboximage: {
     width: 50,
     height: 50,

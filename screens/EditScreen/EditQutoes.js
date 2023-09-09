@@ -1,21 +1,18 @@
 import React from "react";
-import { View, Text, Button, TextInput, Keyboard, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, Keyboard, ActivityIndicator } from "react-native";
 import Toast from 'react-native-root-toast';
 import { getItem } from "../../utils/only-token";
 import { useState } from "react";
 import { styles } from '../../Styles/CreateStyleSheet';
+import CustomButton from "../../components/CustomButton";
 
-export default function EditCategory({ route }) {
-    const { id, nameValue, desc } = route.params;
+export default function EditQutoes({ route }) {
+    const { id, desc } = route.params;
 
     const isEdit = !!id;
-    const [name, setName] = useState(isEdit ? nameValue : '');
     const [description, setDescription] = useState(isEdit ? desc : '');
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleNameChange = (text) => {
-        setName(text);
-    };
     const handleDescriptionChange = (text) => {
         setDescription(text);
     };
@@ -30,17 +27,15 @@ export default function EditCategory({ route }) {
         if (isEdit) {
             PayLoad = {
                 id: id,
-                name: name,
                 description: description
             }
         } else {
             PayLoad = {
-                name: name,
                 description: description
             }
         }
 
-        let url = isEdit ? `${Api}/categories/update/${id}` : `${Api}/categories/create`;
+        let url = isEdit ? `${Api}/servicesquotes/update/${id}` : `${Api}/servicesquotes/create`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -51,10 +46,7 @@ export default function EditCategory({ route }) {
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log('response for edit=========', json)
                 if (json.status === 200) {
-                    setName(null)
-                    setDescription(null)
                     setIsLoading(false)
                     Toast.show('✌️Success✌️')
                     return;
@@ -66,20 +58,13 @@ export default function EditCategory({ route }) {
             .catch((error) => {
                 setIsLoading(false)
                 Toast.show('😞Error😞')
-                console.error('API request failed in create category====>', error);
+                console.error('API request failed in Edit servicequtoes====>', error);
             });
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Name:</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Enter your name"
-                value={name}
-                onChangeText={handleNameChange}
-            />
-            <Text style={styles.label}>Description:</Text>
+            <Text style={styles.detailLabel}>Description:</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter a description"
@@ -89,11 +74,7 @@ export default function EditCategory({ route }) {
             {isLoading ? (
                 <ActivityIndicator size="large" color="rose" />
             ) : (
-                <Button
-                    title={"Submit"}
-                    onPress={handleSubmit}
-                    disabled={isLoading}
-                />
+                <CustomButton onPress={() => handleSubmit()}  label={'Update'} />
             )}
         </View>
     );
