@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import{styles} from "../../Styles/styleSheet"
+
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
@@ -61,7 +63,6 @@ export default function ListTransactions({ navigation }) {
       setIsRefreshing(false);
     }, 2000)
   };
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -77,7 +78,7 @@ export default function ListTransactions({ navigation }) {
   const renderItem = ({ item, index }) => {
     return (
       <View style={styles.cardsWrapper}>
-        <View style={styles.cardPadding}>
+        <View style={styles.cardcategory}>
           {/* <View style={styles.cardImgWrapper}>
             <Image
               source={{ uri: item.photo } ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
@@ -124,131 +125,86 @@ export default function ListTransactions({ navigation }) {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  sliderContainer: {
-    height: 200,
-    width: '90%',
-    marginTop: 10,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    borderRadius: 8,
-  },
-  cardPadding: {
-    padding: 15
-  },
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    borderRadius: 8,
-  },
-  sliderImage: {
-    height: '100%',
-    width: '100%',
-    alignSelf: 'center',
-    borderRadius: 8,
-  },
-  categoryContainer: {
-    flexDirection: 'row',
-    width: '90%',
-    alignSelf: 'center',
-    marginTop: 25,
-    marginBottom: 10,
-  },
-  categoryBtn: {
-    flex: 1,
-    width: '30%',
-    marginHorizontal: 0,
-    alignSelf: 'center',
-  },
-  categoryIcon: {
-    borderWidth: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    width: 70,
-    height: 70,
-    backgroundColor: '#fdeae7' /* '#FF6347' */,
-    borderRadius: 50,
-  },
-  categoryBtnTxt: {
-    alignSelf: 'center',
-    marginTop: 5,
-    color: '#de4f35',
-  }, cardicon: {
-    marginRight: 5, alignSelf: "center", marginRight: 10
-  },
-  cardsWrapper: {
-    marginTop: 5,
-    width: '99%',
-    borderColor: "black",
-    alignSelf: 'center',
-    borderBottomColor: "#fff",
-  },
-  card: {
-    height: 130,
-    marginVertical: -5,
-    flexDirection: 'row',
-    shadowColor: '#999',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 3,
-  },
-  cardImgWrapper: {
-    flex: 1,
-  },
-  cardImg: {
-    height: '50%',
-    width: '75%',
-    borderRadius: 10,
-    alignSelf: 'center',
-    borderColor: "black",
-    //borderRadius: 8,
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
-    // borderBottomLeftRadius: 30,
-    // borderBottomRightRadius: 30,
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
 
-  },
-  cardInfo: {
+//   cardPadding: {
+//     padding: 15
+//   },
 
-    flex: 4,
-    padding: 0,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 13,
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-    backgroundColor: '#fff',
-  },
-  cardTitle: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    /// fontFamily: "Roboto-Regular",
-    paddingBottom: 5,
-  },
 
-  cardDetails: {
-    fontSize: 15,
-    paddingBottom: 2,
-    color: '#444',
-  },
-  cardButton: {
-    backgroundColor: "#e9b4f0",
-    width: 80,
-    height: 25,
-    margin: 2,
-    padding: 2,
-    borderRadius: 10
-  },
-  labelStyle: {
-    color: "black",
-    fontSize: 14,
-    textAlign: "center"
-  }
-});
+
+
+
+//   cardicon: {
+//     marginRight: 5, alignSelf: "center", marginRight: 10
+//   },
+//   cardsWrapper: {
+//     marginTop: 5,
+//     width: '99%',
+//     borderColor: "black",
+//     alignSelf: 'center',
+//     borderBottomColor: "#fff",
+//   },
+//   card: {
+//     height: 130,
+//     marginVertical: -5,
+//     flexDirection: 'row',
+//     shadowColor: '#999',
+//     shadowOffset: { width: 0, height: 1 },
+//     shadowOpacity: 0.8,
+//     shadowRadius: 2,
+//     elevation: 3,
+//   },
+//   cardImgWrapper: {
+//     flex: 1,
+//   },
+//   cardImg: {
+//     height: '50%',
+//     width: '75%',
+//     borderRadius: 10,
+//     alignSelf: 'center',
+//     borderColor: "black",
+
+
+//   },
+//   cardInfo: {
+
+//     flex: 4,
+//     padding: 0,
+//     borderColor: '#fff',
+//     borderWidth: 1,
+//     borderLeftWidth: 0,
+//     borderRightWidth: 13,
+//     borderBottomRightRadius: 8,
+//     borderTopRightRadius: 8,
+//     backgroundColor: '#fff',
+//   },
+//   cardTitle: {
+//     fontWeight: 'bold',
+//     fontSize: 15,
+//     /// fontFamily: "Roboto-Regular",
+//     paddingBottom: 5,
+//   },
+
+//   cardDetails: {
+//     fontSize: 15,
+//     paddingBottom: 2,
+//     color: '#444',
+//   },
+//   cardButton: {
+//     backgroundColor: "#e9b4f0",
+//     width: 80,
+//     height: 25,
+//     margin: 2,
+//     padding: 2,
+//     borderRadius: 10
+//   },
+//   labelStyle: {
+//     color: "black",
+//     fontSize: 14,
+//     textAlign: "center"
+//   }
+// });

@@ -138,10 +138,10 @@ export default function TutorScreen({ navigation }) {
             <View style={styles.cardDetails}>
               <StarRating ratings={item.average_rating} reviews={item.rating_count} />
             </View>
-
+             
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
-              <CustomButton style={styles.cardButton1} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Active' : 'Deactive'} />
-              <CustomButton style={styles.cardButton1} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View'} />
+              <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Active' : 'Deactive'} />
+              <CustomButton style={styles.cardButton} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View'} />
 
             </View>
 

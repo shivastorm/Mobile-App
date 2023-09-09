@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image,  ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
+import { styles } from "../../Styles/styleSheet"
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
@@ -82,9 +84,11 @@ export default function ListServices() {
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <TruncatedText style={styles.cardDetails} text={item.description} />
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
-              <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
+                <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+              </View>
               <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
             </View>
           </View>
@@ -106,87 +110,3 @@ export default function ListServices() {
 
   );
 };
-
-const styles = StyleSheet.create({
-
-  cardicon: {
-    alignSelf: "center",
-    marginRight: 5
-  },
-  cardsWrapper: {
-    marginTop: 20,
-    width: '100%',
-    alignSelf: 'center',
-    borderBottomColor: "#fff",
-  },
-  card: {
-    maxHeight: 145,
-    flexDirection: 'row',
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.26,
-    elevation: 3,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  cardImgWrapper: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardImg: {
-    height: '50%',
-    width: '80%',
-    borderRadius: 10,
-    padding: 30,
-  },
-  cardInfo: {
-    flex: 4,
-    paddingRight: 5,
-  },
-  cardTitle: {
-    fontSize: 15,
-    fontFamily: "Roboto-Bold",
-    paddingBottom: 5,
-  },
-  cardDetails: {
-    fontSize: 15,
-    paddingBottom: 2,
-    color: '#444',
-  },
-  cardButton: {
-    backgroundColor: "#e9b4f0",
-    width: 80,
-    height: 25,
-    margin: 2,
-    padding: 2,
-    borderRadius: 10
-  },
-  labelStyle: {
-    color: "black",
-    fontSize: 14,
-    textAlign: "center"
-  }, 
-   searchbox: {
-    width:"83%",
-    paddingHorizontal: 20,  
-    marginRight:5,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    flexDirection:"row"
-
-  },
-  searchboxicon:{
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    paddingRight: 20,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    flexDirection:"row"
-  }
-});

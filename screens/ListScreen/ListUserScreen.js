@@ -103,18 +103,18 @@ export default function ManageUser({navigation}) {
             </View>
             <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
               <TouchableOpacity style={{
-                backgroundColor: "#e9b4f0",
-                width: 80,
-                height: 25,
-                margin: 2,
-                padding: 2,
-                borderRadius: 10
+               backgroundColor: "#1b00b3",
+               width: 80,
+               height: 30,
+               margin: 2,
+               padding: 5,
+               borderRadius: 10,
               }}>
-                <Text style={styles.activebutton}>
+                <Text style={styles.labelStyle}>
                   {item.user.status === 1 ? 'Active' : 'Deactive'}
                 </Text>
               </TouchableOpacity>
-              <CustomButton style={styles.cardButton1} onPress={() => ViewProfile()} labelStyle={styles.labelStyle} label={'View'} />
+              <CustomButton style={styles.cardButton} onPress={() => ViewProfile()} labelStyle={styles.labelStyle} label={'View'} />
 
             </View>
           </View>
