@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import { styles } from '../../Styles/styleSheet';
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
 
@@ -50,7 +50,6 @@ export default function ListCategories({ navigation }) {
       </View>
     );
   };
-
   const EditCategory = (id, nameValue, desc) => {
     // Pass the values as an object
     navigation.navigate('EditCategory', { id, nameValue, desc });
@@ -72,12 +71,14 @@ export default function ListCategories({ navigation }) {
     return (
       <View style={styles.cardsWrapper}>
         <TouchableOpacity
-          onPress={() => EditCategory(id, nameValue, desc)}
-        >
+          onPress={() => EditCategory(id, nameValue, desc)}>
           <View style={styles.cardcategory}>
             <View style={styles.categorycardInfo}>
               <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
-                <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
+                <MIcon
+                  name="person" size={16}
+                  color="#900"
+                  style={styles.cardicon} />
                 <Text style={styles.cardTitle}> {nameValue} </Text>
               </View>
               <View style={{ display: 'flex', flexDirection: 'row' }}>
@@ -85,10 +86,18 @@ export default function ListCategories({ navigation }) {
               </View>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
                 <View style={{ display: "flex", flexDirection: "row" }}>
-                  <MIcon name="calendar-today" size={15} color="#900" style={styles.cardicon} />
-                  <Text style={styles.cardDetails}>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</Text>
+                  <MIcon
+                    name="calendar-today"
+                    size={15} color="#900"
+                    style={styles.cardicon} />
+                  <Text style={styles.cardDetails}>
+                    {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+                  </Text>
                 </View>
-                <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.status === 1 ? 'Active' : 'Deactive'} />
+                <CustomButton
+                  style={styles.cardButton}
+                  labelStyle={styles.labelStyle}
+                  label={item.status === 1 ? 'Active' : 'Deactive'} />
               </View>
             </View>
           </View>

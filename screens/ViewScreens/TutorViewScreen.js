@@ -39,7 +39,7 @@ const TutorViewScreen = (props) => {
     }, [items])
 
     const claimHandle = async (id, status) => {
-    };
+            };
 
     const updateUserField = async (id, field, currentValue) => {
         setIsLoading(true);
@@ -115,9 +115,18 @@ const TutorViewScreen = (props) => {
                     </View>
                     <View style={styles.detailsContainer}>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15 }}>
-                            <CustomButton style={styles.cardButton} onPress={() => claimHandle(item.id, item.user?.status)} labelStyle={styles.labelStyle} label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
-                            <CustomButton style={styles.cardButton} onPress={() => updateUserField(item.user?.id, 'status', item.user?.status)} labelStyle={styles.labelStyle} label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
-                            <CustomButton style={styles.cardButton} onPress={() => updateUserField(item.user?.id, 'verified', item.user?.verified)} labelStyle={styles.labelStyle} label={item.user?.verified === 1 ? 'Unverify Now' : 'Verify Now'} />
+                            <CustomButton style={styles.cardButton}
+                                onPress={() => claimHandle(item.id, item.user?.status)}
+                                labelStyle={styles.labelStyle}
+                                label={item.claim === 0 ? 'Unclaim' : 'Claim'} />
+                            <CustomButton style={styles.cardButton}
+                                onPress={() => updateUserField(item.user?.id, 'status', item.user?.status)}
+                                labelStyle={styles.labelStyle}
+                                label={item.user?.status === 1 ? 'Deactivate Now' : 'Activate Now'} />
+                            <CustomButton style={styles.cardButton}
+                                onPress={() => updateUserField(item.user?.id, 'verified', item.user?.verified)}
+                                labelStyle={styles.labelStyle}
+                                label={item.user?.verified === 1 ? 'Unverify Now' : 'Verify Now'} />
                         </View>
                         <View style={styles.detailItem}>
                             <Text style={styles.detailLabel}>Email:</Text>

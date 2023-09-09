@@ -27,6 +27,7 @@ export default function ManageUser({navigation}) {
     }).then((response) => response.json())
       .then((json) => {
         // Combine previous and new data
+        //console.log("res user====",json)
         if (searchQuery) {
           // If there's a search query, set newData to the JSON items
           newData = json?.items;
@@ -44,7 +45,7 @@ export default function ManageUser({navigation}) {
 
       })
       .catch(err => {
-        console.log('catch err in tutor list api=======', err)
+        console.log('catch err in user list api=======', err)
         setIsLoading(false)
       })
   }
@@ -66,8 +67,9 @@ export default function ManageUser({navigation}) {
       </View>
     );
   };
-  const ViewProfile = () => {
-    navigation.navigate('UserView');
+  const ViewProfile = (props) => {
+    navigation.navigate('UserView',(props.id));
+    //console.log("value=====",props.id)
   };
   
   if (isLoading && page === 1) {
@@ -114,7 +116,7 @@ export default function ManageUser({navigation}) {
                   {item.user.status === 1 ? 'Active' : 'Deactive'}
                 </Text>
               </TouchableOpacity>
-              <CustomButton style={styles.cardButton} onPress={() => ViewProfile()} labelStyle={styles.labelStyle} label={'View'} />
+              <CustomButton style={styles.cardButton} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View'} />
 
             </View>
           </View>

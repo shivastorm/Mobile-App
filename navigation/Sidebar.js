@@ -10,8 +10,8 @@ import EditQutoes from "../screens/EditScreen/EditQutoes";
 import DrawerScreen from "../Drawer/DrawerScreen";
 import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
-import TutorViewScreen from "../screens/Tutors/TutorViewScreen";
-import UserViewScreen from "../screens/UserViewScreen";
+import TutorViewScreen from "../screens/ViewScreens/TutorViewScreen";
+import UserViewScreen from "../screens/ViewScreens/UserViewScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
