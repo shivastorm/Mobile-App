@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React from 'react';
 import Onboarding from 'react-native-onboarding-swiper';
 import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -30,21 +30,19 @@ export default function OnboardingScreen() {
                 onDone={handleDone}
                 onSkip={handleDone}
                 DoneButtonComponent={doneButton}
-                titleStyles={{color:'#fff'}}
-                subTitleStyles ={{color:'#fff'}}
+                titleStyles={{ color: '#fff' }}
+                subTitleStyles={{ color: '#fff' }}
                 containerStyles={{ paddingHorizontal: 15 }}
                 pages={[
                     {
                         backgroundColor: '#17b8ff',
                         image: (
                             <View style={styles.lottie}>
-                                <Image 
-                                 source={require("../../assets/images/productive.jpg")}
-                                 style={{
-                                   width: 300, height: 200, justifyContent: 'center',
-                                   marginTop: 50,
-                                 }}/>
-                                {/* <LottieView source={require('../../assets/animations/boost.json')} autoPlay loop /> */}
+                                <LottieView
+                                    autoPlay
+                                    loop
+                                    source={require('../../assets/animations/boost.json')}
+                                />
 
                             </View>
                         ),
@@ -52,16 +50,10 @@ export default function OnboardingScreen() {
                         subtitle: 'Subscribe this channel to boost your productivity level',
                     },
                     {
-                        backgroundColor: '#3cff3d',
+                        backgroundColor: '#42f5dd',
                         image: (
                             <View style={styles.lottie}>
-                                <Image 
-                                 source={require("../../assets/images/signup.png")}
-                                 style={{
-                                   width: 300, height: 200, justifyContent: 'center',
-                                   marginTop: 50,
-                                 }}/>
-                                {/* <LottieView source={require('../../assets/animations/work.json')} autoPlay loop /> */}
+                                <LottieView source={require('../../assets/animations/work.json')} autoPlay loop />
                             </View>
                         ),
                         title: 'Work Seamlessly',
@@ -71,13 +63,7 @@ export default function OnboardingScreen() {
                         backgroundColor: '#a78bfa',
                         image: (
                             <View style={styles.lottie}>
-                                <Image 
-                                 source={require("../../assets/images/signup.png")}
-                                 style={{
-                                   width: 300, height: 200, justifyContent: 'center',
-                                   marginTop: 50,
-                                 }}/>
-                                {/* <LottieView source={require('../../assets/animations/achieve.json')} autoPlay loop /> */}
+                                <LottieView source={require('../../assets/animations/achieve.json')} autoPlay loop />
                             </View>
                         ),
                         title: 'Achieve Higher Goals',
@@ -103,8 +89,8 @@ const styles = StyleSheet.create({
     },
     doneButton: {
         padding: 20,
-        fontFamily:'Roboto-Regular',
-        color:'white'
+        fontFamily: 'Roboto-Regular',
+        color: 'white'
         // backgroundColor: 'white',
         // borderTopLeftRadius: '100%',
         // borderBottomLeftRadius: '100%'
