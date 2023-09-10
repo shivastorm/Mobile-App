@@ -27,12 +27,16 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         paddingHorizontal: 20,
     },
+    radiosection:{
+        display: 'flex', flexDirection: 'row', justifyContent: 'space-between',marginBottom:5
+    },
     section: {
         flexDirection: 'row',
         alignItems: 'center',
     },
     paragraph: {
-        fontSize: 15,
+        fontSize: 14,
+        fontFamily:'Roboto-Regular'
     },
     checkbox: {
         margin: 8,

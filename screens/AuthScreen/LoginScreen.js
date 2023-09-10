@@ -9,10 +9,12 @@ import {
 import Toast from 'react-native-root-toast';
 import CustomButton from '../../components/CustomButton';
 import LoginSave from '../../utils/login/LoginSave';
+import LottieView from 'lottie-react-native';
 import { setItem } from '../../utils/only-token';
 import { getItem } from "../../utils/only-token";
 import { styles } from '../../Styles/AuthScreenStyleSheet';
 import Checkbox from 'expo-checkbox';
+
 export default LoginScreen = ({ navigation }) => {
 
   const [username, setUsername] = useState('');
@@ -82,15 +84,17 @@ export default LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <View style={{ paddingHorizontal: 25 }}>
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require("../../assets/images/signup.png")}
+        <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'center' }}>
+          <LottieView
+            source={require('../../assets/animations/Login.json')}
             style={{
-              width: 300, height: 200, justifyContent: 'center',
-              marginTop: 50,
+              width: 200,
+              height: 250,
+              alignItems: "center",
             }}
-          />
+            autoPlay loop />
         </View>
+
         <Text
           style={{
             fontFamily: "Roboto-Regular",
@@ -112,31 +116,31 @@ export default LoginScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={password}
           onChangeText={text => setPassword(text)} />
+
+        <View style={styles.radiosection}>
+          <View style={styles.section}>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked === 'live' ? true : false}
+              onValueChange={() => setCheckedHandle('live')}
+              color={isChecked ? '#4630EB' : undefined}
+            />
+            <Text style={styles.paragraph}>Login Class nurtem</Text>
+          </View>
+          <View style={styles.section}>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked === 'event' ? true : false}
+              onValueChange={() => setCheckedHandle('event')}
+              color={isChecked ? '#4630EB' : undefined}
+            />
+            <Text style={styles.paragraph}>Login event nurtem</Text>
+          </View>
+        </View>
         {isLoading ? <ActivityIndicator size="large" color="yellow" />
           :
-          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-
-            <View style={styles.section}>
-              <Checkbox
-                style={styles.checkbox}
-                value={isChecked === 'live' ? true : false}
-                onValueChange={() => setCheckedHandle('live')}
-                color={isChecked ? '#4630EB' : undefined}
-              />
-              <Text style={styles.paragraph}>Login Class nurtem</Text>
-            </View>
-            <View style={styles.section}>
-              <Checkbox
-                style={styles.checkbox}
-                value={isChecked === 'event' ? true : false}
-                onValueChange={() => setCheckedHandle('event')}
-                color={isChecked ? '#4630EB' : undefined}
-              />
-              <Text style={styles.paragraph}>Login event nurtem</Text>
-            </View>
-          </View>
+          <CustomButton onPress={() => handleLogin()} label={"Login"} />
         }
-        <CustomButton onPress={() => handleLogin()} label={"Login"} />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...

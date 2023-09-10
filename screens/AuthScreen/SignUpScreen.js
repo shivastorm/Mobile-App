@@ -7,14 +7,9 @@ import {
   TextInput,
   TouchableOpacity, Image
 } from 'react-native';
-//import { RobotoMedium } from './assets/fonts/Roboto-Medium.ttf';
-//import DatePicker from 'react-native-date-picker';
-
-import InputField from '../../components/InputField';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../../components/CustomButton';
 import { styles } from '../../Styles/AuthScreenStyleSheet';
+import LottieView from 'lottie-react-native';
 
 const RegisterScreen = ({ navigation }) => {
   const [usermail, setUsermail] = useState('');
@@ -31,30 +26,16 @@ const RegisterScreen = ({ navigation }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ paddingHorizontal: 25 }}>
-        <View style={{ alignItems: 'center' }}>
-
+        <View style={{ display: "flex", flexDirection: 'row', justifyContent: 'center' }}>
+          <LottieView
+            source={require('../../assets/animations/Login.json')}
+            style={{
+              width: 200,
+              height: 250,
+              alignItems: "center",
+            }}
+            autoPlay loop />
         </View>
-        <Image
-          source={require("../../assets/images/login.png")}
-          style={{
-            width: 200, height: 200,
-            marginTop: 60, marginLeft: 60
-          }}
-        />
-
-        {/* <Text
-          style={{
-            //fontFamily: 'Roboto-Medium',
-           
-           //paddingHorizontal: 20,
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-                      
-          }}>
-          Register
-        </Text> */}
-
         <View
           style={{
             paddingVertical: 20,
@@ -108,23 +89,9 @@ const RegisterScreen = ({ navigation }) => {
           Or, register with email ...
         </Text>
 
-        {/* <InputField
-          label={'Full Name'}
-          icon={
-            <Ionicons
-              name="person-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-        /> */}
-        {/* username */}
-
         <TextInput
           style={styles.input}
           placeholder='UserName'
-
           keyboardType="default"
           // value={"text"}
           onChangeText={text => setUsername(text)} />
@@ -134,7 +101,6 @@ const RegisterScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder='Email ID'
-
           keyboardType="email-address"
           // value={"Email ID"}
           onChangeText={text => setUsermail(text)} />
@@ -146,46 +112,6 @@ const RegisterScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={password}
           onChangeText={text => setPassword(text)} />
-
-        {/* <InputField
-          label={'Email ID'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
-          keyboardType="email-address"
-        /> */}
-        {/* 
-        <InputField
-          label={'Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
-          inputType="password"
-        />
-
-        <InputField
-          label={'Confirm Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
-          inputType="password"
-        /> */}
-
         <CustomButton label={'Register'} onPress={() => { handleLogin() }} />
 
         <View

@@ -7,10 +7,11 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
-  StatusBar
 } from 'react-native';
 import NoInternetConnection from "./utils/CheckInternetConnection";
 import { RootSiblingParent } from 'react-native-root-siblings';
+import { StatusBar } from 'expo-status-bar';
+
 SplashScreen.preventAutoHideAsync();
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -33,8 +34,8 @@ const App = () => {
   return (
     <>
       <RootSiblingParent>
+        <StatusBar style="dark" />
         <SafeAreaView style={styles.container}>
-          <StatusBar style="light"/>
           <NoInternetConnection>
             <View style={styles.container} onLayout={onLayoutRootView}>
               <Sidebar />

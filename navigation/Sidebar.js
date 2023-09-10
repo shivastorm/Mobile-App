@@ -59,6 +59,11 @@ export default function AppNavigation() {
             component={LoginScreen}
           />
           <Stack.Screen
+            name="SignUp"
+            options={{ headerShown: false }}
+            component={SignUpScreen}
+          />
+          <Stack.Screen
             name="Dashboard"
             options={{ headerShown: false }}
             component={DrawerScreen} />

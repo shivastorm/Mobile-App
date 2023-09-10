@@ -1,25 +1,32 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Toast from 'react-native-root-toast';
+import { View, StyleSheet, Dimensions } from 'react-native'
+import React from 'react';
+import LottieView from 'lottie-react-native';
+const { width, height } = Dimensions.get('window');
 
 export default function DashboardScreen() {
-  return (
-    <View>
-      {/* Your dashboard screen UI components */}
-      <SafeAreaView>
-        <Text>DashboardScreen page </Text>
 
-      </SafeAreaView>
-      {/* <Button
-        onPress={() => {
-          navigation.navigate("settings");
-        }}
-      >
-        go to settings
-      </Button> */}
+  return (
+    <View style={styles.container}>
+      <View style={styles.lottie}>
+        <LottieView source={require('../../assets/animations/confetti.json')} autoPlay loop />
+      </View>
     </View>
-  );
+  )
 }
 
-//export default HomeScreen();
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
+  lottie: {
+    width: width * 0.9,
+    height: '100%',
+    alignItems: "center"
+  },
+  doneButton: {
+    padding: 20,
+    fontFamily: 'Roboto-Regular',
+    color: 'white'
+  }
+})
