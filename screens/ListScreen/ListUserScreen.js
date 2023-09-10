@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, TextInput, ActivityIndicator } from "react-native";
+import { View, Text, Image, TextInput, ActivityIndicator } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import { styles } from '../../Styles/styleSheet'; 
+import { styles } from '../../Styles/styleSheet';
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
 
-export default function ManageUser({navigation}) {
+export default function ManageUser({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -35,7 +35,7 @@ export default function ManageUser({navigation}) {
         } else {
           // If there's no search query, concatenate the previous data and the new JSON items
           newData = [...value, ...json?.items];
-        }    
+        }
 
         // Filter out duplicates based on item id
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
@@ -68,17 +68,18 @@ export default function ManageUser({navigation}) {
     );
   };
   const ViewProfile = (props) => {
-    navigation.navigate('UserView',(props.id));
+    navigation.navigate('UserView', (props.id));
     //console.log("value=====",props.id)
   };
-  
+
   if (isLoading && page === 1) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ActivityIndicator size={"large"} color={"#e9b4f0"} />
       </View>
     )
-  }
+  };
+
   const renderItem = ({ item, index }) => {
     return (
       <View key={item.id} style={styles.userCardsWrapper}>
@@ -103,14 +104,14 @@ export default function ManageUser({navigation}) {
               <MIcon name="phone-iphone" size={15} color="#900" style={styles.cardicon} />
               <Text style={styles.cardDetails}>{item.mobile_number}</Text>
             </View>
-            <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               <TouchableOpacity style={{
-               backgroundColor: "#1b00b3",
-               width: 80,
-               height: 30,
-               margin: 2,
-               padding: 5,
-               borderRadius: 10,
+                backgroundColor: "#1b00b3",
+                width: 80,
+                height: 30,
+                margin: 2,
+                padding: 5,
+                borderRadius: 10,
               }}>
                 <Text style={styles.labelStyle}>
                   {item.user.status === 1 ? 'Active' : 'Deactive'}
@@ -123,32 +124,35 @@ export default function ManageUser({navigation}) {
         </View>
       </View>
     )
-  }
+  };
+
   return (
-    <View style={{ backgroundColor: "white" }} >
-      <View style={{   flexDirection: "row", padding: 20, }} >
-        <TextInput
-          placeholder="Search"
-          clearButtonMode="always"
-          style={styles.tutorsearchbox}
-          onChangeText={(query) => {
-            //  handleChange(query)
-            setSearchQuery(query);
-          }}
-          value={searchQuery}
+    <>
+      <View style={{ backgroundColor: "white" }} >
+        <View style={{ flexDirection: "row", padding: 20, }} >
+          <TextInput
+            placeholder="Search"
+            clearButtonMode="always"
+            style={styles.tutorsearchbox}
+            onChangeText={(query) => {
+              //  handleChange(query)
+              setSearchQuery(query);
+            }}
+            value={searchQuery}
+          />
+          <MIcon name="search" size={20} color="#900"
+            style={styles.tutorsearchboxicon}
+            onPress={() => handleSearch()} />
+        </View>
+        <FlatList
+          data={value}
+          onEndReachedThreshold={0.1}
+          onEndReached={() => { setPage(page + 1) }}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
         />
-        <MIcon name="search" size={20} color="#900"
-          style={styles.tutorsearchboxicon}
-          onPress={() => handleSearch()} />
       </View>
-      <FlatList
-        data={value}
-        onEndReachedThreshold={0.1}
-        onEndReached={() => { setPage(page + 1) }}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
-    </View>
+    </>
   )
 };
 

@@ -26,7 +26,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 30,
         paddingHorizontal: 20,
-    }
+    },
+    section: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    paragraph: {
+        fontSize: 15,
+    },
+    checkbox: {
+        margin: 8,
+    },
 });
 
 export { styles }

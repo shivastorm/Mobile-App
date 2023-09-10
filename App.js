@@ -34,7 +34,7 @@ const App = () => {
     <>
       <RootSiblingParent>
         <SafeAreaView style={styles.container}>
-          <StatusBar style="dark"/>
+          <StatusBar style="light"/>
           <NoInternetConnection>
             <View style={styles.container} onLayout={onLayoutRootView}>
               <Sidebar />

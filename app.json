@@ -4,7 +4,7 @@
     "slug": "Admin",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/new.png",
+    "icon": "./assets/ic_launcher_circle.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/nurtemnobg.png",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/EmptyClassWhite.png",
+        "foregroundImage": "./assets/ic_launcher_circle.png",
         "backgroundColor": "#fff"
       },
       "package": "com.ram_prasad.Admin"

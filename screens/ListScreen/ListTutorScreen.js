@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text,  Image, ActivityIndicator, TextInput, Alert } from "react-native";
+import { View, Text, Image, ActivityIndicator, TextInput, Alert } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon1 from 'react-native-vector-icons/Octicons';
 import { styles } from '../../Styles/styleSheet';
@@ -143,33 +143,35 @@ export default function TutorScreen({ navigation }) {
   };
 
   return (
-    <View style={{ backgroundColor: "white" }}  >
-      <View style={{ flexDirection: "row", padding: 20 }}>
-        <TextInput
-          placeholder="Search"
-          clearButtonMode="always"
-          style={styles.tutorsearchbox}
-          onChangeText={(query) => {
-            setSearchQuery(query);
-            // handleSearch(query);
-          }}
-          value={searchQuery}
+    <>
+      <View style={{ backgroundColor: "white" }}  >
+        <View style={{ flexDirection: "row", padding: 20 }}>
+          <TextInput
+            placeholder="Search"
+            clearButtonMode="always"
+            style={styles.tutorsearchbox}
+            onChangeText={(query) => {
+              setSearchQuery(query);
+              // handleSearch(query);
+            }}
+            value={searchQuery}
 
+          />
+          <MIcon name="search" size={20} color="#900"
+            style={styles.tutorsearchboxicon}
+            onPress={() => handleSearch()} />
+        </View>
+        <FlatList
+          data={value}
+          onEndReachedThreshold={0.1}
+          onEndReached={() => { setPage(page + 1) }}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        // onRefresh={onRefresh}
+        // refreshing={isRefreshing}
         />
-        <MIcon name="search" size={20} color="#900"
-          style={styles.tutorsearchboxicon}
-          onPress={() => handleSearch()} />
-      </View>
-      <FlatList
-        data={value}
-        onEndReachedThreshold={0.1}
-        onEndReached={() => { setPage(page + 1) }}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      // onRefresh={onRefresh}
-      // refreshing={isRefreshing}
-      />
-    </View >
+      </View >
+    </>
   )
 }
 

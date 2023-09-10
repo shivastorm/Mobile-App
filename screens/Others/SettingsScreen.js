@@ -1,9 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Button, Alert, ScrollView } from "react-native";
+import { View, Text, Alert, ScrollView } from "react-native";
 import { styles } from "../../Styles/SettingScreenStyles"
 import { removeItem } from "../../utils/only-token";
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 export default function SettingsScreen({ navigation }) {
   const logoutHandle = () => {
     Alert.alert(
@@ -46,14 +48,16 @@ export default function SettingsScreen({ navigation }) {
                 <Text>Delete my account</Text>
               </View>
             </View>
-            <View style={styles.cards}>
-              <View style={styles.cardstyle}>
-                <MIcon name="logout" size={16} color="#900" style={styles.cardicon} />
-                <Text onPress={() => { logoutHandle() }}>Logout</Text>
-                {/* <CustomButton label={"Logout"} onPress={logoutHandle} style={styles.loginbtn} /> */}
+            <TouchableOpacity onPress={() => { logoutHandle() }}>
+              <View style={styles.cards}>
+                <View style={styles.cardstyle}>
+                  <MIcon name="logout" size={16} color="#900" style={styles.cardicon} />
+                  <Text >Logout</Text>
+                  {/* <CustomButton label={"Logout"} onPress={logoutHandle} style={styles.loginbtn} /> */}
 
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.MiddleCardsContainer} >
             <Text style={styles.Titile}>Help</Text>

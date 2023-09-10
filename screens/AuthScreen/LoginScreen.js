@@ -12,21 +12,26 @@ import LoginSave from '../../utils/login/LoginSave';
 import { setItem } from '../../utils/only-token';
 import { getItem } from "../../utils/only-token";
 import { styles } from '../../Styles/AuthScreenStyleSheet';
-
+import Checkbox from 'expo-checkbox';
 export default LoginScreen = ({ navigation }) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setChecked] = useState(null);
 
-  const handleLogin = async (props) => {
-    if (username === '' || password === '') {
-      Toast.show('Username and password are required!!🤷‍♀️')
+  const setCheckedHandle = (props) => {
+    setChecked(props)
+  };
+
+  const handleLogin = async () => {
+    if (username === '' || password === '' || !isChecked) {
+      Toast.show('Username, password , checkbox values are required!!🤷‍♀️')
       return;
     }
     Keyboard.dismiss();
     let Api
-    if (props === 'live') {
+    if (isChecked === 'live') {
       setItem('api', 'https://api.nurtem.com');
       Api = 'https://api.nurtem.com'
     } else {
@@ -73,6 +78,7 @@ export default LoginScreen = ({ navigation }) => {
       console.error('Error in login:', error);
     }
   };
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <View style={{ paddingHorizontal: 25 }}>
@@ -110,10 +116,27 @@ export default LoginScreen = ({ navigation }) => {
           :
           <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
 
-            <CustomButton onPress={() => handleLogin('live')} label={"Login Live"} />
-            <CustomButton onPress={() => handleLogin('dev')} label={"Login Dev"} />
+            <View style={styles.section}>
+              <Checkbox
+                style={styles.checkbox}
+                value={isChecked === 'live' ? true : false}
+                onValueChange={() => setCheckedHandle('live')}
+                color={isChecked ? '#4630EB' : undefined}
+              />
+              <Text style={styles.paragraph}>Login Class nurtem</Text>
+            </View>
+            <View style={styles.section}>
+              <Checkbox
+                style={styles.checkbox}
+                value={isChecked === 'event' ? true : false}
+                onValueChange={() => setCheckedHandle('event')}
+                color={isChecked ? '#4630EB' : undefined}
+              />
+              <Text style={styles.paragraph}>Login event nurtem</Text>
+            </View>
           </View>
         }
+        <CustomButton onPress={() => handleLogin()} label={"Login"} />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...

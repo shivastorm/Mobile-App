@@ -1,10 +1,9 @@
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import React from 'react';
 import Onboarding from 'react-native-onboarding-swiper';
 import LottieView from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { setItem } from '../../utils/only-token';
-import { color } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
@@ -83,16 +82,11 @@ const styles = StyleSheet.create({
     lottie: {
         width: width * 0.9,
         height: width,
-        //backgroundColor: "blue",
         alignItems: "center"
-
     },
     doneButton: {
         padding: 20,
         fontFamily: 'Roboto-Regular',
         color: 'white'
-        // backgroundColor: 'white',
-        // borderTopLeftRadius: '100%',
-        // borderBottomLeftRadius: '100%'
     }
 })
