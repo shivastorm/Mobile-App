@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/EmptyClassWhite.png",
         "backgroundColor": "#fff"
-      }
+      },
+      "package": "com.ram_prasad.Admin"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1ac361a3-c062-4cdb-85b9-b650522739d3"
+      }
     }
   }
 }
