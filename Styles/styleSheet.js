@@ -119,8 +119,9 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   profileImageContainer: {
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'center',
+    
   },
 
   profileImage: {
@@ -139,8 +140,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   detailsContainer: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    justifyContent: 'center',
   },
   detailItem: {
     display: "flex",

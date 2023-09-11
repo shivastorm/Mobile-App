@@ -15,7 +15,7 @@ const TutorViewScreen = (props) => {
         let access_token = await getItem('access_token');
         let convertedToken = JSON.parse(access_token)
         let Api = await getItem('api')
-
+//console.log("value====",`${Api}/providers/view/${items}/?id${items}&expand=user`)
         fetch(`${Api}/providers/view/${items}/?id${items}&expand=user`, {
             method: "GET",
             headers: {
@@ -25,6 +25,7 @@ const TutorViewScreen = (props) => {
         }).then((response) => response.json())
             .then((json) => {
                 const newData = json?.details
+                console.log("token===",json?.details)
                 setValue(newData);
                 setIsLoading(false)
             })
@@ -101,7 +102,7 @@ const TutorViewScreen = (props) => {
     };
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{backgroundColor:"#fff"}}>
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.profileImageContainer}>
