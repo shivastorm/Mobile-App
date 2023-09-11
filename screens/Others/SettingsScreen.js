@@ -21,6 +21,9 @@ export default function SettingsScreen({ navigation }) {
             removeItem('expires_in')
             removeItem('api')
             removeItem('onboarded')
+            removeItem('currentTime')
+            removeItem('expirationTime')
+            removeItem('refreshThreshold')
             navigation.navigate('Login');
           },
         },
