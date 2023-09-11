@@ -12,6 +12,7 @@ import { getAccessToken } from "../utils/get-access-token";
 import { removeAllTokens } from "../utils/RemoveAllTokens";
 import TutorViewScreen from "../screens/ViewScreens/TutorViewScreen";
 import UserViewScreen from "../screens/ViewScreens/UserViewScreen";
+import ListConfiguration from "../screens/ListScreen/ListConfiguration";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
@@ -87,6 +88,7 @@ export default function AppNavigation() {
             options={{ headerShown: false }}
             component={EditQutoes}
           />
+         
         </>
       </Stack.Navigator>
     </NavigationContainer>

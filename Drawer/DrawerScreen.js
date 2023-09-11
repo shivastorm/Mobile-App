@@ -9,11 +9,16 @@ import CreateCategory from "../screens/CreateScreen/CreateCategoryScreen";
 import ListQuotes from "../screens/ListScreen/ListQuotesScreen.js";
 import CreateQuotes from "../screens/CreateScreen/CreateQutoesScreen";
 import ListServices from "../screens/ListScreen/ListServicesScreen";
-import ListConfigurations from "../screens/ListScreen/ListConfiguration";
+//import Configurations from "../screens/ListScreen/ListConfiguration";
 import ListTransaction from "../screens/ListScreen/ListTransactions";
 import SettingsScreen from "../screens/Others/SettingsScreen";
 import CreateServices from "../screens/CreateScreen/CreateServices";
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
+import Iicons from 'react-native-vector-icons/Entypo';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import TIcons from 'react-native-vector-icons/FontAwesome5';
+import Tcons from 'react-native-vector-icons/FontAwesome';
+import Configurations1 from '../screens/ListScreen/ListConfiguration';
 
 export default function DrawerScreen() {
   const Drawer = createDrawerNavigator();
@@ -49,7 +54,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="person-add-alt-1" paddingleft={30} size={20} color={color} />
+            <Icons name="desktop-mac-dashboard" paddingleft={30} size={20} color={color} />
           )
         }} component={DashboardScreen} />
       <Drawer.Screen name="Manage Tutors"
@@ -58,7 +63,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="person-add-alt-1" paddingleft={30} size={20} color={color} />
+            <TIcons name="chalkboard-teacher" paddingleft={30} size={20} color={color} />
           )
         }}
 
@@ -79,7 +84,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="auto-awesome-motion" size={20} color={color} />
+            <Ionicons name="category" size={20} color={color} />
           )
         }}
         component={ListCategories} />
@@ -89,7 +94,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="auto-awesome-motion" size={20} color={color} />
+            <Icons name="comment-quote-outline" size={20} color={color} />
           )
         }}
         component={ListQuotes} />
@@ -99,7 +104,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="corporate-fare" size={20} color={color} />
+            <Ionicons name="design-services" size={20} color={color} />
           )
         }}
         component={ListServices} />
@@ -119,7 +124,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="assignment" size={20} color={color} />
+            <Tcons name="pencil-square-o" size={20} color={color} />
           )
         }}
         component={ManageClaim} />
@@ -129,7 +134,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="dashboard-customize" size={20} color={color} />
+            <Icons name="format-list-bulleted-type" size={20} color={color} />
           )
         }}
         component={CreateCategory} />
@@ -139,7 +144,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="dashboard-customize" size={20} color={color} />
+            <Iicons name="creative-commons-share" size={20} color={color} />
           )
         }}
         component={CreateServices} />
@@ -149,7 +154,7 @@ export default function DrawerScreen() {
           headerStyle,
           headerTitleAlign: 'center',
           drawerIcon: ({ color }) => (
-            <Ionicons name="dashboard-customize" size={20} color={color} />
+            <Ionicons name="add-comment" size={20} color={color} />
           )
         }}
         component={CreateQuotes} />
@@ -162,7 +167,7 @@ export default function DrawerScreen() {
             <Ionicons name="settings-input-component" size={20} color={color} />
           )
         }}
-        component={ListConfigurations} />
+        component={Configurations1} />
       <Drawer.Screen name="Settings"
         options={{
           headerShown: true,

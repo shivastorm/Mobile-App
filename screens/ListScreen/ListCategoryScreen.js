@@ -3,13 +3,14 @@ import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import { styles } from '../../Styles/styleSheet';
-
+import { Button, SearchBar } from "react-native-elements";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
 import CreateCategory from "../CreateScreen/CreateCategoryScreen";
 
 export default function ListCategories({ navigation }) {
   const [value, setValue] = useState([])
+  const [searchText, setSearchText] = useState('')
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -67,6 +68,12 @@ export default function ListCategories({ navigation }) {
       </View>
     )
   };
+  const handleSearch = () => {
+    // Implement your search logic here based on the 'searchText' state
+    // For example, you can make an API request or filter a list of items.
+    console.log('Search text:', searchText);
+  };
+ 
 
   const renderItem = ({ item, index }) => {
     let date = new Date(item.updated_at)
@@ -74,10 +81,7 @@ export default function ListCategories({ navigation }) {
     let nameValue = item.name
     let desc = item.description
     return (
-      <>
-      
-
-        
+      <>      
 
           <View style={styles.cardsWrapper}>
             <TouchableOpacity
@@ -124,6 +128,17 @@ export default function ListCategories({ navigation }) {
 
   return (
     <View style={{ backgroundColor: "white" }} >
+       <View>
+      <SearchBar
+        placeholder="Search..."
+        onChangeText={setSearchText}
+        value={searchText}
+       // platform="default" // Specify the platform (optional)
+        cancelButtonTitle="Cancel" // Customize the cancel button text (optional)
+        inputContainerStyle={{ backgroundColor: 'white' }} // Customize the input container style (optional)
+      />
+      <Button title="Search" onPress={handleSearch} />
+    </View>
         <View styel={{display:"flex",flexDirection:"row",alignItems:'',justifyContent:"center"}}>
           <CustomButton
             style={styles.cardButton}

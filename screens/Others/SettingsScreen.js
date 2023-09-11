@@ -33,7 +33,7 @@ export default function SettingsScreen({ navigation }) {
       <View style={styles.maincontainer}  >
         <View style={styles.container}>
           {/* <Text style={styles.Titile}>Logout:</Text>
-        <CustomButton label={"Logout"} onPress={logoutHandle} style={styles.loginbtn} /> */}
+          <CustomButton label={"Logout"} onPress={logoutHandle} style={styles.loginbtn} /> */}
           <View style={styles.TopCardsContainer} >
             <Text style={styles.Titile}>Account</Text>
             <View style={styles.cards}>
