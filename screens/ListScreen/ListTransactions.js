@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import{styles} from "../../Styles/styleSheet"
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import AIcon from 'react-native-vector-icons/AntDesign';
+import { styles } from "../../Styles/styleSheet"
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
+import _ from 'lodash'
 
 export default function ListTransactions({ navigation }) {
   const [value, setValue] = useState([])
@@ -19,7 +21,8 @@ export default function ListTransactions({ navigation }) {
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
     let Api = await getItem('api')
-    fetch(`${Api}/providers/list?sort=created_at.ASC&limit=20&page=${page}`, {
+    // console.log("api value===",`${Api}/transactions/list/?page=1&sort=created_at.desc&expand=class_details,camp_details,provider,user,dependent_user,payment_details`)
+    fetch(`${Api}/transactions/list/?page=1&sort=created_at.DESC&expand=class_details,camp_details,provider,user,dependent_user,payment_details`, {
       method: "GET",
       headers: {
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +30,7 @@ export default function ListTransactions({ navigation }) {
       },
     }).then((response) => response.json())
       .then((json) => {
-        // Combine previous and new data
+        // console.log("hgac=====",json)
         const newData = [...value, ...json?.items];
 
         // Filter out duplicates based on item id
@@ -50,7 +53,7 @@ export default function ListTransactions({ navigation }) {
   const TruncatedText = ({ text }) => {
     return (
       <View  >
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.cardTitle}>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.context}>
           {text}
         </Text>
       </View>
@@ -78,31 +81,57 @@ export default function ListTransactions({ navigation }) {
   const renderItem = ({ item, index }) => {
     return (
       <View style={styles.cardsWrapper}>
-        <View style={styles.cardcategory}>
-          {/* <View style={styles.cardImgWrapper}>
-            <Image
-              source={{ uri: item.photo } ? { uri: item.photo } : { uri: "https://nurtem-s3.s3.us-west-2.amazonaws.com/Assets/user3d.jpg" }}
-              style={styles.cardImg}
-              resizeMode="cover"
-            />
-          </View> */}
+        <View style={styles.card_Trans_Cat}>         
           <View style={styles.cardInfo}>
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', }}>
+              <AIcon name="idcard" size={16} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardTitle}>ID:   </Text>
+              <TruncatedText text={item.id} />
+            </View>
             <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
-              <MIcon name="person" size={16} color="#900" style={styles.cardicon} />
-              <TruncatedText text={item.type === 'Individual' ? item.firstname : item.businessname} />
+              <MIcon name="style" size={16} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardTitle}>Type:   </Text>
+              <TruncatedText text={item.class_type} />
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+              <Icon name="stats-chart-outline" size={16} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardTitle}>Status:  </Text>
+              <TruncatedText text={item.status === 1 ? 'Active' : 'Deactive'} />
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <MIcon name="email" size={15} color="#900" style={styles.cardicon} />
-              <Text style={styles.cardDetails}>{item.email}</Text>
+              <MIcon name="person" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardTitle}>User Name:   </Text>
+              <Text style={styles.cardDetails}>{item.user.firstname}</Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <MIcon name="phone-iphone" size={15} color="#900" style={styles.cardicon} />
-              <Text style={styles.cardDetails}>{item.mobile_number}</Text>
+              <MIcon name="person" size={15} color="#900" style={styles.cardicon} />
+              <Text style={styles.cardTitle}>Session:   </Text>
+              <Text style={styles.cardDetails}>{
+              item.class_type === "class" ? 
+              _.get(item,"class_details.session_name"," ") 
+              :item.class_type === "camp"?
+              _.get(item,"camp_details.session_name"," ") :
+             _.get(item,"competition_details.session_name","undefined")             
+                       
+
+            }</Text>
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <MIcon name="access-time" size={15} color="#900" style={styles.cardicon} />
+                <Text style={styles.cardTitle}>No Session paid:   </Text>
+                <Text style={styles.cardDetails}>{item.number_session_paid}</Text>
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <MIcon name="attach-money" size={15} color="#900" style={styles.cardicon} />
+                <Text style={styles.cardTitle}>Amount:    </Text>
+                <Text style={styles.cardDetails}>{item.amount}</Text>
+              </View>
+            </View>
+            {/* <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               <CustomButton style={styles.cardButton} labelStyle={styles.labelStyle} label={item.user.status === 1 ? 'Active' : 'Deactive'} />
               <CustomButton style={styles.cardButton} onPress={() => ViewProfile(item)} labelStyle={styles.labelStyle} label={'View Profile'} />
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
@@ -124,87 +153,3 @@ export default function ListTransactions({ navigation }) {
   )
 }
 
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-
-//   cardPadding: {
-//     padding: 15
-//   },
-
-
-
-
-
-//   cardicon: {
-//     marginRight: 5, alignSelf: "center", marginRight: 10
-//   },
-//   cardsWrapper: {
-//     marginTop: 5,
-//     width: '99%',
-//     borderColor: "black",
-//     alignSelf: 'center',
-//     borderBottomColor: "#fff",
-//   },
-//   card: {
-//     height: 130,
-//     marginVertical: -5,
-//     flexDirection: 'row',
-//     shadowColor: '#999',
-//     shadowOffset: { width: 0, height: 1 },
-//     shadowOpacity: 0.8,
-//     shadowRadius: 2,
-//     elevation: 3,
-//   },
-//   cardImgWrapper: {
-//     flex: 1,
-//   },
-//   cardImg: {
-//     height: '50%',
-//     width: '75%',
-//     borderRadius: 10,
-//     alignSelf: 'center',
-//     borderColor: "black",
-
-
-//   },
-//   cardInfo: {
-
-//     flex: 4,
-//     padding: 0,
-//     borderColor: '#fff',
-//     borderWidth: 1,
-//     borderLeftWidth: 0,
-//     borderRightWidth: 13,
-//     borderBottomRightRadius: 8,
-//     borderTopRightRadius: 8,
-//     backgroundColor: '#fff',
-//   },
-//   cardTitle: {
-//     fontWeight: 'bold',
-//     fontSize: 15,
-//     /// fontFamily: "Roboto-Regular",
-//     paddingBottom: 5,
-//   },
-
-//   cardDetails: {
-//     fontSize: 15,
-//     paddingBottom: 2,
-//     color: '#444',
-//   },
-//   cardButton: {
-//     backgroundColor: "#e9b4f0",
-//     width: 80,
-//     height: 25,
-//     margin: 2,
-//     padding: 2,
-//     borderRadius: 10
-//   },
-//   labelStyle: {
-//     color: "black",
-//     fontSize: 14,
-//     textAlign: "center"
-//   }
-// });

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
 
   cardicon: {
-    alignSelf: "center",
+    alignSelf: 'center',
     marginRight: 5
   },
   cardsWrapper: {
@@ -27,8 +27,25 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
+  context:{
+    fontSize:14,
+    fontFamily:"Roboto-Medium"
+  },
   cardcategory: {
     maxHeight: 160,
+    flexDirection: 'row',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.06,
+    elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingTop: 10,
+    padding: 10
+  },
+  card_Trans_Cat: {
+    maxHeight: 180,
     flexDirection: 'row',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
@@ -60,7 +77,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardTitle: {
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: "Roboto-Bold",
     paddingBottom: 5,
   },
@@ -159,7 +176,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     fontFamily: 'Roboto-Bold',
-  },
+  },   label: {
+    fontSize: 18,
+    fontFamily: "Roboto-Bold",
+    marginBottom: 8,
+},
 
   detailValue: {
     width: 340,
