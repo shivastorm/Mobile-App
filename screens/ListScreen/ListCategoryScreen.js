@@ -6,6 +6,7 @@ import { styles } from '../../Styles/styleSheet';
 
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
+import CreateCategory from "../CreateScreen/CreateCategoryScreen";
 
 export default function ListCategories({ navigation }) {
   const [value, setValue] = useState([])
@@ -54,6 +55,10 @@ export default function ListCategories({ navigation }) {
     // Pass the values as an object
     navigation.navigate('EditCategory', { id, nameValue, desc });
   };
+  const CreateCategory = () => {
+    // Pass the values as an object
+    navigation.navigate('EditCategory' );
+  };
 
   if (isLoading && page === 1) {
     return (
@@ -69,45 +74,66 @@ export default function ListCategories({ navigation }) {
     let nameValue = item.name
     let desc = item.description
     return (
-      <View style={styles.cardsWrapper}>
-        <TouchableOpacity
-          onPress={() => EditCategory(id, nameValue, desc)}>
-          <View style={styles.cardcategory}>
-            <View style={styles.categorycardInfo}>
-              <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
-                <MIcon
-                  name="person" size={16}
-                  color="#900"
-                  style={styles.cardicon} />
-                <Text style={styles.cardTitle}> {nameValue} </Text>
-              </View>
-              <View style={{ display: 'flex', flexDirection: 'row' }}>
-                <TruncatedText style={styles.cardDetails} text={desc} />
-              </View>
-              <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                  <MIcon
-                    name="calendar-today"
-                    size={15} color="#900"
-                    style={styles.cardicon} />
-                  <Text style={styles.cardDetails}>
-                    {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
-                  </Text>
+      <>
+      
+
+        
+
+          <View style={styles.cardsWrapper}>
+            <TouchableOpacity
+              onPress={() => EditCategory(id, nameValue, desc)}>
+              <View style={styles.cardcategory}>
+                <View style={styles.categorycardInfo}>
+
+                  <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+                    <MIcon
+                      name="person" size={16}
+                      color="#900"
+                      style={styles.cardicon} />
+                    <Text style={styles.cardTitle}> {nameValue} </Text>
+                  </View>
+
+
+                  <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <TruncatedText style={styles.cardDetails} text={desc} />
+                  </View>
+                  <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
+                    <View style={{ display: "flex", flexDirection: "row" }}>
+                      <MIcon
+                        name="calendar-today"
+                        size={15} color="#900"
+                        style={styles.cardicon} />
+                      <Text style={styles.cardDetails}>
+                        {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+                      </Text>
+                    </View>
+                    <CustomButton
+                      style={styles.cardButton}
+                      labelStyle={styles.labelStyle}
+                      label={item.status === 1 ? 'Active' : 'Deactive'} />
+                  </View>
                 </View>
-                <CustomButton
-                  style={styles.cardButton}
-                  labelStyle={styles.labelStyle}
-                  label={item.status === 1 ? 'Active' : 'Deactive'} />
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
+        
+      </>
+
     )
   };
 
   return (
     <View style={{ backgroundColor: "white" }} >
+        <View styel={{display:"flex",flexDirection:"row",alignItems:'',justifyContent:"center"}}>
+          <CustomButton
+            style={styles.cardButton}
+            labelStyle={styles.labelStyle}
+            label={'create'} 
+            onPress={() => CreateCategory()}
+            />
+
+        </View>
+
       <FlatList
         data={value}
         onEndReachedThreshold={0.1}

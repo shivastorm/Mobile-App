@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     borderBottomColor: "#fff",
+    // backgroundColor:"black"
 
   },
   card: {

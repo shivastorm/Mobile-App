@@ -3,11 +3,13 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        paddingTop: 70,
+        padding: 15,
         backgroundColor: "#fff"
     },
     label: {
         fontSize: 18,
+        fontFamily: "Roboto-Bold",
         marginBottom: 8,
     },
     input: {
