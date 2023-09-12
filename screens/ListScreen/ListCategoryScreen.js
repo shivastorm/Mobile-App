@@ -58,7 +58,7 @@ export default function ListCategories({ navigation }) {
   };
   const CreateCategory = () => {
     // Pass the values as an object
-    navigation.navigate('EditCategory' );
+    navigation.navigate('EditCategory');
   };
 
   if (isLoading && page === 1) {
@@ -68,12 +68,10 @@ export default function ListCategories({ navigation }) {
       </View>
     )
   };
-  const handleSearch = () => {
-    // Implement your search logic here based on the 'searchText' state
-    // For example, you can make an API request or filter a list of items.
-    console.log('Search text:', searchText);
-  };
- 
+  const filteredData = value.filter((item) =>
+    item.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
 
   const renderItem = ({ item, index }) => {
     let date = new Date(item.updated_at)
@@ -81,46 +79,46 @@ export default function ListCategories({ navigation }) {
     let nameValue = item.name
     let desc = item.description
     return (
-      <>      
+      <>
 
-          <View style={styles.cardsWrapper}>
-            <TouchableOpacity
-              onPress={() => EditCategory(id, nameValue, desc)}>
-              <View style={styles.cardcategory}>
-                <View style={styles.categorycardInfo}>
+        <View style={styles.cardsWrapper}>
+          <TouchableOpacity
+            onPress={() => EditCategory(id, nameValue, desc)}>
+            <View style={styles.cardcategory}>
+              <View style={styles.categorycardInfo}>
 
-                  <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+                <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
+                  <MIcon
+                    name="person" size={16}
+                    color="#900"
+                    style={styles.cardicon} />
+                  <Text style={styles.cardTitle}> {nameValue} </Text>
+                </View>
+
+
+                <View style={{ display: 'flex', flexDirection: 'row' }}>
+                  <TruncatedText style={styles.cardDetails} text={desc} />
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
+                  <View style={{ display: "flex", flexDirection: "row" }}>
                     <MIcon
-                      name="person" size={16}
-                      color="#900"
+                      name="calendar-today"
+                      size={15} color="#900"
                       style={styles.cardicon} />
-                    <Text style={styles.cardTitle}> {nameValue} </Text>
+                    <Text style={styles.cardDetails}>
+                      {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+                    </Text>
                   </View>
-
-
-                  <View style={{ display: 'flex', flexDirection: 'row' }}>
-                    <TruncatedText style={styles.cardDetails} text={desc} />
-                  </View>
-                  <View style={{ display: 'flex', flexDirection: 'row', alignItems: "center", justifyContent: "space-between" }}>
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                      <MIcon
-                        name="calendar-today"
-                        size={15} color="#900"
-                        style={styles.cardicon} />
-                      <Text style={styles.cardDetails}>
-                        {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
-                      </Text>
-                    </View>
-                    <CustomButton
-                      style={styles.cardButton}
-                      labelStyle={styles.labelStyle}
-                      label={item.status === 1 ? 'Active' : 'Deactive'} />
-                  </View>
+                  <CustomButton
+                    style={styles.cardButton}
+                    labelStyle={styles.labelStyle}
+                    label={item.status === 1 ? 'Active' : 'Deactive'} />
                 </View>
               </View>
-            </TouchableOpacity>
-          </View>
-        
+            </View>
+          </TouchableOpacity>
+        </View>
+
       </>
 
     )
@@ -128,34 +126,47 @@ export default function ListCategories({ navigation }) {
 
   return (
     <View style={{ backgroundColor: "white" }} >
-       <View>
-      <SearchBar
-        placeholder="Search..."
-        onChangeText={setSearchText}
-        value={searchText}
-       // platform="default" // Specify the platform (optional)
-        cancelButtonTitle="Cancel" // Customize the cancel button text (optional)
-        inputContainerStyle={{ backgroundColor: 'white' }} // Customize the input container style (optional)
-      />
-      <Button title="Search" onPress={handleSearch} />
-    </View>
-        <View styel={{display:"flex",flexDirection:"row",alignItems:'',justifyContent:"center"}}>
-          <CustomButton
-            style={styles.cardButton}
-            labelStyle={styles.labelStyle}
-            label={'create'} 
-            onPress={() => CreateCategory()}
-            />
+      <View>
+        <SearchBar
+          placeholder="Search..."
+          returnType="text"
+          onChangeText={(query) => {
+            setSearchText(query);
 
-        </View>
+          }}
+          value={searchText}
 
-      <FlatList
-        data={value}
-        onEndReachedThreshold={0.1}
-        onEndReached={() => { setPage(page + 1) }}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
+          cancelButtonTitle="Cancel" // Customize the cancel button text (optional)
+          inputContainerStyle={{ backgroundColor: 'white' }} // Customize the input container style (optional)
+        />
+        {/* <Button title="Search" onPress={handleSearch} /> */}
+      </View>
+      <View styel={{ display: "flex", flexDirection: "row", alignItems: '', justifyContent: "center" }}>
+        <CustomButton
+          style={styles.cardButton}
+          labelStyle={styles.labelStyle}
+          label={'create'}
+          onPress={() => CreateCategory()}
+        />
+
+      </View>
+     {  searchText ?(
+        <FlatList
+          data={filteredData}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+        />
+
+  ):(        <FlatList
+          searchText
+          data={value}
+          onEndReachedThreshold={0.1}
+          onEndReached={() => { setPage(page + 1) }}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+
+      )}
     </View>
 
   );
