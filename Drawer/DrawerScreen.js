@@ -4,8 +4,7 @@ import DashboardScreen from "../screens/Others/DashboardScreen";
 import TutorScreen from "../screens/ListScreen/ListTutorScreen";
 import ManageUser from "../screens/ListScreen/ListUserScreen";
 import ManageClaim from "../screens/Others/ClaimScreen";
-import ListCategories from "../screens/ListScreen/ListCategoryScreen";
-import CreateCategory from "../screens/CreateScreen/CreateCategoryScreen";
+import ListCategories from "../screens/ListScreen/ListCategoryScreen"; 
 import ListQuotes from "../screens/ListScreen/ListQuotesScreen.js";
 import CreateQuotes from "../screens/CreateScreen/CreateQutoesScreen";
 import ListServices from "../screens/ListScreen/ListServicesScreen";
@@ -127,17 +126,7 @@ export default function DrawerScreen() {
             <Tcons name="pencil-square-o" size={20} color={color} />
           )
         }}
-        component={ManageClaim} />
-      <Drawer.Screen name="Create Category"
-        options={{
-          headerShown: true,
-          headerStyle,
-          headerTitleAlign: 'center',
-          drawerIcon: ({ color }) => (
-            <Icons name="format-list-bulleted-type" size={20} color={color} />
-          )
-        }}
-        component={CreateCategory} />
+        component={ManageClaim} />    
       <Drawer.Screen name="Create Services"
         options={{
           headerShown: true,

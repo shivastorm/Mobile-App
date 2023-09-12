@@ -6,7 +6,6 @@ import { styles } from '../../Styles/styleSheet';
 import { Button, SearchBar } from "react-native-elements";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
-import CreateCategory from "../CreateScreen/CreateCategoryScreen";
 
 export default function ListCategories({ navigation }) {
   const [value, setValue] = useState([])
@@ -29,7 +28,6 @@ export default function ListCategories({ navigation }) {
       .then((json) => {
         const newData = [...value, ...json?.items];
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
-
         setValue(uniqueData);
         setIsLoading(false)
       })
@@ -38,11 +36,9 @@ export default function ListCategories({ navigation }) {
         setIsLoading(false)
       })
   };
-
   useEffect(() => {
     getData()
   }, [page])
-
   const TruncatedText = ({ text }) => {
     return (
       <View  >
@@ -56,11 +52,6 @@ export default function ListCategories({ navigation }) {
     // Pass the values as an object
     navigation.navigate('EditCategory', { id, nameValue, desc });
   };
-  const CreateCategory = () => {
-    // Pass the values as an object
-    navigation.navigate('EditCategory');
-  };
-
   if (isLoading && page === 1) {
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -68,11 +59,13 @@ export default function ListCategories({ navigation }) {
       </View>
     )
   };
+  //filteration of seaarch data
   const filteredData = value.filter((item) =>
     item.name.toLowerCase().includes(searchText.toLowerCase())
   );
-
-
+  const handlechange = (query) => {
+    setSearchText(query);
+  }
   const renderItem = ({ item, index }) => {
     let date = new Date(item.updated_at)
     let id = item.id
@@ -80,13 +73,11 @@ export default function ListCategories({ navigation }) {
     let desc = item.description
     return (
       <>
-
         <View style={styles.cardsWrapper}>
           <TouchableOpacity
             onPress={() => EditCategory(id, nameValue, desc)}>
             <View style={styles.cardcategory}>
               <View style={styles.categorycardInfo}>
-
                 <View style={{ display: 'flex', flexDirection: 'row', alignContent: 'center' }}>
                   <MIcon
                     name="person" size={16}
@@ -94,8 +85,6 @@ export default function ListCategories({ navigation }) {
                     style={styles.cardicon} />
                   <Text style={styles.cardTitle}> {nameValue} </Text>
                 </View>
-
-
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
                   <TruncatedText style={styles.cardDetails} text={desc} />
                 </View>
@@ -130,42 +119,36 @@ export default function ListCategories({ navigation }) {
         <SearchBar
           placeholder="Search..."
           returnType="text"
-          onChangeText={(query) => {
-            setSearchText(query);
-
-          }}
+          onChangeText={handlechange}
           value={searchText}
-
           cancelButtonTitle="Cancel" // Customize the cancel button text (optional)
-          inputContainerStyle={{ backgroundColor: 'white' }} // Customize the input container style (optional)
+          containerStyle={{ backgroundColor: "white", height: 70 }}
+          inputContainerStyle={{ backgroundColor: '#fff', borderWidth: 1, borderColor: "#000" }}
+        // Customize the input container style (optional)
         />
-        {/* <Button title="Search" onPress={handleSearch} /> */}
       </View>
       <View styel={{ display: "flex", flexDirection: "row", alignItems: '', justifyContent: "center" }}>
         <CustomButton
           style={styles.cardButton}
           labelStyle={styles.labelStyle}
           label={'create'}
-          onPress={() => CreateCategory()}
+          onPress={() => navigation.navigate('EditCategory', { create: true })}
         />
-
       </View>
-     {  searchText ?(
+      {searchText ? (
         <FlatList
           data={filteredData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
         />
-
-  ):(        <FlatList
-          searchText
-          data={value}
-          onEndReachedThreshold={0.1}
-          onEndReached={() => { setPage(page + 1) }}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-        />
-
+      ) : (<FlatList
+        searchText
+        data={value}
+        onEndReachedThreshold={0.1}
+        onEndReached={() => { setPage(page + 1) }}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
       )}
     </View>
 

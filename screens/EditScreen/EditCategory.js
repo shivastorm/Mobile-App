@@ -6,8 +6,8 @@ import { useState } from "react";
 import { styles } from '../../Styles/CreateStyleSheet';
 
 export default function EditCategory({ route }) {
-    const { id, nameValue, desc } = route.params;
-
+    const { id, nameValue, desc, create } = route.params;
+    const creation = !!create;
     const isEdit = !!id;
     const [name, setName] = useState(isEdit ? nameValue : '');
     const [description, setDescription] = useState(isEdit ? desc : '');
@@ -19,7 +19,6 @@ export default function EditCategory({ route }) {
     const handleDescriptionChange = (text) => {
         setDescription(text);
     };
-
     const handleSubmit = async () => {
         Keyboard.dismiss();
         setIsLoading(true)
@@ -33,14 +32,13 @@ export default function EditCategory({ route }) {
                 name: name,
                 description: description
             }
-        } else {
+        } if (creation) {
             PayLoad = {
                 name: name,
                 description: description
             }
         }
-
-        let url = isEdit ? `${Api}/categories/update/${id}` : `${Api}/categories/create`;
+        let url = isEdit ? `${Api}/categories/update/${id}` : creation ? `${Api}/categories/create` : null;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -51,8 +49,13 @@ export default function EditCategory({ route }) {
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log('response for edit=========', json)
-                if (json.status === 200) {
+                //  console.log('response for edit=========', json)
+                if (json.errors) {
+                    const errorMessages = json.errors.map((error) => error.rules[0].message);
+                    const errorMessage = errorMessages.join('\n');
+                    setIsLoading(false);
+                    Toast.show(errorMessage);
+                } else if (json.status === 200 || json.status === 201) {
                     setName(null)
                     setDescription(null)
                     setIsLoading(false)
