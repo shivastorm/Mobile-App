@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { View, Text, ActivityIndicator, TouchableOpacity,RefreshControl,FlatList} from "react-native";
+//import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import { styles } from '../../Styles/styleSheet';
 import { Button, SearchBar } from "react-native-elements";
@@ -12,8 +12,11 @@ export default function ListCategories({ navigation }) {
   const [searchText, setSearchText] = useState('')
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
-
-  const getData = async () => {
+  const [refresh, setRefresh] = useState(false);
+  let getData;
+  const onRefresh = ()=>{
+   getData = async () => {
+    setRefresh(true);
     setIsLoading(true)
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token)
@@ -30,12 +33,15 @@ export default function ListCategories({ navigation }) {
         const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
         setValue(uniqueData);
         setIsLoading(false)
+        setRefresh(false);
       })
       .catch(err => {
         console.log('catch err in service list api call=======', err)
         setIsLoading(false)
+        setRefresh(false);
       })
-  };
+  }
+};
   useEffect(() => {
     getData()
   }, [page])
@@ -135,20 +141,26 @@ export default function ListCategories({ navigation }) {
           onPress={() => navigation.navigate('EditCategory', { create: true })}
         />
       </View>
-      {searchText ? (
+       {searchText ? (
         <FlatList
           data={filteredData}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
         />
-      ) : (<FlatList
+       ) : (<FlatList
         searchText
         data={value}
         onEndReachedThreshold={0.1}
         onEndReached={() => { setPage(page + 1) }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-      />
+        refreshControl={
+          <RefreshControl
+            refreshing={refresh}
+            onRefresh={onRefresh()}
+          />
+        }
+        />
       )}
     </View>
 

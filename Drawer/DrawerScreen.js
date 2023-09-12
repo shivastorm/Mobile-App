@@ -4,7 +4,7 @@ import DashboardScreen from "../screens/Others/DashboardScreen";
 import TutorScreen from "../screens/ListScreen/ListTutorScreen";
 import ManageUser from "../screens/ListScreen/ListUserScreen";
 import ManageClaim from "../screens/Others/ClaimScreen";
-import ListCategories from "../screens/ListScreen/ListCategoryScreen"; 
+import ListCategories from '../screens/ListScreen/ListCategoryScreen'; 
 import ListQuotes from "../screens/ListScreen/ListQuotesScreen.js";
 import CreateQuotes from "../screens/CreateScreen/CreateQutoesScreen";
 import ListServices from "../screens/ListScreen/ListServicesScreen";

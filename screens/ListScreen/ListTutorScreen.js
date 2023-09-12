@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, ActivityIndicator, TextInput, Alert } from "react-native";
+import { View, Text, Image, ActivityIndicator, TextInput, Alert, RefreshControl,FlatList } from "react-native";
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MIcon1 from 'react-native-vector-icons/Octicons';
 import { styles } from '../../Styles/styleSheet';
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+ 
 import StarRating from "../../components/starRating";
 import { getItem } from "../../utils/only-token";
 import CustomButton from "../../components/CustomButton";
@@ -14,11 +14,15 @@ export default function TutorScreen({ navigation }) {
   const [value, setValue] = useState([])
   const [page, setPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
-  const [isRefreshing, setIsRefreshing] = useState(false)
+  
   const [isLoading, setIsLoading] = useState(false)
-  const getData = async () => {
-    setIsLoading(true);
+  const [refresh, setRefresh] = useState(false);
 
+  let getData;
+  const onRefresh = ()=>{
+   getData = async () => {
+    setRefresh(true);
+    setIsLoading(true);
     let access_token = await getItem('access_token');
     let convertedToken = JSON.parse(access_token);
     let api = await getItem('api');
@@ -36,28 +40,27 @@ export default function TutorScreen({ navigation }) {
           Authorization: `Bearer ${convertedToken}`
         }
       });
-
       let newData;
-
       if (searchQuery) {
         newData = response.data.items;
         setSearchQuery(null);
       } else {
         newData = [...value, ...response.data.items];
       }
-
       const uniqueData = Array.from(new Set(newData.map(item => item.id))).map(id => newData.find(item => item.id === id));
-
       setValue(uniqueData);
+      setRefresh(false);
 
     } catch (err) {
       Toast.show('😞Error😞');
       console.log('catch err in tutor list api=======', err);
+      setRefresh(false);
     } finally {
       setIsLoading(false);
+      setRefresh(false);
     }
-
   };
+};
 
   useEffect(() => {
     getData()
@@ -73,12 +76,7 @@ export default function TutorScreen({ navigation }) {
     );
   };
 
-  const onRefresh = () => {
-    setIsRefreshing(true)
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 2000)
-  };
+ 
 
   if (isLoading && page === 1) {
     return (
@@ -167,8 +165,12 @@ export default function TutorScreen({ navigation }) {
           onEndReached={() => { setPage(page + 1) }}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-        // onRefresh={onRefresh}
-        // refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={onRefresh()}
+            />
+          }
         />
       </View >
     </>

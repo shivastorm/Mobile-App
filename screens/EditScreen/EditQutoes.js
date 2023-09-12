@@ -7,16 +7,14 @@ import { styles } from '../../Styles/CreateStyleSheet';
 import CustomButton from "../../components/CustomButton";
 
 export default function EditQutoes({ route }) {
-    const { id, desc } = route.params;
-
+    const { id, desc,create } = route.params;
+    const creation = !!create;
     const isEdit = !!id;
     const [description, setDescription] = useState(isEdit ? desc : '');
     const [isLoading, setIsLoading] = useState(false);
-
     const handleDescriptionChange = (text) => {
         setDescription(text);
     };
-
     const handleSubmit = async () => {
         Keyboard.dismiss();
         setIsLoading(true)
@@ -29,13 +27,12 @@ export default function EditQutoes({ route }) {
                 id: id,
                 description: description
             }
-        } else {
+        } if(creation) {
             PayLoad = {
                 description: description
             }
         }
-
-        let url = isEdit ? `${Api}/servicesquotes/update/${id}` : `${Api}/servicesquotes/create`;
+        let url = isEdit ? `${Api}/servicesquotes/update/${id}`: creation? `${Api}/servicesquotes/create`:null;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -46,7 +43,13 @@ export default function EditQutoes({ route }) {
         })
             .then((response) => response.json())
             .then((json) => {
-                if (json.status === 200) {
+               //     console.log('response for edit=========', json)
+                if (json.errors) {
+                    const errorMessages = json.errors.map((error) => error.rules[0].message);
+                    const errorMessage = errorMessages.join('\n');
+                    setIsLoading(false);
+                    Toast.show(errorMessage);
+                } else if (json.status === 200 || json.status === 201) {
                     setIsLoading(false)
                     Toast.show('✌️Success✌️')
                     return;
@@ -61,7 +64,6 @@ export default function EditQutoes({ route }) {
                 console.error('API request failed in Edit servicequtoes====>', error);
             });
     };
-
     return (
         <View style={styles.container}>
             <Text style={styles.detailLabel}>Description:</Text>
@@ -74,7 +76,7 @@ export default function EditQutoes({ route }) {
             {isLoading ? (
                 <ActivityIndicator size="large" color="rose" />
             ) : (
-                <CustomButton onPress={() => handleSubmit()}  label={'Update'} />
+                <CustomButton onPress={() => handleSubmit()}  label={'Submit'} />
             )}
         </View>
     );

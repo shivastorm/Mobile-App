@@ -3,11 +3,15 @@ import { View, Text, Image, ActivityIndicator, TouchableOpacity } from "react-na
 import { FlatList } from "react-native-gesture-handler";
 import { getItem } from "../../utils/only-token";
 import { styles } from "../../Styles/styleSheet"
+import { Button, SearchBar } from "react-native-elements";
+
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from "../../components/CustomButton";
 
 export default function ListQuotes({ navigation }) {
   const [value, setValue] = useState([])
+  const [searchText, setSearchText] = useState('')
+
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -54,6 +58,12 @@ export default function ListQuotes({ navigation }) {
     // Pass the values as an object
     navigation.navigate('EditQutoes', { id, desc });
   };
+//   const filteredData = value.filter((item) =>
+//   item.name.toLowerCase().includes(searchText.toLowerCase())
+// );
+  const handlechange = (query) => {
+    setSearchText(query);
+  }
 
   if (isLoading && page === 1) {
     return (
@@ -99,14 +109,45 @@ export default function ListQuotes({ navigation }) {
   };
 
   return (
-    <View >
-      <FlatList
+    <View style={{backgroundColor:"#fff"}}>
+       <View>
+        <SearchBar
+          placeholder="Search..."
+          returnType="text"
+          onChangeText={handlechange}
+          value={searchText}
+          cancelButtonTitle="Cancel" // Customize the cancel button text (optional)
+          containerStyle={{ backgroundColor: "white", height: 70 }}
+          inputContainerStyle={{ backgroundColor: '#fff', borderWidth: 1, borderColor: "#000" }}
+         // Customize the input container style (optional)
+        />
+      </View>
+      <View styel={{ display: "flex", flexDirection: "row", alignItems: '', justifyContent: "center" }}>
+        <CustomButton
+          style={styles.cardButton}
+          labelStyle={styles.labelStyle}
+          label={'create'}
+          onPress={() => navigation.navigate('EditQutoes', { create: true })}
+        />
+      </View>
+      <View>
+       {searchText ? (
+        <FlatList
+          data={filteredData}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+        />
+       ) : (<FlatList
+        searchText
         data={value}
         onEndReachedThreshold={0.1}
         onEndReached={() => { setPage(page + 1) }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-      />
+        />
+      )}
     </View>
+    </View>
+    
   );
 };

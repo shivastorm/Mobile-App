@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, Button, TextInput, Keyboard, ActivityIndicator } from "react-native";
+import { View, Text, Button, TextInput, Keyboard, ActivityIndicator,ScrollView,RefreshControl } from "react-native";
 import Toast from 'react-native-root-toast';
 import { getItem } from "../../utils/only-token";
 import { useState } from "react";
 import { styles } from '../../Styles/CreateStyleSheet';
+ 
 
 export default function EditCategory({ route }) {
     const { id, nameValue, desc, create } = route.params;
@@ -12,6 +13,7 @@ export default function EditCategory({ route }) {
     const [name, setName] = useState(isEdit ? nameValue : '');
     const [description, setDescription] = useState(isEdit ? desc : '');
     const [isLoading, setIsLoading] = useState(false);
+    const [refreshing, setRefreshing] = React.useState(false);
 
     const handleNameChange = (text) => {
         setName(text);
@@ -19,6 +21,7 @@ export default function EditCategory({ route }) {
     const handleDescriptionChange = (text) => {
         setDescription(text);
     };
+
     const handleSubmit = async () => {
         Keyboard.dismiss();
         setIsLoading(true)
@@ -72,8 +75,21 @@ export default function EditCategory({ route }) {
                 console.error('API request failed in create category====>', error);
             });
     };
+      const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    handleSubmit()
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
     return (
+        <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>        
+
         <View style={styles.container}>
             <Text style={styles.label}>Name:</Text>
             <TextInput
@@ -81,23 +97,24 @@ export default function EditCategory({ route }) {
                 placeholder="Enter your name"
                 value={name}
                 onChangeText={handleNameChange}
-            />
+                />
             <Text style={styles.label}>Description:</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter a description"
                 value={description}
                 onChangeText={handleDescriptionChange}
-            />
+                />
             {isLoading ? (
                 <ActivityIndicator size="large" color="rose" />
-            ) : (
-                <Button
+                ) : (
+                    <Button
                     title={"Submit"}
                     onPress={handleSubmit}
                     disabled={isLoading}
-                />
-            )}
+                    />
+                    )}
         </View>
+                    </ScrollView>
     );
 }
