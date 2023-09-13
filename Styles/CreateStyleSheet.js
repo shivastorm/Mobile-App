@@ -25,6 +25,16 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: 'Roboto-Bold',
     },
+    containerimage: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      previewImage: {
+        width: 200,
+        height: 200,
+        marginVertical: 10,
+      },
     // cardButton: {
     //     backgroundColor: "#e9b4f0",
     //     padding: 20,
